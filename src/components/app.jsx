@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
 import RoomManager from './RoomManager.jsx';
+import Scheduler from './Scheduler.jsx';
 
 class App extends Component {
 	constructor(props) {
@@ -12,6 +13,9 @@ class App extends Component {
 
 		this.addRoom = this.addRoom.bind(this);
 		this.removeRoom = this.removeRoom.bind(this);
+
+		this.makeReservation = this.makeReservation.bind(this);
+		this.removeReservation = this.removeReservation.bind(this);
 	}
 
 	addRoom(name, capacity) {
@@ -27,10 +31,19 @@ class App extends Component {
 		this.setState({rooms: rooms});
 	}
 
+	makeReservation() {
+
+	}
+
+	removeReservation() {
+
+	}
+
 	render() {
 		return (
 			<div>
-				<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom} />
+				<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
+				<Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation}/>
 			</div>
 		);
 	}

@@ -8,7 +8,7 @@ class RoomManager extends Component {
 		return (
 			<div className="room-manager">
 				<AddRoomPanel rooms={this.props.rooms} addRoom={this.props.addRoom} />
-				<RoomList rooms={this.props.rooms} removeRoom={this.props.removeRoom} />
+				<RoomList rooms={this.props.rooms} removeRoom={this.props.removeRoom} mode="edit"/>
 			</div>
 		);
 	}

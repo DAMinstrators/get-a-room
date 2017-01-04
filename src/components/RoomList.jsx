@@ -19,11 +19,17 @@ class RoomList extends Component {
 			if (!capacity) {
 				capacity = "Capactity not set";
 			}
+
+			let removeButton = "";
+			if (this.props.mode === "edit") {
+				removeButton = <RemoveRoom roomIndex={i} removeRoom={this.handleRemoveRoom}/>;
+			}
+
 			return (
 				<li key={i}>
 					<span>{room.name}</span>,
 					<span>{capacity}</span>
-					<RemoveRoom roomIndex={i} removeRoom={this.handleRemoveRoom}/>
+					{removeButton}
 				</li>
 			);
 		});
