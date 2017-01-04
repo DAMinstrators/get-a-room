@@ -18,12 +18,31 @@ class AddRoomPanel extends Component {
 	handleRoomEntry(event) {
 		const entryUpdate = {};
 		entryUpdate[event.target.name] = event.target.value;
+		console.log(entryUpdate);
 		this.setState(entryUpdate);
 	}
 
 	addRoom() {
 		if (this.state.name) {
-			this.props.addRoom(this.state.name, this.state.capacity);
+			let unique = true;
+			//check to see if room already exists (Rooms must have unique names)
+			const currentRooms = Object.keys(this.props.rooms);
+			for (let i = 0; i < currentRooms.length; i++) {
+				if (this.state.name.toUpperCase() === this.props.rooms[i].name.toUpperCase()) {
+					unique = false;
+					break;
+				}
+			}
+			// Object.keys(this.props.rooms).forEach( (room, i) => {
+			// 	if (this.state.name === )
+			// });
+			if (unique) {
+				this.refs.name.value = "";
+				this.refs.capacity.value = "";
+				this.props.addRoom(this.state.name, this.state.capacity);
+			} else {
+				this.setState({errorMessage: "\"" + this.state.name + "\" room already exists"});
+			}
 		} else {
 			this.setState({errorMessage: "Please provide a room name."});
 		}
@@ -38,8 +57,8 @@ class AddRoomPanel extends Component {
 			<div className="add-room-panel">
 				<h3>Add New Room</h3>
 				{errorMessage}
-				<input type="text" name="name" placeholder="Enter Room Name" onChange={this.handleRoomEntry}/>
-				<input type="text" name="capacity" placeholder="Enter Room Capacity" onChange={this.handleRoomEntry}/>
+				<input type="text" name="name" ref="name" placeholder="Enter Room Name" onChange={this.handleRoomEntry}/>
+				<input type="text" name="capacity" ref="capacity" placeholder="Enter Room Capacity" onChange={this.handleRoomEntry}/>
 				<button onClick={this.addRoom}>Add Room</button>
 			</div>
 		);
