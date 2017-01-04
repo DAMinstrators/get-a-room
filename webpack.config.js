@@ -1,5 +1,5 @@
 var config = {
-   entry: './src/components/app.jsx',
+   entry: './src/index.js',
 	
    output: {
       path:'./public',
