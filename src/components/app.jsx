@@ -43,11 +43,46 @@ class App extends Component {
 
 	}
 
+	httpRequest(method, url, data, callback) {
+		let xhttp = new XMLHttpRequest();
+		let params = "";
+		if (data) {
+			params = data;
+		}
+		method = method.toLowerCase();
+
+		xhttp.open(method, url, true);
+
+		if (method === "getting") {	
+			console.log("Getting...", url, data, callback);
+			xhttp.setRequestHeader("Content-type", "application/json");
+		}
+
+		if (method === "post") {	
+			console.log("Posting...", callback);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		}
+
+		xhttp.onreadystatechange = () => {
+			if (xhttp.status == 200 && xhttp.readyState == 4) {
+				console.log(xhttp.responseText);
+				//console.log("Response Text: ", xhttp.responseText);
+				callback(null, JSON.parse(xhttp.responseText));
+			}
+
+			if (xhttp.status == 400 || xhttp.status == 500) {
+				callback(url + " could not be reached");
+			}
+		}
+
+		xhttp.send(params);
+	}
+
 	render() {
 		return (
 			<div>
 				<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
-				<Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation}/>
+				<Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 			</div>
 		);
 	}
