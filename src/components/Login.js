@@ -12,6 +12,7 @@ export default class Login extends React.Component {
     }
   render() {
     return (
+      <div>
       <div id="container" className="app-container">
         <div id="adminfield" className="admin-field">
           <div id="containertitle" className="container-title">Log in</div>
@@ -36,6 +37,8 @@ export default class Login extends React.Component {
 
         </div>
         
+        </div>
+        <center><div id="createsuccess">{this.props.createSuccess}</div></center>
         </div>
     );
   }

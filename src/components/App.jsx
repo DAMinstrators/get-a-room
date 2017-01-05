@@ -17,6 +17,7 @@ class App extends Component {
 			createdPassword: '',
 			createdGithub: '',
 			createErr: '',
+			createSuccess: '',
 			loggedIn: false,
 			loginErr: '',
 			user: '',
@@ -28,7 +29,7 @@ class App extends Component {
 				reservations: {}
 			}
 		}
-    
+
 		this.usernameChange = this.usernameChange.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
 		this.myAuth = this.myAuth.bind(this);
@@ -45,7 +46,7 @@ class App extends Component {
 		this.removeRoom = this.removeRoom.bind(this);
 		this.makeReservation = this.makeReservation.bind(this);
 		this.removeReservation = this.removeReservation.bind(this);
-		
+
 	}
 
 	//listens to changes to the username field on login page
@@ -53,6 +54,7 @@ class App extends Component {
 		this.setState({username: event.target.value})
 		console.log(this.state.username);
 		this.setState({loginErr: ''});
+		this.setState({createSuccess: ''});
 	}
 
 	//listens to changes to the password field on login page
@@ -60,6 +62,7 @@ class App extends Component {
 		this.setState({password: event.target.value})
 		console.log(this.state.password);
 		this.setState({loginErr: ''});
+	    this.setState({createSuccess: ''});
 	}
 
 	//indicates user clicked on create new org button
@@ -76,21 +79,21 @@ class App extends Component {
 	myAuth() {
 
 		//check if they filled out both fields
-		if (this.state.username === '' || this.state.password === '') {
-		  this.setState({loginErr: "Please fill out all fields"})
-		  return;
-	  	}
-		
+		// if (this.state.username === '' || this.state.password === '') {
+		//   this.setState({loginErr: "Please fill out all fields"})
+		//   return;
+	  // 	}
+
 		//if they filled it out, format username and password string to send in post request
-		let loginString='username=' + this.state.username + "&" + 
+		let loginString='username=' + this.state.username + "&" +
 	  			 'password=' + this.state.password;
-		this.setState({auth: loginString});
+
 		console.log(loginString)
 
 		//post request to see if username and password are correct
 		var http = new XMLHttpRequest();
-		var url = "localhost:8080/user/validate";
-		var params = this.state.auth;
+		var url = "http://localhost:8080/user/validate";
+		var params = loginString;
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -99,37 +102,48 @@ class App extends Component {
 		//Call a function when the state changes.
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
-				//alert(http.responseText);
+				console.log(http.responseText);
+				if (http.responseText === 'true') {
+					console.log('valid login!!!')
+					this.setState({loggedIn: true});
+					this.setState({loginErr: ''});
+					this.setState({username: ''});
+					this.setState({password: ''});
+				} else {
+					console.log('in else')
+					this.setState({loginErr: 'Invalid login'})
+				}
 			}
-		}
+		}.bind(this);
 		http.send(params);
 
 
 
-	
-	if(this.state.accounts[this.state.username]) {
-      if (this.state.accounts[this.state.username] === this.state.password) {
-        this.setState({loggedIn: true});
+
+	// if(this.state.accounts[this.state.username]) {
+  //     if (this.state.accounts[this.state.username] === this.state.password) {
+        //this.setState({loggedIn: true});
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
-		
-		console.log('valid login');
-      } else {
-        this.setState({loginErr:'Wrong Password!'});
-      }
-
-    } else {
-      this.setState({loginErr:'Account name doesn\'t exist!'});
-    }
+	//
+	// 	console.log('valid login');
+  //     } else {
+  //       this.setState({loginErr:'Wrong Password!'});
+  //     }
+	//
+  //   } else {
+  //     this.setState({loginErr:'Account name doesn\'t exist!'});
+  //   }
 
   }
-  
+
   //user clicked on submit button after creating an org
   submitCreateOrg() {
 	  this.setState({requestToCreate: 0});
 
 	  this.setState({loginErr: ''});
+	  this.setState({createSuccess: ''});
   }
 
   //stores the username being typed into the create user page's "username" field into state
@@ -137,7 +151,7 @@ class App extends Component {
 	  this.setState({createdUsername: event.target.value})
 	  this.setState({createErr: ''});
   }
-  
+
   //stores the password being typed into the create user page's "password" field into state
   createdPassword(event) {
 	  this.setState({createdPassword: event.target.value})
@@ -161,23 +175,21 @@ class App extends Component {
 		  this.setState({createErr: "Please fill out all fields"})
 		  return;
 	  }
-	  
+
 	  //if they are all filled properly, format string for post request
-	  let userString='username=' + this.state.createdUsername + "&" + 
-	  			 'password=' + this.state.createdPassword + "&" +
+	  let userString = 'username=' + this.state.createdUsername + '&' +
+	  			 'password='+ this.state.createdPassword + '&' +
 				 'github=' + this.state.createdGithub;
 
-	    this.setState({user: userString})
-		
 		//reset the username and password so you can create another one if you want to
 		this.setState({createdUsername: ''});
 	  	this.setState({createdPassword: ''});
 	  	this.setState({createdGithub: ''});
-		
+
 		console.log(userString);
 	    var http = new XMLHttpRequest();
-		var url = "localhost:8080/user/create";
-		var params = this.state.user;
+		var url = "http://localhost:8080/user/create";
+		var params = userString;
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -186,9 +198,17 @@ class App extends Component {
 		//Call a function when the state changes.
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
-				//alert(http.responseText);
+				 console.log(http.responseText);
+				if (http.responseText === "\"User already exists.\"") {
+					console.log('got here');
+					this.setState({createSuccess: 'Please use a different username.'});
+					
+				} else {
+					this.setState({createSuccess: 'Username has been created.'});
+					
+				}
 			}
-		}
+		}.bind(this);
 		http.send(params);
 
 	  this.setState({requestToCreate: 0});
@@ -199,16 +219,17 @@ class App extends Component {
 
   //takes you back to login page, resets all the information in the fields
   reset() {
-	  
+	  this.setState({loggedIn: false});
 	  this.setState({loginErr: ''});
 	  this.setState({createErr: ''});
 	  this.setState({requestToCreate: 0});
 	  this.setState({createdUsername: ''});
 	  this.setState({createdPassword: ''});
 	  this.setState({createdGithub: ''});
+	  this.setState({createSuccess: ''});
 
   }
-    
+
     addRoom(name, capacity) {
 		if (name) {
 			const rooms = this.state.rooms.slice();
@@ -240,12 +261,12 @@ class App extends Component {
 
 		xhttp.open(method, url, true);
 
-		if (method === "getting") {	
+		if (method === "getting") {
 			console.log("Getting...", url, data, callback);
 			xhttp.setRequestHeader("Content-type", "application/json");
 		}
 
-		if (method === "post") {	
+		if (method === "post") {
 			console.log("Posting...", callback);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		}
@@ -278,19 +299,20 @@ class App extends Component {
 							login={this.myAuth}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
-							
+							createSuccess={this.state.createSuccess}
+
 							/>
 					</div>
 				);
 			//if you're not logged in, and they clicked on the create organization button
 			} if (this.state.requestToCreate === 1) {
-				
+
 				return (
 				 <CreateOrganization submitCreateOrg={this.submitCreateOrg}/>
 				);
 			//if you're not logged in, and they clicked on the create user button
 			} if (this.state.requestToCreate === 2) {
-				
+
 				return (
 				 <CreateUser submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
@@ -298,7 +320,7 @@ class App extends Component {
 							 createdGithub={this.createdGithub}
 							 reset={this.reset}
 							 createErr={this.state.createErr}
-				 
+
 				 				/>
 				);
 			}
@@ -306,12 +328,13 @@ class App extends Component {
 		} else {
 			return (
 				<div>
+				<button id="logout" onClick={this.reset}>Logout</button>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
-		}
-		
+		}		
 	}
 }
 export default App;
+

@@ -65,7 +65,7 @@ h1 {
 #buttons {
     display: flex;
     flex-direction: column;
-    
+
 }
 
 #loginbtn {

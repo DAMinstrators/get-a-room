@@ -21539,6 +21539,7 @@
 				createdPassword: '',
 				createdGithub: '',
 				createErr: '',
+				createSuccess: '',
 				loggedIn: false,
 				loginErr: '',
 				user: '',
@@ -21580,6 +21581,7 @@
 				this.setState({ username: event.target.value });
 				console.log(this.state.username);
 				this.setState({ loginErr: '' });
+				this.setState({ createSuccess: '' });
 			}
 
 			//listens to changes to the password field on login page
@@ -21590,6 +21592,7 @@
 				this.setState({ password: event.target.value });
 				console.log(this.state.password);
 				this.setState({ loginErr: '' });
+				this.setState({ createSuccess: '' });
 			}
 
 			//indicates user clicked on create new org button
@@ -21615,20 +21618,20 @@
 			value: function myAuth() {
 
 				//check if they filled out both fields
-				if (this.state.username === '' || this.state.password === '') {
-					this.setState({ loginErr: "Please fill out all fields" });
-					return;
-				}
+				// if (this.state.username === '' || this.state.password === '') {
+				//   this.setState({loginErr: "Please fill out all fields"})
+				//   return;
+				// 	}
 
 				//if they filled it out, format username and password string to send in post request
 				var loginString = 'username=' + this.state.username + "&" + 'password=' + this.state.password;
-				this.setState({ auth: loginString });
+
 				console.log(loginString);
 
 				//post request to see if username and password are correct
 				var http = new XMLHttpRequest();
-				var url = "localhost:8080/user/validate";
-				var params = this.state.auth;
+				var url = "http://localhost:8080/user/validate";
+				var params = loginString;
 				http.open("POST", url, true);
 
 				//Send the proper header information along with the request
@@ -21637,25 +21640,36 @@
 				//Call a function when the state changes.
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
-						//alert(http.responseText);
+						console.log(http.responseText);
+						if (http.responseText === 'true') {
+							console.log('valid login!!!');
+							this.setState({ loggedIn: true });
+							this.setState({ loginErr: '' });
+							this.setState({ username: '' });
+							this.setState({ password: '' });
+						} else {
+							console.log('in else');
+							this.setState({ loginErr: 'Invalid login' });
+						}
 					}
-				};
+				}.bind(this);
 				http.send(params);
 
-				if (this.state.accounts[this.state.username]) {
-					if (this.state.accounts[this.state.username] === this.state.password) {
-						this.setState({ loggedIn: true });
-						this.setState({ loginErr: '' });
-						this.setState({ username: '' });
-						this.setState({ password: '' });
-
-						console.log('valid login');
-					} else {
-						this.setState({ loginErr: 'Wrong Password!' });
-					}
-				} else {
-					this.setState({ loginErr: 'Account name doesn\'t exist!' });
-				}
+				// if(this.state.accounts[this.state.username]) {
+				//     if (this.state.accounts[this.state.username] === this.state.password) {
+				//this.setState({loggedIn: true});
+				this.setState({ loginErr: '' });
+				this.setState({ username: '' });
+				this.setState({ password: '' });
+				//
+				// 	console.log('valid login');
+				//     } else {
+				//       this.setState({loginErr:'Wrong Password!'});
+				//     }
+				//
+				//   } else {
+				//     this.setState({loginErr:'Account name doesn\'t exist!'});
+				//   }
 			}
 
 			//user clicked on submit button after creating an org
@@ -21666,6 +21680,7 @@
 				this.setState({ requestToCreate: 0 });
 
 				this.setState({ loginErr: '' });
+				this.setState({ createSuccess: '' });
 			}
 
 			//stores the username being typed into the create user page's "username" field into state
@@ -21711,9 +21726,7 @@
 				}
 
 				//if they are all filled properly, format string for post request
-				var userString = 'username=' + this.state.createdUsername + "&" + 'password=' + this.state.createdPassword + "&" + 'github=' + this.state.createdGithub;
-
-				this.setState({ user: userString });
+				var userString = 'username=' + this.state.createdUsername + '&' + 'password=' + this.state.createdPassword + '&' + 'github=' + this.state.createdGithub;
 
 				//reset the username and password so you can create another one if you want to
 				this.setState({ createdUsername: '' });
@@ -21722,8 +21735,8 @@
 
 				console.log(userString);
 				var http = new XMLHttpRequest();
-				var url = "localhost:8080/user/create";
-				var params = this.state.user;
+				var url = "http://localhost:8080/user/create";
+				var params = userString;
 				http.open("POST", url, true);
 
 				//Send the proper header information along with the request
@@ -21732,9 +21745,15 @@
 				//Call a function when the state changes.
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
-						//alert(http.responseText);
+						console.log(http.responseText);
+						if (http.responseText === "\"User already exists.\"") {
+							console.log('got here');
+							this.setState({ createSuccess: 'Please use a different username.' });
+						} else {
+							this.setState({ createSuccess: 'Username has been created.' });
+						}
 					}
-				};
+				}.bind(this);
 				http.send(params);
 
 				this.setState({ requestToCreate: 0 });
@@ -21748,13 +21767,14 @@
 		}, {
 			key: 'reset',
 			value: function reset() {
-
+				this.setState({ loggedIn: false });
 				this.setState({ loginErr: '' });
 				this.setState({ createErr: '' });
 				this.setState({ requestToCreate: 0 });
 				this.setState({ createdUsername: '' });
 				this.setState({ createdPassword: '' });
 				this.setState({ createdGithub: '' });
+				this.setState({ createSuccess: '' });
 			}
 		}, {
 			key: 'addRoom',
@@ -21828,7 +21848,8 @@
 								loginErr: this.state.loginErr,
 								login: this.myAuth,
 								createOrg: this.createOrg,
-								createUser: this.createUser
+								createUser: this.createUser,
+								createSuccess: this.state.createSuccess
 
 							})
 						);
@@ -21853,6 +21874,11 @@
 					return _react2.default.createElement(
 						'div',
 						null,
+						_react2.default.createElement(
+							'button',
+							{ id: 'logout', onClick: this.reset },
+							'Logout'
+						),
 						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom }),
 						_react2.default.createElement(_Scheduler2.default, { rooms: this.state.rooms, makeReservation: this.makeReservation, removeReservation: this.removeReservation, httpRequest: this.httpRequest })
 					);
@@ -21913,63 +21939,76 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'container', className: 'app-container' },
+	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'adminfield', className: 'admin-field' },
+	          { id: 'container', className: 'app-container' },
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'containertitle', className: 'container-title' },
-	            'Log in'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'forms', className: 'forms' },
+	            { id: 'adminfield', className: 'admin-field' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              'Username: ',
-	              _react2.default.createElement('input', { id: 'username', ref: 'username', onChange: this.props.username, className: 'username' })
+	              { id: 'containertitle', className: 'container-title' },
+	              'Log in'
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              'Password: ',
-	              _react2.default.createElement('input', { type: 'password', id: 'password', ref: 'password', onChange: this.props.password, className: 'password' })
+	              { id: 'forms', className: 'forms' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Username: ',
+	                _react2.default.createElement('input', { id: 'username', ref: 'username', onChange: this.props.username, className: 'username' })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Password: ',
+	                _react2.default.createElement('input', { type: 'password', id: 'password', ref: 'password', onChange: this.props.password, className: 'password' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLogin, id: 'loginbtn' },
+	              'Login'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { id: 'err' },
+	              this.props.loginErr
 	            )
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.handleOnLogin, id: 'loginbtn' },
-	            'Login'
-	          ),
-	          _react2.default.createElement(
 	            'div',
-	            { id: 'err' },
-	            this.props.loginErr
+	            { id: 'create', className: 'create' },
+	            _react2.default.createElement(
+	              'div',
+	              { id: 'containertitle', className: 'container-title' },
+	              'New User?'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { id: 'buttons' },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.props.createOrg, id: 'createorgbtn' },
+	                'Create a new Organization'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.props.createUser, id: 'createuserbtn' },
+	                'Create a new User'
+	              )
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { id: 'create', className: 'create' },
+	          'center',
+	          null,
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'containertitle', className: 'container-title' },
-	            'New User?'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'buttons' },
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.props.createOrg, id: 'createorgbtn' },
-	              'Create a new Organization'
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.props.createUser, id: 'createuserbtn' },
-	              'Create a new User'
-	            )
+	            { id: 'createsuccess' },
+	            this.props.createSuccess
 	          )
 	        )
 	      );
