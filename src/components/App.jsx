@@ -29,7 +29,7 @@ class App extends Component {
 		}
 
 		this.usernameChange = this.usernameChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
+    	this.passwordChange = this.passwordChange.bind(this);
 		this.myAuth = this.myAuth.bind(this);
 		this.createOrg = this.createOrg.bind(this);
 		this.createUser = this.createUser.bind(this);
@@ -218,6 +218,11 @@ class App extends Component {
 			const rooms = this.state.rooms.slice();
 			rooms.push({name: name, capacity: capacity});
 			this.setState({rooms: rooms});
+
+			const data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1";//UPDATE: accessGroupId to be dynamic
+			this.httpRequest("post", "/room", data, (result) => {
+				console.log("Room added!");
+			});
 		}
 	}
 
@@ -312,7 +317,7 @@ class App extends Component {
 			return (
 				<div>
 				<button id="logout" onClick={this.reset}>Logout</button>
-					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
+					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom} httpRequest={this.httpRequest}/>
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
