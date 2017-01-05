@@ -5,6 +5,7 @@ import CreateOrganization from './CreateOrganization';
 import CreateUser from './CreateUser';
 import RoomManager from './RoomManager.jsx';
 import Scheduler from './Scheduler.jsx';
+import FloorCanvas from './FloorCanvas.jsx';
 
 class App extends Component {
 	constructor() {
@@ -113,7 +114,6 @@ class App extends Component {
 			}
 		}.bind(this);
 		http.send(params);
-
 
         this.setState({loginErr: ''});
         this.setState({username: ''});
@@ -307,7 +307,7 @@ class App extends Component {
 				 				/>
 				);
 			}
-		//if you log in successfully, sherman's part
+		//if you log in successfully, shermans part
 		} else {
 			return (
 				<div>

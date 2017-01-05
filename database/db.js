@@ -8,7 +8,7 @@ const db = {};
 db.createUser = (user) =>{
   return User.findOne({where: {name: user.username}})
     .then((usr) =>{
-      if(usr !== null) return 'User already exists';
+      if(usr !== null) return 'exists';
       return User.create({name: user.username, githubHandle: user.github, password: user.password})
     });
 };
@@ -16,7 +16,7 @@ db.createUser = (user) =>{
 db.validateUser = (user) =>{
     return User.findOne({where: {name: user.username}})
       .then((usr) =>{
-        if(usr === null) return 'User does not exist';
+        if(usr === null) return false;
         if(usr.password !== user.password ){
           return 'Some fields are filled out incorrectly.';
         }
@@ -93,13 +93,18 @@ db.createRoom = (room) =>{
 
 db.addReservation = (rsvp) =>{
   return Room.findOne({where: {name: rsvp.name}}).then((rm) =>{
-    //if(rm !== null){ return;}
-    //DANGER!!!!! ^^^^
-    console.log('rsvp', rsvp);
+    if(rm !== null){ return;}
+
     let date = moment(rsvp.date, 'MM-DD-YYYY').hour(rsvp.startTime).minutes(0).seconds(0).format();
-    //date.hour(rsvp.startTime);
-    ///DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!! enter correct userId
-    return Reservation.create({startTime: date, userId: 1, roomId: 1});
+    console.log('rsvp', rsvp);
+
+    return User.findOne({where: {name: rsvp.username}})
+      .then((usr) =>{
+        if(usr === null) return ('User does not exist.');
+        console.log('usr: ', usr);
+        ///DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!! enter correct roomId
+        return Reservation.create({startTime: date, userId: usr.id, roomId: 1});
+      });
   });
 };
 
