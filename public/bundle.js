@@ -22018,10 +22018,6 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
@@ -22154,7 +22150,13 @@
 		}, {
 			key: 'myAuth',
 			value: function myAuth() {
-
+	
+				// check if they filled out both fields
+				if (this.state.username === '' || this.state.password === '') {
+					this.setState({ loginErr: "Please fill out all fields" });
+					return;
+				}
+	
 				//if they filled it out, format username and password string to send in post request
 				var loginString = 'username=' + this.state.username + "&" + 'password=' + this.state.password;
 	
@@ -22166,9 +22168,8 @@
 				var params = loginString;
 				http.open("POST", url, true);
 	
-				//Send the proper header information along with the request
-				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	
+				// //Send the proper header information along with the request
+				// http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				//Call a function when the state changes.
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
@@ -22186,7 +22187,14 @@
 					}
 				}.bind(this);
 				http.send(params);
-
+				// //Call a function when the state changes.
+				// http.onreadystatechange = function() {
+				// 	if(http.readyState == 4 && http.status == 200) {
+				// 		//alert(http.responseText);
+				// 	}
+				// }
+				// http.send(params);
+	
 				this.setState({ loginErr: '' });
 				this.setState({ username: '' });
 				this.setState({ password: '' });
@@ -22266,8 +22274,7 @@
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
 						console.log(http.responseText);
-						if (http.responseText === "\"User already exists.\"") {
-							console.log('got here');
+						if (http.responseText === "\'exists\'") {
 							this.setState({ createSuccess: 'Please use a different username.' });
 						} else {
 							this.setState({ createSuccess: 'Username has been created.' });
@@ -22287,6 +22294,7 @@
 		}, {
 			key: 'reset',
 			value: function reset() {
+				this.setState({ loggedIn: false });
 				this.setState({ loginErr: '' });
 				this.setState({ createErr: '' });
 				this.setState({ requestToCreate: 0 });
@@ -22302,6 +22310,11 @@
 					var rooms = this.state.rooms.slice();
 					rooms.push({ name: name, capacity: capacity });
 					this.setState({ rooms: rooms });
+	
+					var data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1"; //UPDATE: accessGroupId to be dynamic
+					this.httpRequest("post", "/room", data, function (result) {
+						console.log("Room added!");
+					});
 				}
 			}
 		}, {
@@ -22367,6 +22380,9 @@
 								loginErr: this.state.loginErr,
 								login: this.myAuth,
 								createOrg: this.createOrg,
+								createUser: this.createUser,
+								createSuccess: this.state.createSuccess
+	
 							})
 						);
 						//if you're not logged in, and they clicked on the create organization button
@@ -22395,17 +22411,15 @@
 							{ id: 'logout', onClick: this.reset },
 							'Logout'
 						),
-						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom }),
+						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom, httpRequest: this.httpRequest }),
 						_react2.default.createElement(_Scheduler2.default, { rooms: this.state.rooms, makeReservation: this.makeReservation, removeReservation: this.removeReservation, httpRequest: this.httpRequest })
 					);
 				}
 			}
 		}]);
-	
+
 		return App;
 	}(_react.Component);
-	
-	exports.default = App;
 
 /***/ },
 /* 179 */
@@ -22755,7 +22769,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'room-manager' },
-					_react2.default.createElement(_AddRoomPanel2.default, { rooms: this.props.rooms, addRoom: this.props.addRoom }),
+					_react2.default.createElement(_AddRoomPanel2.default, { rooms: this.props.rooms, addRoom: this.props.addRoom, httpRequest: this.httpRequest }),
 					_react2.default.createElement(_RoomList2.default, { rooms: this.props.rooms, removeRoom: this.props.removeRoom, mode: 'edit' })
 				);
 			}

@@ -94,9 +94,8 @@ class App extends Component {
 		var params = loginString;
 		http.open("POST", url, true);
 
-		//Send the proper header information along with the request
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
+		// //Send the proper header information along with the request
+		// http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		//Call a function when the state changes.
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
@@ -114,6 +113,13 @@ class App extends Component {
 			}
 		}.bind(this);
 		http.send(params);
+		// //Call a function when the state changes.
+		// http.onreadystatechange = function() {
+		// 	if(http.readyState == 4 && http.status == 200) {
+		// 		//alert(http.responseText);
+		// 	}
+		// }
+		// http.send(params);
 
         this.setState({loginErr: ''});
         this.setState({username: ''});
@@ -321,8 +327,8 @@ class App extends Component {
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
+
 		}		
 	}
 }
-export default App;
 
