@@ -5,6 +5,7 @@ import CreateOrganization from './CreateOrganization';
 import CreateUser from './CreateUser';
 import RoomManager from './RoomManager.jsx';
 import Scheduler from './Scheduler.jsx';
+import FloorCanvas from './FloorCanvas.jsx';
 
 class App extends Component {
 	constructor() {
@@ -109,7 +110,7 @@ class App extends Component {
 
 	// if(this.state.accounts[this.state.username]) {
   //     if (this.state.accounts[this.state.username] === this.state.password) {
-        //this.setState({loggedIn: true});
+        this.setState({loggedIn: true});
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
@@ -300,7 +301,7 @@ class App extends Component {
 				 				/>
 				);
 			}
-		//if you log in successfully, sherman's part
+		//if you log in successfully, shermans part
 		} else {
 			return (
 				<div>
