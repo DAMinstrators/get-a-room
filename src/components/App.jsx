@@ -11,17 +11,15 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			accounts: {mike: 'pass', anto: 'hello', dhani: 'dbman'},
 			username: '',
 			password: '',
 			createdUsername: '',
 			createdPassword: '',
 			createdGithub: '',
 			createErr: '',
+			createSuccess: '',
 			loggedIn: false,
 			loginErr: '',
-			user: '',
-			auth: '',
 			requestToCreate: 0,
       rooms: [],
 			scheduler: {
@@ -54,6 +52,7 @@ class App extends Component {
 		this.setState({username: event.target.value})
 		console.log(this.state.username);
 		this.setState({loginErr: ''});
+		this.setState({createSuccess: ''});
 	}
 
 	//listens to changes to the password field on login page
@@ -61,6 +60,7 @@ class App extends Component {
 		this.setState({password: event.target.value})
 		console.log(this.state.password);
 		this.setState({loginErr: ''});
+	    this.setState({createSuccess: ''});
 	}
 
 	//indicates user clicked on create new org button
@@ -76,11 +76,11 @@ class App extends Component {
 	//checks to see if username and password are correct
 	myAuth() {
 
-		//check if they filled out both fields
-		// if (this.state.username === '' || this.state.password === '') {
-		//   this.setState({loginErr: "Please fill out all fields"})
-		//   return;
-	  // 	}
+		// check if they filled out both fields
+		if (this.state.username === '' || this.state.password === '') {
+		  this.setState({loginErr: "Please fill out all fields"})
+		  return;
+	  	}
 
 		//if they filled it out, format username and password string to send in post request
 		let loginString='username=' + this.state.username + "&" +
@@ -100,29 +100,25 @@ class App extends Component {
 		//Call a function when the state changes.
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
-				alert(http.responseText);
+				console.log(http.responseText);
+				if (http.responseText === 'true') {
+					console.log('valid login!!!')
+					this.setState({loggedIn: true});
+					this.setState({loginErr: ''});
+					this.setState({username: ''});
+					this.setState({password: ''});
+				} else {
+					console.log('in else')
+					this.setState({loginErr: 'Invalid login'})
+				}
 			}
-		}
+		}.bind(this);
 		http.send(params);
 
-
-
-
-	// if(this.state.accounts[this.state.username]) {
-  //     if (this.state.accounts[this.state.username] === this.state.password) {
-        this.setState({loggedIn: true});
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
-	//
-	// 	console.log('valid login');
-  //     } else {
-  //       this.setState({loginErr:'Wrong Password!'});
-  //     }
-	//
-  //   } else {
-  //     this.setState({loginErr:'Account name doesn\'t exist!'});
-  //   }
+	
 
   }
 
@@ -131,6 +127,7 @@ class App extends Component {
 	  this.setState({requestToCreate: 0});
 
 	  this.setState({loginErr: ''});
+	  this.setState({createSuccess: ''});
   }
 
   //stores the username being typed into the create user page's "username" field into state
@@ -185,9 +182,16 @@ class App extends Component {
 		//Call a function when the state changes.
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
-				alert(http.responseText);
+				 console.log(http.responseText);
+				if (http.responseText === "\'exists\'") {
+					this.setState({createSuccess: 'Please use a different username.'});
+					
+				} else {
+					this.setState({createSuccess: 'Username has been created.'});
+					
+				}
 			}
-		}
+		}.bind(this);
 		http.send(params);
 
 	  this.setState({requestToCreate: 0});
@@ -198,13 +202,14 @@ class App extends Component {
 
   //takes you back to login page, resets all the information in the fields
   reset() {
-
+	  this.setState({loggedIn: false});
 	  this.setState({loginErr: ''});
 	  this.setState({createErr: ''});
 	  this.setState({requestToCreate: 0});
 	  this.setState({createdUsername: ''});
 	  this.setState({createdPassword: ''});
 	  this.setState({createdGithub: ''});
+	  this.setState({createSuccess: ''});
 
   }
 
@@ -277,6 +282,7 @@ class App extends Component {
 							login={this.myAuth}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
+							createSuccess={this.state.createSuccess}
 
 							/>
 					</div>
@@ -305,12 +311,13 @@ class App extends Component {
 		} else {
 			return (
 				<div>
+				<button id="logout" onClick={this.reset}>Logout</button>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
-		}
+		}		
 	}
 }
-
 export default App;
+
