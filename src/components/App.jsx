@@ -183,7 +183,7 @@ class App extends Component {
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
 				 console.log(http.responseText);
-				if (http.responseText === "\'exists\'") {
+				if (http.responseText === "\"exists\"") {
 					this.setState({createSuccess: 'Please use a different username.'});
 					
 				} else {
