@@ -87,22 +87,22 @@ class App extends Component {
 		this.setState({auth: loginString});
 		console.log(loginString)
 
-		//post request to see if username and password are correct
-		var http = new XMLHttpRequest();
-		var url = "localhost:8080/user/validate";
-		var params = this.state.auth;
-		http.open("POST", url, true);
+		// //post request to see if username and password are correct
+		// var http = new XMLHttpRequest();
+		// var url = "localhost:8080/user/validate";
+		// var params = this.state.auth;
+		// http.open("POST", url, true);
 
-		//Send the proper header information along with the request
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		// //Send the proper header information along with the request
+		// http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-		//Call a function when the state changes.
-		http.onreadystatechange = function() {
-			if(http.readyState == 4 && http.status == 200) {
-				//alert(http.responseText);
-			}
-		}
-		http.send(params);
+		// //Call a function when the state changes.
+		// http.onreadystatechange = function() {
+		// 	if(http.readyState == 4 && http.status == 200) {
+		// 		//alert(http.responseText);
+		// 	}
+		// }
+		// http.send(params);
 
 
 
@@ -311,5 +311,7 @@ class App extends Component {
 				</div>
 			);
 		}
+	}
+}
 
 export default App;
