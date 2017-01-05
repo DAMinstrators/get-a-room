@@ -8,7 +8,11 @@ class App extends Component {
 		super(props);
 		
 		this.state = {
-			rooms: []
+			rooms: [],
+			scheduler: {
+				selectedRoomIndex: 0,
+				reservations: {}
+			}
 		};
 
 		this.addRoom = this.addRoom.bind(this);
