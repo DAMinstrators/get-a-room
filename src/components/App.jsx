@@ -10,7 +10,6 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			accounts: {mike: 'pass', anto: 'hello', dhani: 'dbman'},
 			username: '',
 			password: '',
 			createdUsername: '',
@@ -20,8 +19,6 @@ class App extends Component {
 			createSuccess: '',
 			loggedIn: false,
 			loginErr: '',
-			user: '',
-			auth: '',
 			requestToCreate: 0,
       rooms: [],
 			scheduler: {
@@ -78,11 +75,11 @@ class App extends Component {
 	//checks to see if username and password are correct
 	myAuth() {
 
-		//check if they filled out both fields
-		// if (this.state.username === '' || this.state.password === '') {
-		//   this.setState({loginErr: "Please fill out all fields"})
-		//   return;
-	  // 	}
+		// check if they filled out both fields
+		if (this.state.username === '' || this.state.password === '') {
+		  this.setState({loginErr: "Please fill out all fields"})
+		  return;
+	  	}
 
 		//if they filled it out, format username and password string to send in post request
 		let loginString='username=' + this.state.username + "&" +
@@ -118,23 +115,10 @@ class App extends Component {
 		http.send(params);
 
 
-
-
-	// if(this.state.accounts[this.state.username]) {
-  //     if (this.state.accounts[this.state.username] === this.state.password) {
-        //this.setState({loggedIn: true});
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
-	//
-	// 	console.log('valid login');
-  //     } else {
-  //       this.setState({loginErr:'Wrong Password!'});
-  //     }
-	//
-  //   } else {
-  //     this.setState({loginErr:'Account name doesn\'t exist!'});
-  //   }
+	
 
   }
 
