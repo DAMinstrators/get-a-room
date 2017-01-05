@@ -54,13 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _App = __webpack_require__(178);
+
+	var _App2 = _interopRequireDefault(_App);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(
-	  'h1',
-	  null,
-	  ' hi '
-	), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21474,6 +21474,1620 @@
 
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Login = __webpack_require__(179);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _CreateOrganization = __webpack_require__(180);
+
+	var _CreateOrganization2 = _interopRequireDefault(_CreateOrganization);
+
+	var _CreateUser = __webpack_require__(181);
+
+	var _CreateUser2 = _interopRequireDefault(_CreateUser);
+
+	var _RoomManager = __webpack_require__(182);
+
+	var _RoomManager2 = _interopRequireDefault(_RoomManager);
+
+	var _Scheduler = __webpack_require__(186);
+
+	var _Scheduler2 = _interopRequireDefault(_Scheduler);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_Component) {
+		_inherits(App, _Component);
+
+		function App() {
+			_classCallCheck(this, App);
+
+			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+			_this.state = {
+				accounts: { mike: 'pass', anto: 'hello', dhani: 'dbman' },
+				username: '',
+				password: '',
+				createdUsername: '',
+				createdPassword: '',
+				createdGithub: '',
+				createErr: '',
+				loggedIn: false,
+				loginErr: '',
+				user: '',
+				auth: '',
+				requestToCreate: 0,
+				rooms: [],
+				scheduler: {
+					selectedRoomIndex: "",
+					reservations: {}
+				}
+			};
+
+			_this.usernameChange = _this.usernameChange.bind(_this);
+			_this.passwordChange = _this.passwordChange.bind(_this);
+			_this.myAuth = _this.myAuth.bind(_this);
+			_this.createOrg = _this.createOrg.bind(_this);
+			_this.createUser = _this.createUser.bind(_this);
+			_this.submitCreateOrg = _this.submitCreateOrg.bind(_this);
+			_this.createdUsername = _this.createdUsername.bind(_this);
+			_this.createdPassword = _this.createdPassword.bind(_this);
+			_this.createdGithub = _this.createdGithub.bind(_this);
+			_this.submitCreateUser = _this.submitCreateUser.bind(_this);
+			_this.reset = _this.reset.bind(_this);
+
+			_this.addRoom = _this.addRoom.bind(_this);
+			_this.removeRoom = _this.removeRoom.bind(_this);
+			_this.makeReservation = _this.makeReservation.bind(_this);
+			_this.removeReservation = _this.removeReservation.bind(_this);
+
+			return _this;
+		}
+
+		//listens to changes to the username field on login page
+
+
+		_createClass(App, [{
+			key: 'usernameChange',
+			value: function usernameChange(event) {
+				this.setState({ username: event.target.value });
+				console.log(this.state.username);
+				this.setState({ loginErr: '' });
+			}
+
+			//listens to changes to the password field on login page
+
+		}, {
+			key: 'passwordChange',
+			value: function passwordChange(event) {
+				this.setState({ password: event.target.value });
+				console.log(this.state.password);
+				this.setState({ loginErr: '' });
+			}
+
+			//indicates user clicked on create new org button
+
+		}, {
+			key: 'createOrg',
+			value: function createOrg() {
+				this.setState({ requestToCreate: 1 });
+			}
+
+			//indicates user clicked on create new user button
+
+		}, {
+			key: 'createUser',
+			value: function createUser() {
+				this.setState({ requestToCreate: 2 });
+			}
+
+			//checks to see if username and password are correct
+
+		}, {
+			key: 'myAuth',
+			value: function myAuth() {
+
+				//check if they filled out both fields
+				// if (this.state.username === '' || this.state.password === '') {
+				//   this.setState({loginErr: "Please fill out all fields"})
+				//   return;
+				// 	}
+
+				//if they filled it out, format username and password string to send in post request
+				var loginString = 'username=' + this.state.username + "&" + 'password=' + this.state.password;
+
+				console.log(loginString);
+
+				//post request to see if username and password are correct
+				var http = new XMLHttpRequest();
+				var url = "http://localhost:8080/user/validate";
+				var params = loginString;
+				http.open("POST", url, true);
+
+				//Send the proper header information along with the request
+				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+				//Call a function when the state changes.
+				http.onreadystatechange = function () {
+					if (http.readyState == 4 && http.status == 200) {
+						alert(http.responseText);
+					}
+				};
+				http.send(params);
+
+				// if(this.state.accounts[this.state.username]) {
+				//     if (this.state.accounts[this.state.username] === this.state.password) {
+				//this.setState({loggedIn: true});
+				this.setState({ loginErr: '' });
+				this.setState({ username: '' });
+				this.setState({ password: '' });
+				//
+				// 	console.log('valid login');
+				//     } else {
+				//       this.setState({loginErr:'Wrong Password!'});
+				//     }
+				//
+				//   } else {
+				//     this.setState({loginErr:'Account name doesn\'t exist!'});
+				//   }
+			}
+
+			//user clicked on submit button after creating an org
+
+		}, {
+			key: 'submitCreateOrg',
+			value: function submitCreateOrg() {
+				this.setState({ requestToCreate: 0 });
+
+				this.setState({ loginErr: '' });
+			}
+
+			//stores the username being typed into the create user page's "username" field into state
+
+		}, {
+			key: 'createdUsername',
+			value: function createdUsername(event) {
+				this.setState({ createdUsername: event.target.value });
+				this.setState({ createErr: '' });
+			}
+
+			//stores the password being typed into the create user page's "password" field into state
+
+		}, {
+			key: 'createdPassword',
+			value: function createdPassword(event) {
+				this.setState({ createdPassword: event.target.value });
+				this.setState({ createErr: '' });
+			}
+
+			//stores the github handle being typed into the create user page's "github handle" field into state
+
+		}, {
+			key: 'createdGithub',
+			value: function createdGithub(event) {
+				this.setState({ createdGithub: event.target.value });
+				this.setState({ createErr: '' });
+			}
+
+			//onclick when user clicks on submit button (user creation)
+
+		}, {
+			key: 'submitCreateUser',
+			value: function submitCreateUser() {
+				console.log('username is ' + this.state.createdUsername);
+				console.log('password is ' + this.state.createdPassword);
+				console.log('github is ' + this.state.createdGithub);
+
+				//check to make sure all fields are filled on user creation page
+				if (this.state.createdUsername === '' || this.state.createdPassword === '' || this.state.createdGithub === '') {
+					this.setState({ createErr: "Please fill out all fields" });
+					return;
+				}
+
+				//if they are all filled properly, format string for post request
+				var userString = 'username=' + this.state.createdUsername + '&' + 'password=' + this.state.createdPassword + '&' + 'github=' + this.state.createdGithub;
+
+				//reset the username and password so you can create another one if you want to
+				this.setState({ createdUsername: '' });
+				this.setState({ createdPassword: '' });
+				this.setState({ createdGithub: '' });
+
+				console.log(userString);
+				var http = new XMLHttpRequest();
+				var url = "http://localhost:8080/user/create";
+				var params = userString;
+				http.open("POST", url, true);
+
+				//Send the proper header information along with the request
+				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+				//Call a function when the state changes.
+				http.onreadystatechange = function () {
+					if (http.readyState == 4 && http.status == 200) {
+						alert(http.responseText);
+					}
+				};
+				http.send(params);
+
+				this.setState({ requestToCreate: 0 });
+
+				this.setState({ loginErr: '' });
+				console.log(this.state.user);
+			}
+
+			//takes you back to login page, resets all the information in the fields
+
+		}, {
+			key: 'reset',
+			value: function reset() {
+
+				this.setState({ loginErr: '' });
+				this.setState({ createErr: '' });
+				this.setState({ requestToCreate: 0 });
+				this.setState({ createdUsername: '' });
+				this.setState({ createdPassword: '' });
+				this.setState({ createdGithub: '' });
+			}
+		}, {
+			key: 'addRoom',
+			value: function addRoom(name, capacity) {
+				if (name) {
+					var rooms = this.state.rooms.slice();
+					rooms.push({ name: name, capacity: capacity });
+					this.setState({ rooms: rooms });
+				}
+			}
+		}, {
+			key: 'removeRoom',
+			value: function removeRoom(roomIndex) {
+				var rooms = this.state.rooms.slice(0, roomIndex).concat(this.state.rooms.slice(roomIndex + 1));
+				this.setState({ rooms: rooms });
+			}
+		}, {
+			key: 'makeReservation',
+			value: function makeReservation() {}
+		}, {
+			key: 'removeReservation',
+			value: function removeReservation() {}
+		}, {
+			key: 'httpRequest',
+			value: function httpRequest(method, url, data, callback) {
+				var xhttp = new XMLHttpRequest();
+				var params = "";
+				if (data) {
+					params = data;
+				}
+				method = method.toLowerCase();
+
+				xhttp.open(method, url, true);
+
+				if (method === "getting") {
+					console.log("Getting...", url, data, callback);
+					xhttp.setRequestHeader("Content-type", "application/json");
+				}
+
+				if (method === "post") {
+					console.log("Posting...", callback);
+					xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				}
+
+				xhttp.onreadystatechange = function () {
+					if (xhttp.status == 200 && xhttp.readyState == 4) {
+						console.log(xhttp.responseText);
+						//console.log("Response Text: ", xhttp.responseText);
+						callback(null, JSON.parse(xhttp.responseText));
+					}
+
+					if (xhttp.status == 400 || xhttp.status == 500) {
+						callback(url + " could not be reached");
+					}
+				};
+
+				xhttp.send(params);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				//if you're not logged in, render the login page
+				if (!this.state.loggedIn) {
+					//defaults to rendering the login page, unless they click on one of the buttons
+					if (this.state.requestToCreate === 0) {
+						return _react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(_Login2.default, { username: this.usernameChange,
+								password: this.passwordChange,
+								loginErr: this.state.loginErr,
+								login: this.myAuth,
+								createOrg: this.createOrg,
+								createUser: this.createUser
+
+							})
+						);
+						//if you're not logged in, and they clicked on the create organization button
+					}if (this.state.requestToCreate === 1) {
+
+						return _react2.default.createElement(_CreateOrganization2.default, { submitCreateOrg: this.submitCreateOrg });
+						//if you're not logged in, and they clicked on the create user button
+					}if (this.state.requestToCreate === 2) {
+
+						return _react2.default.createElement(_CreateUser2.default, { submitCreateUser: this.submitCreateUser,
+							createdUsername: this.createdUsername,
+							createdPassword: this.createdPassword,
+							createdGithub: this.createdGithub,
+							reset: this.reset,
+							createErr: this.state.createErr
+
+						});
+					}
+					//if you log in successfully, sherman's part
+				} else {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom }),
+						_react2.default.createElement(_Scheduler2.default, { rooms: this.state.rooms, makeReservation: this.makeReservation, removeReservation: this.removeReservation, httpRequest: this.httpRequest })
+					);
+				}
+			}
+		}]);
+
+		return App;
+	}(_react.Component);
+
+	exports.default = App;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_React$Component) {
+	  _inherits(Login, _React$Component);
+
+	  function Login() {
+	    _classCallCheck(this, Login);
+
+	    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
+
+	    _this.handleOnLogin = _this.handleOnLogin.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Login, [{
+	    key: 'handleOnLogin',
+	    value: function handleOnLogin() {
+	      this.refs.username.value = '';
+	      this.refs.password.value = '';
+	      this.props.login();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'container', className: 'app-container' },
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'adminfield', className: 'admin-field' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'containertitle', className: 'container-title' },
+	            'Log in'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'forms', className: 'forms' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'Username: ',
+	              _react2.default.createElement('input', { id: 'username', ref: 'username', onChange: this.props.username, className: 'username' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'Password: ',
+	              _react2.default.createElement('input', { type: 'password', id: 'password', ref: 'password', onChange: this.props.password, className: 'password' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleOnLogin, id: 'loginbtn' },
+	            'Login'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'err' },
+	            this.props.loginErr
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'create', className: 'create' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'containertitle', className: 'container-title' },
+	            'New User?'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'buttons' },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.props.createOrg, id: 'createorgbtn' },
+	              'Create a new Organization'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.props.createUser, id: 'createuserbtn' },
+	              'Create a new User'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Login;
+	}(_react2.default.Component);
+
+	exports.default = Login;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateOrganization = function (_React$Component) {
+	  _inherits(CreateOrganization, _React$Component);
+
+	  function CreateOrganization() {
+	    _classCallCheck(this, CreateOrganization);
+
+	    return _possibleConstructorReturn(this, (CreateOrganization.__proto__ || Object.getPrototypeOf(CreateOrganization)).apply(this, arguments));
+	  }
+
+	  _createClass(CreateOrganization, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "container", className: "app-container" },
+	        _react2.default.createElement(
+	          "div",
+	          { id: "adminfield" },
+	          "Create Organization Page",
+	          _react2.default.createElement(
+	            "button",
+	            { id: "submit", onClick: this.props.submitCreateOrg },
+	            "Submit"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CreateOrganization;
+	}(_react2.default.Component);
+
+	exports.default = CreateOrganization;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateUser = function (_React$Component) {
+	  _inherits(CreateUser, _React$Component);
+
+	  function CreateUser() {
+	    _classCallCheck(this, CreateUser);
+
+	    return _possibleConstructorReturn(this, (CreateUser.__proto__ || Object.getPrototypeOf(CreateUser)).apply(this, arguments));
+	  }
+
+	  _createClass(CreateUser, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "container", className: "app-container" },
+	        _react2.default.createElement(
+	          "div",
+	          { id: "createfields" },
+	          _react2.default.createElement(
+	            "div",
+	            { id: "forms" },
+	            _react2.default.createElement(
+	              "center",
+	              null,
+	              _react2.default.createElement(
+	                "div",
+	                { id: "containertitle" },
+	                "Create User Page"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              null,
+	              "Username: ",
+	              _react2.default.createElement("input", { id: "username", ref: "username", onChange: this.props.createdUsername, className: "username" })
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              null,
+	              "Password: ",
+	              _react2.default.createElement("input", { type: "password", id: "password", ref: "password", onChange: this.props.createdPassword, className: "password" })
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              null,
+	              "Github Handle: ",
+	              _react2.default.createElement("input", { id: "githubhandle", ref: "githubhandle", onChange: this.props.createdGithub, className: "githubhandle" })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { id: "err" },
+	            this.props.createErr
+	          ),
+	          _react2.default.createElement(
+	            "button",
+	            { id: "submit", onClick: this.props.submitCreateUser },
+	            "Submit"
+	          ),
+	          _react2.default.createElement(
+	            "button",
+	            { id: "reset", onClick: this.props.reset },
+	            "Return to Login"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CreateUser;
+	}(_react2.default.Component);
+
+	exports.default = CreateUser;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _AddRoomPanel = __webpack_require__(183);
+
+	var _AddRoomPanel2 = _interopRequireDefault(_AddRoomPanel);
+
+	var _RoomList = __webpack_require__(184);
+
+	var _RoomList2 = _interopRequireDefault(_RoomList);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RoomManager = function (_Component) {
+		_inherits(RoomManager, _Component);
+
+		function RoomManager() {
+			_classCallCheck(this, RoomManager);
+
+			return _possibleConstructorReturn(this, (RoomManager.__proto__ || Object.getPrototypeOf(RoomManager)).apply(this, arguments));
+		}
+
+		_createClass(RoomManager, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'room-manager' },
+					_react2.default.createElement(_AddRoomPanel2.default, { rooms: this.props.rooms, addRoom: this.props.addRoom }),
+					_react2.default.createElement(_RoomList2.default, { rooms: this.props.rooms, removeRoom: this.props.removeRoom, mode: 'edit' })
+				);
+			}
+		}]);
+
+		return RoomManager;
+	}(_react.Component);
+
+	exports.default = RoomManager;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AddRoomPanel = function (_Component) {
+		_inherits(AddRoomPanel, _Component);
+
+		function AddRoomPanel(props) {
+			_classCallCheck(this, AddRoomPanel);
+
+			var _this = _possibleConstructorReturn(this, (AddRoomPanel.__proto__ || Object.getPrototypeOf(AddRoomPanel)).call(this, props));
+
+			_this.state = {
+				name: "",
+				capacity: 0,
+				errorMessage: ""
+			};
+
+			_this.handleRoomEntry = _this.handleRoomEntry.bind(_this);
+			_this.addRoom = _this.addRoom.bind(_this);
+			return _this;
+		}
+
+		_createClass(AddRoomPanel, [{
+			key: 'handleRoomEntry',
+			value: function handleRoomEntry(event) {
+				var entryUpdate = {};
+				entryUpdate[event.target.name] = event.target.value;
+				console.log(entryUpdate);
+				this.setState(entryUpdate);
+			}
+		}, {
+			key: 'addRoom',
+			value: function addRoom() {
+				if (this.state.name) {
+					var unique = true;
+					//check to see if room already exists (Rooms must have unique names)
+					var currentRooms = Object.keys(this.props.rooms);
+					for (var i = 0; i < currentRooms.length; i++) {
+						if (this.state.name.toUpperCase() === this.props.rooms[i].name.toUpperCase()) {
+							unique = false;
+							break;
+						}
+					}
+
+					if (unique) {
+						this.refs.name.value = "";
+						this.refs.capacity.value = "";
+						this.props.addRoom(this.state.name, this.state.capacity);
+						this.setState({ name: "", capacity: 0, errorMessage: "" });
+					} else {
+						this.setState({ errorMessage: "\"" + this.state.name + "\" room already exists" });
+					}
+				} else {
+					this.setState({ errorMessage: "Please provide a room name." });
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var errorMessage = "";
+				if (this.state.errorMessage) {
+					errorMessage = _react2.default.createElement(
+						'div',
+						{ className: 'error' },
+						this.state.errorMessage
+					);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ className: 'adder-panel' },
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Add New Room'
+					),
+					errorMessage,
+					_react2.default.createElement(
+						'div',
+						{ className: 'entry-fields' },
+						_react2.default.createElement('input', { type: 'text', name: 'name', ref: 'name', placeholder: 'Enter Room Name', onChange: this.handleRoomEntry }),
+						_react2.default.createElement('input', { type: 'text', name: 'capacity', ref: 'capacity', placeholder: 'Enter Room Capacity', onChange: this.handleRoomEntry })
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.addRoom },
+						'Add Room'
+					)
+				);
+			}
+		}]);
+
+		return AddRoomPanel;
+	}(_react.Component);
+
+	exports.default = AddRoomPanel;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _RemoveRoom = __webpack_require__(185);
+
+	var _RemoveRoom2 = _interopRequireDefault(_RemoveRoom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RoomList = function (_Component) {
+		_inherits(RoomList, _Component);
+
+		function RoomList(props) {
+			_classCallCheck(this, RoomList);
+
+			var _this = _possibleConstructorReturn(this, (RoomList.__proto__ || Object.getPrototypeOf(RoomList)).call(this, props));
+
+			_this.handleRemoveRoom = _this.handleRemoveRoom.bind(_this);
+			return _this;
+		}
+
+		_createClass(RoomList, [{
+			key: 'handleRemoveRoom',
+			value: function handleRemoveRoom(roomIndex) {
+				this.props.removeRoom(roomIndex);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				var roomsList = this.props.rooms.map(function (room, i) {
+					var capacity = parseInt(room.capacity, 10);
+					if (!capacity) {
+						capacity = "Capactity not set";
+					}
+
+					var removeButton = "";
+					if (_this2.props.mode === "edit") {
+						removeButton = _react2.default.createElement(_RemoveRoom2.default, { roomIndex: i, removeRoom: _this2.handleRemoveRoom });
+					}
+
+					return _react2.default.createElement(
+						'li',
+						{ key: i },
+						_react2.default.createElement(
+							'span',
+							null,
+							room.name
+						),
+						', ',
+						_react2.default.createElement(
+							'span',
+							null,
+							capacity
+						),
+						removeButton
+					);
+				});
+
+				if (roomsList.length) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'list-container' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Organization Rooms'
+						),
+						_react2.default.createElement(
+							'ul',
+							{ className: 'room-list' },
+							roomsList
+						)
+					);
+				} else {
+					return null;
+				}
+			}
+		}]);
+
+		return RoomList;
+	}(_react.Component);
+
+	exports.default = RoomList;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RemoveRoom = function (_Component) {
+		_inherits(RemoveRoom, _Component);
+
+		function RemoveRoom(props) {
+			_classCallCheck(this, RemoveRoom);
+
+			var _this = _possibleConstructorReturn(this, (RemoveRoom.__proto__ || Object.getPrototypeOf(RemoveRoom)).call(this, props));
+
+			_this.handleRemoveRoom = _this.handleRemoveRoom.bind(_this);
+			return _this;
+		}
+
+		_createClass(RemoveRoom, [{
+			key: 'handleRemoveRoom',
+			value: function handleRemoveRoom() {
+				this.props.removeRoom(this.props.roomIndex);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'button',
+					{ onClick: this.handleRemoveRoom },
+					'Remove Room'
+				);
+			}
+		}]);
+
+		return RemoveRoom;
+	}(_react.Component);
+
+	exports.default = RemoveRoom;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _RoomList = __webpack_require__(184);
+
+	var _RoomList2 = _interopRequireDefault(_RoomList);
+
+	var _DateSelector = __webpack_require__(187);
+
+	var _DateSelector2 = _interopRequireDefault(_DateSelector);
+
+	var _RoomSelector = __webpack_require__(188);
+
+	var _RoomSelector2 = _interopRequireDefault(_RoomSelector);
+
+	var _TimeSlotSelector = __webpack_require__(190);
+
+	var _TimeSlotSelector2 = _interopRequireDefault(_TimeSlotSelector);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function isValidDate(date) {
+		if (Object.prototype.toString.call(date) === "[object Date]") {
+			if (isNaN(date.getTime())) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	var Scheduler = function (_Component) {
+		_inherits(Scheduler, _Component);
+
+		function Scheduler(props) {
+			_classCallCheck(this, Scheduler);
+
+			var _this = _possibleConstructorReturn(this, (Scheduler.__proto__ || Object.getPrototypeOf(Scheduler)).call(this, props));
+
+			_this.state = {
+				selectedRoomIndex: -1,
+				selectedDate: "",
+				selectedSlots: {},
+				selectedSlot: 0,
+				errorMessage: ""
+			};
+
+			_this.handleSelectDate = _this.handleSelectDate.bind(_this);
+			_this.handleSelectRoom = _this.handleSelectRoom.bind(_this);
+			_this.handleSelectTimeSlot = _this.handleSelectTimeSlot.bind(_this);
+			_this.handleReservationRequest = _this.handleReservationRequest.bind(_this);
+			return _this;
+		}
+
+		_createClass(Scheduler, [{
+			key: 'handleSelectDate',
+			value: function handleSelectDate(date) {
+				var selectedDate = new Date(date);
+				if (isValidDate(selectedDate) && date.length === 10) {
+					this.setState({ selectedDate: date }); //store the string version (just the timestamp)
+				} else {
+
+					this.setState({ selectedRoomIndex: -1, selectedDate: "", selectedSlots: {} });
+				}
+			}
+		}, {
+			key: 'handleSelectRoom',
+			value: function handleSelectRoom(roomIndex) {
+				this.setState({ selectedRoomIndex: roomIndex });
+
+				this.setState({ selectedSlots: {} });
+			}
+		}, {
+			key: 'handleSelectTimeSlot',
+			value: function handleSelectTimeSlot(timeSlot) {
+				var selectedSlots = this.state.selectedSlots;
+
+				if (!selectedSlots[timeSlot]) {
+					selectedSlots[timeSlot] = 1;
+				} else {
+					selectedSlots[timeSlot] = 0;
+				}
+
+				this.setState({ selectedSlots: selectedSlots, selectedSlot: timeSlot });
+			}
+		}, {
+			key: 'handleReservationRequest',
+			value: function handleReservationRequest() {
+				var _this2 = this;
+
+				if (this.state.selectedRoomIndex >= 0) {
+					var date = new Date(this.state.selectedDate);
+					var roomName = this.props.rooms[this.state.selectedRoomIndex].name;
+					//UPDATE: remove selectedSlot and use selectedSlots so that user can choose multiple time slots
+					var selectedTimeSlot = this.state.selectedSlot;
+					var userName = "admin";
+
+					console.log(isValidDate(date), roomName, selectedTimeSlot, userName);
+					if (isValidDate(date) && roomName && selectedTimeSlot && userName) {
+						//modify date for API by placing year at the end of the time stamp
+						var apiDate = this.state.selectedDate.substring(5) + "-" + this.state.selectedDate.substring(0, 4);
+						var data = "date=" + apiDate + "&roomName=" + roomName + "&startTime=" + selectedTimeSlot + "&userName=" + userName;
+						this.props.httpRequest("post", "/reservation", data, function (result) {
+							_this2.setState({ successMessage: "Reservation details: ", result: result });
+						});
+					} else {
+						this.setState({ errorMessage: "Please make sure you've selected a room and time slot." });
+					}
+				} else {
+					this.setState({ errorMessage: "Please make sure you've selected a room." });
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var successMessage = "";
+				var errorMessage = "";
+				if (this.state.successMessage) {
+					successMessage = _react2.default.createElement(
+						'div',
+						{ className: 'success' },
+						this.state.successMessage
+					);
+				}
+
+				if (this.state.errorMessage) {
+					errorMessage = _react2.default.createElement(
+						'div',
+						{ className: 'error' },
+						this.state.errorMessage
+					);
+				}
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'scheduler-container' },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Get a Room! Scheduler'
+					),
+					successMessage,
+					errorMessage,
+					_react2.default.createElement(_DateSelector2.default, { selectDate: this.handleSelectDate }),
+					_react2.default.createElement(_RoomSelector2.default, { rooms: this.props.rooms, selectedDate: this.state.selectedDate, selectedRoomIndex: this.state.selectedRoomIndex, selectRoom: this.handleSelectRoom }),
+					_react2.default.createElement(_TimeSlotSelector2.default, { rooms: this.props.rooms, selectedDate: this.state.selectedDate, selectedRoomIndex: this.state.selectedRoomIndex, selectedTimeSlots: this.state.selectedSlots, selectTimeSlot: this.handleSelectTimeSlot, scheduler: this.props.scheduler }),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.handleReservationRequest },
+						'Reserve Room'
+					)
+				);
+			}
+		}]);
+
+		return Scheduler;
+	}(_react.Component);
+
+	exports.default = Scheduler;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DateSelector = function (_Component) {
+		_inherits(DateSelector, _Component);
+
+		function DateSelector(props) {
+			_classCallCheck(this, DateSelector);
+
+			var _this = _possibleConstructorReturn(this, (DateSelector.__proto__ || Object.getPrototypeOf(DateSelector)).call(this, props));
+
+			_this.handleSelectDate = _this.handleSelectDate.bind(_this);
+			return _this;
+		}
+
+		_createClass(DateSelector, [{
+			key: 'handleSelectDate',
+			value: function handleSelectDate(event) {
+				this.props.selectDate(event.target.value);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'selector-container' },
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Reservation Date'
+					),
+					_react2.default.createElement('input', { type: 'text', placeholder: 'Ex. 2016-11-19', onChange: this.handleSelectDate })
+				);
+			}
+		}]);
+
+		return DateSelector;
+	}(_react.Component);
+
+	exports.default = DateSelector;
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _SelectRoomButton = __webpack_require__(189);
+
+	var _SelectRoomButton2 = _interopRequireDefault(_SelectRoomButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RoomSelector = function (_Component) {
+		_inherits(RoomSelector, _Component);
+
+		function RoomSelector(props) {
+			_classCallCheck(this, RoomSelector);
+
+			var _this = _possibleConstructorReturn(this, (RoomSelector.__proto__ || Object.getPrototypeOf(RoomSelector)).call(this, props));
+
+			_this.handleSelectRoom = _this.handleSelectRoom.bind(_this);
+			return _this;
+		}
+
+		_createClass(RoomSelector, [{
+			key: 'handleSelectRoom',
+			value: function handleSelectRoom(roomIndex) {
+				this.props.selectRoom(roomIndex);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				console.log(this.props.rooms);
+				var roomsList = this.props.rooms.map(function (room, i) {
+					var selected = "";
+					if (i === _this2.props.selectedRoomIndex) {
+						selected = "selected";
+					}
+
+					return _react2.default.createElement(
+						'li',
+						{ key: i, className: selected },
+						_react2.default.createElement(_SelectRoomButton2.default, { roomIndex: i, name: room.name, capacity: room.capacity, selectRoom: _this2.handleSelectRoom })
+					);
+				});
+
+				if (this.props.selectedDate && !this.props.rooms.length) {
+					return _react2.default.createElement(
+						'li',
+						{ className: 'no-rooms' },
+						'No rooms available for this organization. Please add a room.'
+					);
+				}
+
+				if (this.props.selectedDate) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'selector-container' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Select a Room'
+						),
+						_react2.default.createElement(
+							'ul',
+							{ className: 'room-selector clear' },
+							roomsList
+						)
+					);
+				} else {
+					return null;
+				}
+			}
+		}]);
+
+		return RoomSelector;
+	}(_react.Component);
+
+	exports.default = RoomSelector;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectRoomButton = function (_Component) {
+		_inherits(SelectRoomButton, _Component);
+
+		function SelectRoomButton(props) {
+			_classCallCheck(this, SelectRoomButton);
+
+			var _this = _possibleConstructorReturn(this, (SelectRoomButton.__proto__ || Object.getPrototypeOf(SelectRoomButton)).call(this, props));
+
+			_this.handleSelectRoomButton = _this.handleSelectRoomButton.bind(_this);
+			return _this;
+		}
+
+		_createClass(SelectRoomButton, [{
+			key: 'handleSelectRoomButton',
+			value: function handleSelectRoomButton(event) {
+				event.preventDefault();
+				this.props.selectRoom(this.props.roomIndex);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var capacity = parseInt(this.props.capacity, 10);
+				if (!capacity) {
+					capacity = "";
+				}
+				return _react2.default.createElement(
+					'a',
+					{ href: '#', onClick: this.handleSelectRoomButton },
+					_react2.default.createElement(
+						'span',
+						null,
+						this.props.name
+					),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'span',
+						null,
+						capacity
+					)
+				);
+			}
+		}]);
+
+		return SelectRoomButton;
+	}(_react.Component);
+
+	exports.default = SelectRoomButton;
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _SelectTimeSlotButton = __webpack_require__(191);
+
+	var _SelectTimeSlotButton2 = _interopRequireDefault(_SelectTimeSlotButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TimeSlotSelector = function (_Component) {
+		_inherits(TimeSlotSelector, _Component);
+
+		function TimeSlotSelector(props) {
+			_classCallCheck(this, TimeSlotSelector);
+
+			var _this = _possibleConstructorReturn(this, (TimeSlotSelector.__proto__ || Object.getPrototypeOf(TimeSlotSelector)).call(this, props));
+
+			_this.handleSelectTimeSlot = _this.handleSelectTimeSlot.bind(_this);
+			return _this;
+		}
+
+		_createClass(TimeSlotSelector, [{
+			key: 'handleSelectTimeSlot',
+			value: function handleSelectTimeSlot(timeSlot) {
+				this.props.selectTimeSlot(timeSlot);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var renderTimeSlotSelector = "";
+				if (this.props.selectedRoomIndex >= 0) {
+					var timeSlots = [];
+					var startSlot = 9;
+					var endSlot = 22;
+					if (this.props.extendedHours === true) {
+						startSlot = 0;
+						endSlot = 24;
+					}
+					for (var i = startSlot; i < endSlot; i++) {
+						var selected = "";
+						if (this.props.selectedTimeSlots[i] === 1) {
+							selected = "selected";
+						}
+						timeSlots.push(_react2.default.createElement(
+							'li',
+							{ key: i, className: selected },
+							_react2.default.createElement(_SelectTimeSlotButton2.default, { timeSlot: i, selectTimeSlot: this.handleSelectTimeSlot })
+						));
+					}
+					renderTimeSlotSelector = _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Select Time Slots'
+						),
+						_react2.default.createElement(
+							'ul',
+							{ className: 'time-slots' },
+							timeSlots
+						)
+					);
+				}
+
+				if (this.props.selectedDate && this.props.selectedRoomIndex >= 0) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'selector-container' },
+						renderTimeSlotSelector
+					);
+				} else {
+					return null;
+				}
+			}
+		}]);
+
+		return TimeSlotSelector;
+	}(_react.Component);
+
+	exports.default = TimeSlotSelector;
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectTimeSlotButton = function (_Component) {
+		_inherits(SelectTimeSlotButton, _Component);
+
+		function SelectTimeSlotButton(props) {
+			_classCallCheck(this, SelectTimeSlotButton);
+
+			var _this = _possibleConstructorReturn(this, (SelectTimeSlotButton.__proto__ || Object.getPrototypeOf(SelectTimeSlotButton)).call(this, props));
+
+			_this.handleSelectTimeSlotButton = _this.handleSelectTimeSlotButton.bind(_this);
+			return _this;
+		}
+
+		_createClass(SelectTimeSlotButton, [{
+			key: 'handleSelectTimeSlotButton',
+			value: function handleSelectTimeSlotButton(event) {
+				event.preventDefault();
+				this.props.selectTimeSlot(this.props.timeSlot);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'a',
+					{ href: '#', onClick: this.handleSelectTimeSlotButton },
+					_react2.default.createElement(
+						'span',
+						null,
+						this.props.timeSlot
+					)
+				);
+			}
+		}]);
+
+		return SelectTimeSlotButton;
+	}(_react.Component);
+
+	exports.default = SelectTimeSlotButton;
 
 /***/ }
 /******/ ]);

@@ -5,6 +5,25 @@ const moment = require('moment');
 
 const db = {};
 
+db.createUser = (user) =>{
+  return User.findOne({where: {name: user.username}})
+    .then((usr) =>{
+      if(usr !== null) return 'User already exists';
+      return User.create({name: user.username, githubHandle: user.github, password: user.password})
+    });
+};
+
+db.validateUser = (user) =>{
+    return User.findOne({where: {name: user.username}})
+      .then((usr) =>{
+        if(usr === null) return 'User does not exist';
+        if(usr.password !== user.password ){
+          return 'Some fields are filled out incorrectly.';
+        }
+        return true;
+      });
+};
+
 db.getRoomByName = (name) =>{
   return Room.findOne({'name': name});
 };
@@ -74,17 +93,23 @@ db.createRoom = (room) =>{
 
 db.addReservation = (rsvp) =>{
   return Room.findOne({where: {name: rsvp.name}}).then((rm) =>{
-    if(rm !== null){ return;}
+    //if(rm !== null){ return;}
+    //DANGER!!!!! ^^^^
     console.log('rsvp', rsvp);
-    let date = moment(rsvp.date, 'MM-DD-YYYY').format();
-    date.hour(rsvp.startTime);
+    let date = moment(rsvp.date, 'MM-DD-YYYY').hour(rsvp.startTime).minutes(0).seconds(0).format();
+    //date.hour(rsvp.startTime);
     ///DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!! enter correct userId
-    return Reservation.create({'date': date, userId: 1, roomId: rm.id});
+    return Reservation.create({startTime: date, userId: 1, roomId: 1});
   });
 };
 
 db.createUser = (user) =>{
-  return User.findOrCreate({where: user});
+  return User.find({where: {name: user.username}})
+    .then((usr) =>{
+      if(usr !== null) return 'User already exists.';
+      console.log('user:', user);
+      return User.create({name: user.username, password: user.password, githubHandle: user.github});
+    });
 };
 
 const User = sequelize.define('user', {

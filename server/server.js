@@ -6,8 +6,11 @@ const db = require('./../database/db');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-app.use(express.static(path.join(__dirname, './../src')));
+
+app.use(cors());
+app.use(express.static(path.join(__dirname, './../public')));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
@@ -17,6 +20,20 @@ app.get('/rooms/:name/reservations/today', (req, res) =>{
       .then((rsvps) =>{
         res.json(rsvps);
       });
+});
+
+app.post('/user/create', (req, res) =>{
+  db.createUser(req.body)
+    .then((user) =>{
+      res.json(user);
+    });
+});
+
+app.post('/user/validate', (req, res) =>{
+  db.validateUser(req.body)
+    .then((user) =>{
+      res.json(user);
+    });
 });
 
 app.get('/rooms/:name/reservations/tomorrow', (req, res) =>{
@@ -80,17 +97,17 @@ app.post('/user', (req, res) =>{
 });
 
 app.post('/room', (req,res)=>{
-  db.createRoom(req.body).spread((room, created) =>{
-    res.json( created ? room : created );
+  db.createRoom(req.body).then((room) =>{
+    res.json(room);
   });
 });
 
 app.post('/reservation', (req,res)=>{
-  db.addReservation(req.body).spread((rsvp, created) =>{
-    res.json( created ? rsvp : created );
+  db.addReservation(req.body).then((rsvp) =>{
+    res.json(rsvp);
   });
 });
 
-app.listen(3000, function () {
-   console.log("...listening on port 3000");
+app.listen(8080, function () {
+   console.log("...listening on port 8080");
 });
