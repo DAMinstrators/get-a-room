@@ -27,20 +27,24 @@ class RoomList extends Component {
 
 			return (
 				<li key={i}>
-					<span>{room.name}</span>,
-					<span>{capacity}</span>
+					<span>{room.name}</span>, <span>{capacity}</span>
 					{removeButton}
 				</li>
 			);
 		});
-		return (
-			<div className="room-list-container">
-				<h3>Organization Rooms</h3>
-				<ul className="room-list">
-					{roomsList}
-				</ul>
-			</div>
-		);
+
+		if (roomsList.length) {
+			return (
+				<div className="list-container">
+					<h3>Organization Rooms</h3>
+					<ul className="room-list">
+						{roomsList}
+					</ul>
+				</div>
+			);
+		} else {
+			return null;
+		}	
 	}
 }
 

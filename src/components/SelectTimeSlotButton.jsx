@@ -8,7 +8,8 @@ class SelectTimeSlotButton extends Component {
 		this.handleSelectTimeSlotButton = this.handleSelectTimeSlotButton.bind(this);
 	}
 
-	handleSelectTimeSlotButton() {
+	handleSelectTimeSlotButton(event) {
+		event.preventDefault();
 		this.props.selectTimeSlot(this.props.timeSlot);
 	}
 

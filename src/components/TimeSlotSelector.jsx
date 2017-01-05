@@ -17,7 +17,13 @@ class TimeSlotSelector extends Component {
 		let renderTimeSlotSelector = "";
 		if (this.props.selectedRoomIndex >= 0) {
 			let timeSlots = [];
-			for (let i = 0; i < 24; i++) {
+			let startSlot = 9;
+			let endSlot = 22;
+			if (this.props.extendedHours === true) {
+				startSlot = 0;
+				endSlot = 24;
+			}
+			for (let i = startSlot; i < endSlot; i++) {
 				let selected = "";
 				if (this.props.selectedTimeSlots[i] === 1) {
 					selected = "selected";

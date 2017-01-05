@@ -38,12 +38,14 @@ class Scheduler extends Component {
 			this.setState({selectedDate: selectedDate});
 		} else {
 
-			this.setState({selectedRoomIndex: -1, selectedDate: "", selectedSlots: []});
+			this.setState({selectedRoomIndex: -1, selectedDate: "", selectedSlots: {}});
 		}
 	}
 
 	handleSelectRoom(roomIndex) {
 		this.setState({selectedRoomIndex: roomIndex});
+
+		this.setState({selectedSlots: {}});
 	}		
 
 	handleSelectTimeSlot(timeSlot) {
@@ -61,7 +63,7 @@ class Scheduler extends Component {
 	render() {
 		return (
 			<div className="scheduler-container">
-				<h3>Scheduler</h3>
+				<h2>Get a Room! Scheduler</h2>
 				<DateSelector selectDate={this.handleSelectDate} />
 				<RoomSelector rooms={this.props.rooms} selectedDate={this.state.selectedDate} selectedRoomIndex={this.state.selectedRoomIndex} selectRoom={this.handleSelectRoom} />
 				<TimeSlotSelector rooms={this.props.rooms} selectedDate={this.state.selectedDate} selectedRoomIndex={this.state.selectedRoomIndex} selectedTimeSlots={this.state.selectedSlots} selectTimeSlot={this.handleSelectTimeSlot} scheduler={this.props.scheduler} />

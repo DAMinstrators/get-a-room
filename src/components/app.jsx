@@ -10,7 +10,7 @@ class App extends Component {
 		this.state = {
 			rooms: [],
 			scheduler: {
-				selectedRoomIndex: 0,
+				selectedRoomIndex: "",
 				reservations: {}
 			}
 		};

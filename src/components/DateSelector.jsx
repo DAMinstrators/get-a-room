@@ -15,7 +15,8 @@ class DateSelector extends Component {
 	render() {
 		return (
 			<div className="selector-container">
-				<input type="text" placeholder="Enter a date. Ex. 2016-11-19" onChange={this.handleSelectDate}/>
+				<h3>Reservation Date</h3>
+				<input type="text" placeholder="Ex. 2016-11-19" onChange={this.handleSelectDate}/>
 			</div>
 		);
 	}
