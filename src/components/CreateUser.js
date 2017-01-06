@@ -2,6 +2,16 @@ import React from 'react';
 
 
 export default class CreateUser extends React.Component {
+  constructor() {
+    super();
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  handleKeyPress(e){
+      if(e.key === 'Enter') {
+        this.props.submitCreateUser();
+      }
+    }
     
   render() {
     return (
@@ -10,9 +20,9 @@ export default class CreateUser extends React.Component {
             <div id="forms">
             <center><div id="containertitle">Create User Page</div></center>
             
-            <div>Username: <input id="username" ref="username" onChange={this.props.createdUsername} className="username"></input></div>
-            <div>Password: <input type="password" id="password" ref="password" onChange={this.props.createdPassword} className="password"></input></div>
-            <div>Github Handle: <input id="githubhandle" ref="githubhandle" onChange={this.props.createdGithub} className="githubhandle"></input></div>
+            <div>Username: <input id="username" ref="username" onChange={this.props.createdUsername} onKeyPress={this.handleKeyPress} className="username"></input></div>
+            <div>Password: <input type="password" id="password" ref="password" onChange={this.props.createdPassword} onKeyPress={this.handleKeyPress} className="password"></input></div>
+            <div>Github Handle: <input id="githubhandle" ref="githubhandle" onChange={this.props.createdGithub} onKeyPress={this.handleKeyPress} className="githubhandle"></input></div>
             
             </div>
         <div id="err">{this.props.createErr}</div>
