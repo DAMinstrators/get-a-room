@@ -108,15 +108,6 @@ db.addReservation = (rsvp) =>{
   });
 };
 
-db.createUser = (user) =>{
-  return User.find({where: {name: user.username}})
-    .then((usr) =>{
-      if(usr !== null) return 'User already exists.';
-      console.log('user:', user);
-      return User.create({name: user.username, password: user.password, githubHandle: user.github});
-    });
-};
-
 const User = sequelize.define('user', {
   name: Sequelize.STRING,
   githubHandle: Sequelize.STRING,
