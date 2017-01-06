@@ -13,6 +13,9 @@ class TimeSlotSelector extends Component {
 		this.props.selectTimeSlot(timeSlot);
 	}
 
+	//Todo: Set up functionality so time slot periods are more incremental as defined by organization/user
+	//i.e. allow for 15 minute, 30 minute, etc. slots
+
 	render() {
 		let renderTimeSlotSelector = "";
 		if (this.props.selectedRoomIndex >= 0) {

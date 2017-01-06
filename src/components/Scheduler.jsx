@@ -67,7 +67,7 @@ class Scheduler extends Component {
 		if (this.state.selectedRoomIndex >= 0) {
 			const date = new Date(this.state.selectedDate);
 			const roomName = this.props.rooms[this.state.selectedRoomIndex].name;
-			//UPDATE: remove selectedSlot and use selectedSlots so that user can choose multiple time slots
+			//Todo: remove selectedSlot and use selectedSlots so that user can choose multiple time slots
 			const selectedTimeSlot = this.state.selectedSlot;
 			const userName = "admin";
 
@@ -77,7 +77,7 @@ class Scheduler extends Component {
 				const apiDate = this.state.selectedDate.substring(5) + "-" + this.state.selectedDate.substring(0, 4);
 				const data = "date=" + apiDate + "&roomName=" + roomName + "&startTime=" + selectedTimeSlot + "&userName=" + userName;
 				this.props.httpRequest("post", "/reservation", data, (result) => {
-					this.setState({successMessage: "Reservation details: ", result});
+					this.setState({successMessage: "Reservation details: " + result});
 				});
 			} else {
 				this.setState({errorMessage: "Please make sure you've selected a room and time slot."});
@@ -85,6 +85,11 @@ class Scheduler extends Component {
 		} else {
 				this.setState({errorMessage: "Please make sure you've selected a room."});
 		}
+	}
+
+	componentWillMount() {
+		//Todo: Pull in reservations for a room and date via api call /rooms/[ROOM_NAME]/reservations/[11-12-2016]
+		//then style slots already reserved with different background color and prevent them from being clicked
 	}
 
 	render() {
@@ -98,6 +103,10 @@ class Scheduler extends Component {
 			errorMessage = <div className="error">{ this.state.errorMessage }</div>;
 		}
 
+		//Scheduler requires three pieces of information before a request can be made:
+		//1) Date
+		//2) Room
+		//3) Time slot(s)
 		return (
 			<div className="scheduler-container">
 				<h2>Get a Room! Scheduler</h2>

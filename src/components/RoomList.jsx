@@ -13,6 +13,8 @@ class RoomList extends Component {
 		this.props.removeRoom(roomIndex);
 	}
 
+	//Todo: Set up functionality so user can modify room name and capacity
+
 	render() {
 		let roomsList = this.props.rooms.map( (room, i) => {
 			let capacity = parseInt(room.capacity, 10);

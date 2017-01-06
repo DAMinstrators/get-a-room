@@ -13,6 +13,7 @@ class DateSelector extends Component {
 	}
 
 	render() {
+		//Todo: Rather than using a text input, implement a UI date selector via a visual calendar user can click through
 		return (
 			<div className="selector-container">
 				<h3>Reservation Date</h3>

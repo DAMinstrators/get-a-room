@@ -1,6 +1,6 @@
 'use strict';
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('get_a_room', 'root', 'hello');
+const sequelize = new Sequelize('get_a_room', 'mike', 'password');
 const moment = require('moment');
 
 const db = {};

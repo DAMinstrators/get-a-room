@@ -7,6 +7,11 @@ import RoomManager from './RoomManager.jsx';
 import Scheduler from './Scheduler.jsx';
 import FloorCanvas from './FloorCanvas.jsx';
 
+//App Todos:
+//1) Tie api calls to methods triggered in UI so that reservations, rooms, users, etc. will persist (add to database)
+//2) Add cookie/session authentication so user does not need to login each time app is accessed
+//3) Remove user/password from db.js and place in config file that will be ignore by git. This way developer does not need to update user/password for Sequelize each time a pull request is done and oher developers have changed these credentials for their local setups
+
 class App extends Component {
 	constructor() {
 		super();
@@ -29,7 +34,7 @@ class App extends Component {
 		}
 
 		this.usernameChange = this.usernameChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
+    	this.passwordChange = this.passwordChange.bind(this);
 		this.myAuth = this.myAuth.bind(this);
 		this.createOrg = this.createOrg.bind(this);
 		this.createUser = this.createUser.bind(this);
