@@ -1,9 +1,21 @@
 'use strict';
 const Sequelize = require('sequelize');
 //Necessary to setup your database connection, default database is get_a_room
-const sequelize = new Sequelize('get_a_room', 'root'/*database user*/, '2323'/*password*/);
-const moment = require('moment');
+const sequelize = new Sequelize('tqgqhyre', 'tqgqhyre', 'SRgfpU6w8a1h1zwhkkgyDyAMOuyZJWKI', {
+  host: 'elmer.db.elephantsql.com',
+  dialect: 'postgres'
+})
 
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
+
+const moment = require('moment');
 const db = {};
 
 db.createUser = (user) =>{

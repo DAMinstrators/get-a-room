@@ -4,6 +4,7 @@ var config = {
    output: {
       path:'./public',
       filename: 'bundle.js',
+      publicPath: "/",
    },
 	
    devServer: {

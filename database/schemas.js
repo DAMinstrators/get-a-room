@@ -1,7 +1,10 @@
 'use strict';
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('get_a_room', 'root', '2323');
-
+const sequelize = new Sequelize('tqgqhyre', 'tqgqhyre', 'SRgfpU6w8a1h1zwhkkgyDyAMOuyZJWKI', {
+  host: 'elmer.db.elephantsql.com',
+  dialect: 'postgres'
+})
+  
 module.exports = ()=>{
 const User = sequelize.define('user', {
   name: Sequelize.STRING,

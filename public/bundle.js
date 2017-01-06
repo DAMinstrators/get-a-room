@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -22493,62 +22493,66 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'container', className: 'app-container' },
+	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'adminfield', className: 'admin-field' },
+	          { id: 'container', className: 'app-container' },
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'containertitle', className: 'container-title' },
-	            'Log in'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'forms', className: 'forms' },
+	            { id: 'adminfield', className: 'admin-field' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              'Username: ',
-	              _react2.default.createElement('input', { id: 'username', ref: 'username', onKeyPress: this.handleKeyPress, onChange: this.props.username, className: 'username' })
+	              { id: 'containertitle', className: 'container-title' },
+	              'Log in'
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              'Password: ',
-	              _react2.default.createElement('input', { type: 'password', id: 'password', onKeyPress: this.handleKeyPress, ref: 'password', onChange: this.props.password, className: 'password' })
+	              { id: 'forms', className: 'forms' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Username: ',
+	                _react2.default.createElement('input', { id: 'username', ref: 'username', onKeyPress: this.handleKeyPress, onChange: this.props.username, className: 'username' })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Password: ',
+	                _react2.default.createElement('input', { type: 'password', id: 'password', onKeyPress: this.handleKeyPress, ref: 'password', onChange: this.props.password, className: 'password' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', onClick: this.handleOnLogin, id: 'loginbtn' },
+	              'Login'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { id: 'err' },
+	              this.props.loginErr
 	            )
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { type: 'submit', onClick: this.handleOnLogin, id: 'loginbtn' },
-	            'Login'
-	          ),
-	          _react2.default.createElement(
 	            'div',
-	            { id: 'err' },
-	            this.props.loginErr
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { id: 'create', className: 'create' },
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'containertitle', className: 'container-title' },
-	            'New User?'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'buttons' },
+	            { id: 'create', className: 'create' },
 	            _react2.default.createElement(
-	              'button',
-	              { type: 'button', onClick: this.props.createOrg, id: 'createorgbtn' },
-	              'Create a new Organization'
+	              'div',
+	              { id: 'containertitle', className: 'container-title' },
+	              'New User?'
 	            ),
 	            _react2.default.createElement(
-	              'button',
-	              { type: 'button', onClick: this.props.createUser, id: 'createuserbtn' },
-	              'Create a new User'
+	              'div',
+	              { id: 'buttons' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', onClick: this.props.createOrg, id: 'createorgbtn' },
+	                'Create a new Organization'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', onClick: this.props.createUser, id: 'createuserbtn' },
+	                'Create a new User'
+	              )
 	            )
 	          )
 	        ),
@@ -22638,7 +22642,7 @@
   \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22664,63 +22668,73 @@
 	  function CreateUser() {
 	    _classCallCheck(this, CreateUser);
 	
-	    return _possibleConstructorReturn(this, (CreateUser.__proto__ || Object.getPrototypeOf(CreateUser)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (CreateUser.__proto__ || Object.getPrototypeOf(CreateUser)).call(this));
+	
+	    _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(CreateUser, [{
-	    key: "render",
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress(e) {
+	      if (e.key === 'Enter') {
+	        this.props.submitCreateUser();
+	      }
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { id: "container", className: "app-container" },
+	        'div',
+	        { id: 'container', className: 'app-container' },
 	        _react2.default.createElement(
-	          "div",
-	          { id: "createfields" },
+	          'div',
+	          { id: 'createfields' },
 	          _react2.default.createElement(
-	            "div",
-	            { id: "forms" },
+	            'div',
+	            { id: 'forms' },
 	            _react2.default.createElement(
-	              "center",
+	              'center',
 	              null,
 	              _react2.default.createElement(
-	                "div",
-	                { id: "containertitle" },
-	                "Create User Page"
+	                'div',
+	                { id: 'containertitle' },
+	                'Create User Page'
 	              )
 	            ),
 	            _react2.default.createElement(
-	              "div",
+	              'div',
 	              null,
-	              "Username: ",
-	              _react2.default.createElement("input", { id: "username", ref: "username", onChange: this.props.createdUsername, className: "username" })
+	              'Username: ',
+	              _react2.default.createElement('input', { id: 'username', ref: 'username', onChange: this.props.createdUsername, onKeyPress: this.handleKeyPress, className: 'username' })
 	            ),
 	            _react2.default.createElement(
-	              "div",
+	              'div',
 	              null,
-	              "Password: ",
-	              _react2.default.createElement("input", { type: "password", id: "password", ref: "password", onChange: this.props.createdPassword, className: "password" })
+	              'Password: ',
+	              _react2.default.createElement('input', { type: 'password', id: 'password', ref: 'password', onChange: this.props.createdPassword, onKeyPress: this.handleKeyPress, className: 'password' })
 	            ),
 	            _react2.default.createElement(
-	              "div",
+	              'div',
 	              null,
-	              "Github Handle: ",
-	              _react2.default.createElement("input", { id: "githubhandle", ref: "githubhandle", onChange: this.props.createdGithub, className: "githubhandle" })
+	              'Github Handle: ',
+	              _react2.default.createElement('input', { id: 'githubhandle', ref: 'githubhandle', onChange: this.props.createdGithub, onKeyPress: this.handleKeyPress, className: 'githubhandle' })
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { id: "err" },
+	            'div',
+	            { id: 'err' },
 	            this.props.createErr
 	          ),
 	          _react2.default.createElement(
-	            "button",
-	            { id: "submit", onClick: this.props.submitCreateUser },
-	            "Submit"
+	            'button',
+	            { id: 'submit', onClick: this.props.submitCreateUser },
+	            'Submit'
 	          ),
 	          _react2.default.createElement(
-	            "button",
-	            { id: "reset", onClick: this.props.reset },
-	            "Return to Login"
+	            'button',
+	            { id: 'reset', onClick: this.props.reset },
+	            'Return to Login'
 	          )
 	        )
 	      );
