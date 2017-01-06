@@ -1,7 +1,10 @@
 .canvas-container{
-
+  width: 600px;
+  margin: 0 auto;
 }
 
 .canvas{
-  
+  width: 600px;
+  height: 400px;
+  display block;
 }

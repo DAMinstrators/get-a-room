@@ -1,6 +1,6 @@
 'use strict';
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('get_a_room', 'root', 'hello');
+const sequelize = new Sequelize('get_a_room', 'root', '2323');
 const moment = require('moment');
 
 const db = {};
@@ -108,14 +108,14 @@ db.addReservation = (rsvp) =>{
   });
 };
 
-db.createUser = (user) =>{
-  return User.find({where: {name: user.username}})
-    .then((usr) =>{
-      if(usr !== null) return 'User already exists.';
-      console.log('user:', user);
-      return User.create({name: user.username, password: user.password, githubHandle: user.github});
-    });
-};
+// db.createUser = (user) =>{
+//   return User.find({where: {name: user.username}})
+//     .then((usr) =>{
+//       if(usr !== null) return 'User already exists.';
+//       console.log('user:', user);
+//       return User.create({name: user.username, password: user.password, githubHandle: user.github});
+//     });
+// };
 
 const User = sequelize.define('user', {
   name: Sequelize.STRING,
@@ -154,15 +154,5 @@ AccessGroup.sync();
 Room.sync();
 Reservation.sync();
 UserAccessGroup.sync();
-
-// let startTime = new Date('');
-//
-// startTime.setYear(2016);
-// startTime.setMonth(10);
-// startTime.setDate(4);
-// startTime.setUTCHours(15);
-//
-// console.log('startTime:', startTime);
-// db.addReservation({roomId: 2, startTime: startTime});
 
 module.exports = db;

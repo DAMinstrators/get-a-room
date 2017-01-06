@@ -22154,7 +22154,13 @@
 		}, {
 			key: 'myAuth',
 			value: function myAuth() {
-
+	
+				// check if they filled out both fields
+				if (this.state.username === '' || this.state.password === '') {
+					this.setState({ loginErr: "Please fill out all fields" });
+					return;
+				}
+	
 				//if they filled it out, format username and password string to send in post request
 				var loginString = 'username=' + this.state.username + "&" + 'password=' + this.state.password;
 	
@@ -22186,7 +22192,7 @@
 					}
 				}.bind(this);
 				http.send(params);
-
+	
 				this.setState({ loginErr: '' });
 				this.setState({ username: '' });
 				this.setState({ password: '' });
@@ -22266,8 +22272,7 @@
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
 						console.log(http.responseText);
-						if (http.responseText === "\"User already exists.\"") {
-							console.log('got here');
+						if (http.responseText === "\'exists\'") {
 							this.setState({ createSuccess: 'Please use a different username.' });
 						} else {
 							this.setState({ createSuccess: 'Username has been created.' });
@@ -22287,6 +22292,7 @@
 		}, {
 			key: 'reset',
 			value: function reset() {
+				this.setState({ loggedIn: false });
 				this.setState({ loginErr: '' });
 				this.setState({ createErr: '' });
 				this.setState({ requestToCreate: 0 });
@@ -22367,6 +22373,9 @@
 								loginErr: this.state.loginErr,
 								login: this.myAuth,
 								createOrg: this.createOrg,
+								createUser: this.createUser,
+								createSuccess: this.state.createSuccess
+	
 							})
 						);
 						//if you're not logged in, and they clicked on the create organization button
@@ -22395,6 +22404,7 @@
 							{ id: 'logout', onClick: this.reset },
 							'Logout'
 						),
+						_react2.default.createElement(_FloorCanvas2.default, null),
 						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom }),
 						_react2.default.createElement(_Scheduler2.default, { rooms: this.state.rooms, makeReservation: this.makeReservation, removeReservation: this.removeReservation, httpRequest: this.httpRequest })
 					);
@@ -23731,8 +23741,21 @@
 		// }
 	
 		_createClass(FloorCanvas, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.updateCanvas();
+			}
+		}, {
+			key: 'updateCanvas',
+			value: function updateCanvas() {
+				var ctx = this.refs.canvas.getContext('2d');
+				ctx.fillRect(0, 0, 100, 100);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				document.query;
+				var ctx = canvas.getContext("2d");
 				return _react2.default.createElement(
 					'div',
 					{ className: 'canvas-container' },
