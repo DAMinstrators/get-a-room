@@ -20,7 +20,7 @@ class App extends Component {
 			createSuccess: '',
 			loggedIn: false,
 			loginErr: '',
-			requestToCreate: 0,
+			requestToCreate: 'loginpage',
       rooms: [],
 			scheduler: {
 				selectedRoomIndex: "",
@@ -50,7 +50,7 @@ class App extends Component {
 	//listens to changes to the username field on login page
 	usernameChange(event) {
 		this.setState({username: event.target.value})
-		console.log(this.state.username);
+		// console.log(this.state.username);
 		this.setState({loginErr: ''});
 		this.setState({createSuccess: ''});
 	}
@@ -58,19 +58,19 @@ class App extends Component {
 	//listens to changes to the password field on login page
 	passwordChange(event) {
 		this.setState({password: event.target.value})
-		console.log(this.state.password);
+		// console.log(this.state.password);
 		this.setState({loginErr: ''});
 	    this.setState({createSuccess: ''});
 	}
 
 	//indicates user clicked on create new org button
 	createOrg() {
-		this.setState({requestToCreate: 1});
+		this.setState({requestToCreate: 'orgpage'});
 	}
 
 	//indicates user clicked on create new user button
 	createUser() {
-		this.setState({requestToCreate: 2});
+		this.setState({requestToCreate: 'userpage'});
 	}
 
 	//checks to see if username and password are correct
@@ -124,7 +124,7 @@ class App extends Component {
 
   //user clicked on submit button after creating an org
   submitCreateOrg() {
-	  this.setState({requestToCreate: 0});
+	  this.setState({requestToCreate: 'loginpage'});
 
 	  this.setState({loginErr: ''});
 	  this.setState({createSuccess: ''});
@@ -194,7 +194,7 @@ class App extends Component {
 		}.bind(this);
 		http.send(params);
 
-	  this.setState({requestToCreate: 0});
+	  this.setState({requestToCreate: 'loginpage'});
 
 	  this.setState({loginErr: ''});
 	  console.log(this.state.user);
@@ -205,7 +205,7 @@ class App extends Component {
 	  this.setState({loggedIn: false});
 	  this.setState({loginErr: ''});
 	  this.setState({createErr: ''});
-	  this.setState({requestToCreate: 0});
+	  this.setState({requestToCreate: 'loginpage'});
 	  this.setState({createdUsername: ''});
 	  this.setState({createdPassword: ''});
 	  this.setState({createdGithub: ''});
@@ -278,7 +278,7 @@ class App extends Component {
 		//if you're not logged in, render the login page
 		if (!this.state.loggedIn) {
 			//defaults to rendering the login page, unless they click on one of the buttons
-			if (this.state.requestToCreate === 0) {
+			if (this.state.requestToCreate === 'loginpage') {
 				return (
 					<div>
 						<Login username={this.usernameChange}
@@ -293,13 +293,13 @@ class App extends Component {
 					</div>
 				);
 			//if you're not logged in, and they clicked on the create organization button
-			} if (this.state.requestToCreate === 1) {
+			} if (this.state.requestToCreate === 'orgpage') {
 
 				return (
 				 <CreateOrganization submitCreateOrg={this.submitCreateOrg}/>
 				);
 			//if you're not logged in, and they clicked on the create user button
-			} if (this.state.requestToCreate === 2) {
+			} if (this.state.requestToCreate === 'userpage') {
 
 				return (
 				 <CreateUser submitCreateUser={this.submitCreateUser}
