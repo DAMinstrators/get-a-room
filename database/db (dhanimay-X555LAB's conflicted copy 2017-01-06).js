@@ -1,7 +1,6 @@
 'use strict';
 const Sequelize = require('sequelize');
-//Necessary to setup your database connection, default database is get_a_room
-const sequelize = new Sequelize('get_a_room', 'root'/*database user*/, '2323'/*password*/);
+const sequelize = new Sequelize('get_a_room', 'root', '2323');
 const moment = require('moment');
 
 const db = {};
@@ -30,10 +29,10 @@ db.getRoomByName = (name) =>{
 };
 
 db.getRooms = () =>{
-  return Room.findAll();
+  return Room.findAll({});
 };
 
-db.getReservationsToday = (name) =>{
+db.getRoomToday = (name) =>{
   let date = moment().format();
 
   return Room.findOne({where: {'name': name}}).then((rm) =>{
@@ -48,7 +47,7 @@ db.getReservationsToday = (name) =>{
 
 };
 
-db.getReservationsTomorrow = (name) =>{
+db.getRoomTomorrow = (name) =>{
   let date = moment().format();
 
   return Room.findOne({where: {'name': name}}).then((rm) =>{
@@ -63,7 +62,7 @@ db.getReservationsTomorrow = (name) =>{
 
 };
 
-db.getReservationsByDate = (input) =>{
+db.getRoomByDate = (input) =>{
   return Room.findOne({where: {'name': input.name}}).then((rm) =>{
     if(rm === null) return "Room doesn't exist.";
 
@@ -81,7 +80,7 @@ db.getRoomReservations = (name)=> {
   });
 };
 
-db.getReservationByNameDateTime = (input) =>{
+db.getRoomByNameDateTime = (input) =>{
   return Room.findOne({where: {name: input.name}}).then((rm) =>{ //find roomId from given name
     if(rm === null) return "Room doesn't exist.";
     return Reservation.findOne({where: {roomId: rm.id, startTime: input.startTime}});

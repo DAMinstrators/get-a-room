@@ -22082,7 +22082,7 @@
 				createSuccess: '',
 				loggedIn: false,
 				loginErr: '',
-				requestToCreate: 0,
+				requestToCreate: 'loginpage',
 				rooms: [],
 				scheduler: {
 					selectedRoomIndex: "",
@@ -22117,7 +22117,7 @@
 			key: 'usernameChange',
 			value: function usernameChange(event) {
 				this.setState({ username: event.target.value });
-				console.log(this.state.username);
+				// console.log(this.state.username);
 				this.setState({ loginErr: '' });
 				this.setState({ createSuccess: '' });
 			}
@@ -22128,7 +22128,7 @@
 			key: 'passwordChange',
 			value: function passwordChange(event) {
 				this.setState({ password: event.target.value });
-				console.log(this.state.password);
+				// console.log(this.state.password);
 				this.setState({ loginErr: '' });
 				this.setState({ createSuccess: '' });
 			}
@@ -22138,7 +22138,7 @@
 		}, {
 			key: 'createOrg',
 			value: function createOrg() {
-				this.setState({ requestToCreate: 1 });
+				this.setState({ requestToCreate: 'orgpage' });
 			}
 	
 			//indicates user clicked on create new user button
@@ -22146,7 +22146,7 @@
 		}, {
 			key: 'createUser',
 			value: function createUser() {
-				this.setState({ requestToCreate: 2 });
+				this.setState({ requestToCreate: 'userpage' });
 			}
 	
 			//checks to see if username and password are correct
@@ -22203,7 +22203,7 @@
 		}, {
 			key: 'submitCreateOrg',
 			value: function submitCreateOrg() {
-				this.setState({ requestToCreate: 0 });
+				this.setState({ requestToCreate: 'loginpage' });
 	
 				this.setState({ loginErr: '' });
 				this.setState({ createSuccess: '' });
@@ -22281,7 +22281,7 @@
 				}.bind(this);
 				http.send(params);
 	
-				this.setState({ requestToCreate: 0 });
+				this.setState({ requestToCreate: 'loginpage' });
 	
 				this.setState({ loginErr: '' });
 				console.log(this.state.user);
@@ -22295,7 +22295,7 @@
 				this.setState({ loggedIn: false });
 				this.setState({ loginErr: '' });
 				this.setState({ createErr: '' });
-				this.setState({ requestToCreate: 0 });
+				this.setState({ requestToCreate: 'loginpage' });
 				this.setState({ createdUsername: '' });
 				this.setState({ createdPassword: '' });
 				this.setState({ createdGithub: '' });
@@ -22369,7 +22369,7 @@
 				//if you're not logged in, render the login page
 				if (!this.state.loggedIn) {
 					//defaults to rendering the login page, unless they click on one of the buttons
-					if (this.state.requestToCreate === 0) {
+					if (this.state.requestToCreate === 'loginpage') {
 						return _react2.default.createElement(
 							'div',
 							null,
@@ -22384,11 +22384,11 @@
 							})
 						);
 						//if you're not logged in, and they clicked on the create organization button
-					}if (this.state.requestToCreate === 1) {
+					}if (this.state.requestToCreate === 'orgpage') {
 	
 						return _react2.default.createElement(_CreateOrganization2.default, { submitCreateOrg: this.submitCreateOrg });
 						//if you're not logged in, and they clicked on the create user button
-					}if (this.state.requestToCreate === 2) {
+					}if (this.state.requestToCreate === 'userpage') {
 	
 						return _react2.default.createElement(_CreateUser2.default, { submitCreateUser: this.submitCreateUser,
 							createdUsername: this.createdUsername,
@@ -22461,10 +22461,20 @@
 	    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
 	
 	    _this.handleOnLogin = _this.handleOnLogin.bind(_this);
+	    _this.handleKeyPress = _this.handleKeyPress.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Login, [{
+	    key: 'handleOnKey',
+	    value: function handleOnKey(target) {
+	      console.log('key pressed');
+	      console.log(target);
+	      if (target.charCode == 13) {
+	        alert('Enter clicked!!!');
+	      }
+	    }
+	  }, {
 	    key: 'handleOnLogin',
 	    value: function handleOnLogin() {
 	      this.refs.username.value = '';
@@ -22472,70 +22482,73 @@
 	      this.props.login();
 	    }
 	  }, {
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress(e) {
+	      if (e.key === 'Enter') {
+	        this.handleOnLogin();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { id: 'container', className: 'app-container' },
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'container', className: 'app-container' },
+	          { id: 'adminfield', className: 'admin-field' },
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'adminfield', className: 'admin-field' },
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'containertitle', className: 'container-title' },
-	              'Log in'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'forms', className: 'forms' },
-	              _react2.default.createElement(
-	                'div',
-	                null,
-	                'Username: ',
-	                _react2.default.createElement('input', { id: 'username', ref: 'username', onChange: this.props.username, className: 'username' })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                null,
-	                'Password: ',
-	                _react2.default.createElement('input', { type: 'password', id: 'password', ref: 'password', onChange: this.props.password, className: 'password' })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.handleOnLogin, id: 'loginbtn' },
-	              'Login'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'err' },
-	              this.props.loginErr
-	            )
+	            { id: 'containertitle', className: 'container-title' },
+	            'Log in'
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'create', className: 'create' },
+	            { id: 'forms', className: 'forms' },
 	            _react2.default.createElement(
 	              'div',
-	              { id: 'containertitle', className: 'container-title' },
-	              'New User?'
+	              null,
+	              'Username: ',
+	              _react2.default.createElement('input', { id: 'username', ref: 'username', onKeyPress: this.handleKeyPress, onChange: this.props.username, className: 'username' })
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { id: 'buttons' },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.props.createOrg, id: 'createorgbtn' },
-	                'Create a new Organization'
-	              ),
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.props.createUser, id: 'createuserbtn' },
-	                'Create a new User'
-	              )
+	              null,
+	              'Password: ',
+	              _react2.default.createElement('input', { type: 'password', id: 'password', onKeyPress: this.handleKeyPress, ref: 'password', onChange: this.props.password, className: 'password' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'submit', onClick: this.handleOnLogin, id: 'loginbtn' },
+	            'Login'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'err' },
+	            this.props.loginErr
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'create', className: 'create' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'containertitle', className: 'container-title' },
+	            'New User?'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'buttons' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', onClick: this.props.createOrg, id: 'createorgbtn' },
+	              'Create a new Organization'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', onClick: this.props.createUser, id: 'createuserbtn' },
+	              'Create a new User'
 	            )
 	          )
 	        ),
@@ -23739,13 +23752,7 @@
 			_classCallCheck(this, FloorCanvas);
 	
 			return _possibleConstructorReturn(this, (FloorCanvas.__proto__ || Object.getPrototypeOf(FloorCanvas)).call(this, props));
-	
-			// this.handleSelectDate = this.handleSelectDate.bind(this);
 		}
-	
-		// handleSelectDate(event) {
-		// 	this.props.selectDate(event.target.value);
-		// }
 	
 		_createClass(FloorCanvas, [{
 			key: 'componentDidMount',
@@ -23761,8 +23768,11 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				//document.query
-				//var ctx = canvas.getContext("2d");
+				var canvas = document.createElement('canvas');
+				canvas.className = 'canvas';
+				console.log(canvas);
+				var ctx = canvas.getContext("2d");
+	
 				return _react2.default.createElement(
 					'div',
 					{ className: 'canvas-container' },
@@ -23771,7 +23781,7 @@
 						null,
 						'Upload Floor Plan'
 					),
-					_react2.default.createElement('canvas', { className: 'canvas' })
+					canvas
 				);
 			}
 		}]);
