@@ -4,13 +4,7 @@ import ReactDOM from 'react-dom';
 class FloorCanvas extends Component {
 	constructor(props) {
 		super(props);
-
-		// this.handleSelectDate = this.handleSelectDate.bind(this);
 	}
-
-	// handleSelectDate(event) {
-	// 	this.props.selectDate(event.target.value);
-	// }
 
 	componentDidMount() {
         this.updateCanvas();
@@ -22,12 +16,15 @@ class FloorCanvas extends Component {
     }
 
 	render() {
-		//document.query
-		//var ctx = canvas.getContext("2d");
+		let canvas = document.createElement('canvas');
+		canvas.className = 'canvas';
+		console.log(canvas);
+		let ctx = canvas.getContext("2d");
+		
 		return (
 			<div className="canvas-container">
 				<h3>Upload Floor Plan</h3>
-				<canvas className='canvas'></canvas>
+				{canvas}
 			</div>
 		);
 	}
