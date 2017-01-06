@@ -20,6 +20,7 @@ class TimeSlotSelector extends Component {
 		let renderTimeSlotSelector = "";
 		if (this.props.selectedRoomIndex >= 0) {
 			let timeSlots = [];
+			//By default, show 9am to 10pm
 			let startSlot = 9;
 			let endSlot = 22;
 			if (this.props.extendedHours === true) {

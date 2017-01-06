@@ -9,6 +9,7 @@ class SelectRoomButton extends Component {
 	}
 
 	handleSelectRoomButton(event) {
+		//Todo: make sure to remove room from rooms table as well as any reservations associated with that room from the reservations table
 		event.preventDefault();
 		this.props.selectRoom(this.props.roomIndex);
 	}

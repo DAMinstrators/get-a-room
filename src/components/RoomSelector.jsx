@@ -32,6 +32,7 @@ class RoomSelector extends Component {
 			return <li className="no-rooms">No rooms available for this organization. Please add a room.</li>;
 		}
 
+		//only if a user has already selected a date will the room selection interface render
 		if (this.props.selectedDate) {
 			return (
 				<div className="selector-container">
