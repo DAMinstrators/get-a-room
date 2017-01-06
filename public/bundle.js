@@ -22150,13 +22150,6 @@
 		}, {
 			key: 'myAuth',
 			value: function myAuth() {
-	
-				// check if they filled out both fields
-				if (this.state.username === '' || this.state.password === '') {
-					this.setState({ loginErr: "Please fill out all fields" });
-					return;
-				}
-	
 				//if they filled it out, format username and password string to send in post request
 				var loginString = 'username=' + this.state.username + "&" + 'password=' + this.state.password;
 	
@@ -22168,9 +22161,10 @@
 				var params = loginString;
 				http.open("POST", url, true);
 	
-				// //Send the proper header information along with the request
-				// http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				//Send the proper header information along with the request
+				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				//Call a function when the state changes.
+	
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
 						console.log(http.responseText);
@@ -22187,13 +22181,6 @@
 					}
 				}.bind(this);
 				http.send(params);
-				// //Call a function when the state changes.
-				// http.onreadystatechange = function() {
-				// 	if(http.readyState == 4 && http.status == 200) {
-				// 		//alert(http.responseText);
-				// 	}
-				// }
-				// http.send(params);
 	
 				this.setState({ loginErr: '' });
 				this.setState({ username: '' });
