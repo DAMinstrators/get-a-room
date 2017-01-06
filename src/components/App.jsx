@@ -118,7 +118,7 @@ class App extends Component {
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
-	
+
 
   }
 
@@ -185,10 +185,10 @@ class App extends Component {
 				 console.log(http.responseText);
 				if (http.responseText === "\"exists\"") {
 					this.setState({createSuccess: 'Please use a different username.'});
-					
+
 				} else {
 					this.setState({createSuccess: 'Username has been created.'});
-					
+
 				}
 			}
 		}.bind(this);
@@ -316,13 +316,12 @@ class App extends Component {
 		} else {
 			return (
 				<div>
-				<center><button id="logout" onClick={this.reset}>Logout</button></center>
+					<center><button id="logout" onClick={this.reset}>Logout</button></center>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
-		}		
+		}
 	}
 }
 export default App;
-
