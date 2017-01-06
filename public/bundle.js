@@ -22272,7 +22272,7 @@
 				http.onreadystatechange = function () {
 					if (http.readyState == 4 && http.status == 200) {
 						console.log(http.responseText);
-						if (http.responseText === "\'exists\'") {
+						if (http.responseText === "\"exists\"") {
 							this.setState({ createSuccess: 'Please use a different username.' });
 						} else {
 							this.setState({ createSuccess: 'Username has been created.' });
@@ -22308,6 +22308,11 @@
 					var rooms = this.state.rooms.slice();
 					rooms.push({ name: name, capacity: capacity });
 					this.setState({ rooms: rooms });
+	
+					var data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1"; //UPDATE: accessGroupId to be dynamic
+					this.httpRequest("post", "/room", data, function (result) {
+						console.log("Room added!");
+					});
 				}
 			}
 		}, {
@@ -22400,11 +22405,14 @@
 						'div',
 						null,
 						_react2.default.createElement(
-							'button',
-							{ id: 'logout', onClick: this.reset },
-							'Logout'
+							'center',
+							null,
+							_react2.default.createElement(
+								'button',
+								{ id: 'logout', onClick: this.reset },
+								'Logout'
+							)
 						),
-						_react2.default.createElement(_FloorCanvas2.default, null),
 						_react2.default.createElement(_RoomManager2.default, { rooms: this.state.rooms, addRoom: this.addRoom, removeRoom: this.removeRoom }),
 						_react2.default.createElement(_Scheduler2.default, { rooms: this.state.rooms, makeReservation: this.makeReservation, removeReservation: this.removeReservation, httpRequest: this.httpRequest })
 					);
@@ -23192,14 +23200,12 @@
 		}, {
 			key: 'handleReservationRequest',
 			value: function handleReservationRequest() {
-				var _this2 = this;
-	
 				if (this.state.selectedRoomIndex >= 0) {
 					var date = new Date(this.state.selectedDate);
 					var roomName = this.props.rooms[this.state.selectedRoomIndex].name;
 					//UPDATE: remove selectedSlot and use selectedSlots so that user can choose multiple time slots
 					var selectedTimeSlot = this.state.selectedSlot;
-					var userName = "admin";
+					var userName = "dhani";
 	
 					console.log(isValidDate(date), roomName, selectedTimeSlot, userName);
 					if (isValidDate(date) && roomName && selectedTimeSlot && userName) {
@@ -23207,7 +23213,8 @@
 						var apiDate = this.state.selectedDate.substring(5) + "-" + this.state.selectedDate.substring(0, 4);
 						var data = "date=" + apiDate + "&roomName=" + roomName + "&startTime=" + selectedTimeSlot + "&userName=" + userName;
 						this.props.httpRequest("post", "/reservation", data, function (result) {
-							_this2.setState({ successMessage: "Reservation details: ", result: result });
+							console.log('sucess!!!!!!!!!!!');
+							//this.setState({successMessage: "Reservation details: " + result});
 						});
 					} else {
 						this.setState({ errorMessage: "Please make sure you've selected a room and time slot." });
@@ -23754,8 +23761,8 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				document.query;
-				var ctx = canvas.getContext("2d");
+				//document.query
+				//var ctx = canvas.getContext("2d");
 				return _react2.default.createElement(
 					'div',
 					{ className: 'canvas-container' },

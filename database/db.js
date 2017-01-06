@@ -88,34 +88,26 @@ db.getRoomByNameDateTime = (input) =>{
 };
 
 db.createRoom = (room) =>{
-  return Room.findOrCreate({where: room});
+  return Room.findOne({where: {name: room.name}})
+    .then((rm) =>{
+        if(rm !== null) return 'Room already exists.';
+        return Room.create({name: room.name, capacity: room.capacity, accessGroupId: room.accessGroupId});
+    });
 };
 
 db.addReservation = (rsvp) =>{
-  return Room.findOne({where: {name: rsvp.name}}).then((rm) =>{
-    if(rm !== null){ return;}
+  return Room.findOne({where: {name: rsvp.roomName}}).then((rm) =>{
+    if(rm === null){ return;}
 
     let date = moment(rsvp.date, 'MM-DD-YYYY').hour(rsvp.startTime).minutes(0).seconds(0).format();
-    console.log('rsvp', rsvp);
 
-    return User.findOne({where: {name: rsvp.username}})
+    return User.findOne({where: {name: rsvp.userName}})
       .then((usr) =>{
         if(usr === null) return ('User does not exist.');
-        console.log('usr: ', usr);
-        ///DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!! enter correct roomId
-        return Reservation.create({startTime: date, userId: usr.id, roomId: 1});
+        return Reservation.create({startTime: date, userId: usr.id, roomId: rm.id});
       });
   });
 };
-
-// db.createUser = (user) =>{
-//   return User.find({where: {name: user.username}})
-//     .then((usr) =>{
-//       if(usr !== null) return 'User already exists.';
-//       console.log('user:', user);
-//       return User.create({name: user.username, password: user.password, githubHandle: user.github});
-//     });
-// };
 
 const User = sequelize.define('user', {
   name: Sequelize.STRING,

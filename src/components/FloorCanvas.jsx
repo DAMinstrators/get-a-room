@@ -15,15 +15,15 @@ class FloorCanvas extends Component {
 	componentDidMount() {
         this.updateCanvas();
     }
-		
+
     updateCanvas() {
         const ctx = this.refs.canvas.getContext('2d');
         ctx.fillRect(0,0, 100, 100);
     }
 
 	render() {
-		document.query
-		var ctx = canvas.getContext("2d");
+		//document.query
+		//var ctx = canvas.getContext("2d");
 		return (
 			<div className="canvas-container">
 				<h3>Upload Floor Plan</h3>
