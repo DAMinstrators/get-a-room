@@ -218,6 +218,11 @@ class App extends Component {
 			const rooms = this.state.rooms.slice();
 			rooms.push({name: name, capacity: capacity});
 			this.setState({rooms: rooms});
+
+			const data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1";//UPDATE: accessGroupId to be dynamic
+			this.httpRequest("post", "/room", data, (result) => {
+				console.log("Room added!");
+			});
 		}
 	}
 
@@ -311,7 +316,7 @@ class App extends Component {
 		} else {
 			return (
 				<div>
-				<button id="logout" onClick={this.reset}>Logout</button>
+				<center><button id="logout" onClick={this.reset}>Logout</button></center>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
 				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
