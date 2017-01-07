@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login.jsx';
 import Header from './Header.jsx';
+import Content from './Content.jsx';
 import CreateOrganization from './CreateOrganization.jsx';
 import CreateUser from './CreateUser.jsx';
 import RoomManager from './RoomManager.jsx';
@@ -46,12 +47,14 @@ class App extends Component {
 
 
   //user clicked on submit button after creating an org
+
   submitCreateOrg = () =>  {
 	  this.setState({requestToCreate: 'loginpage'});
 
 	  this.setState({loginErr: ''});
 	  this.setState({createSuccess: ''});
   }
+
 
 
 
@@ -150,6 +153,10 @@ class App extends Component {
 							createdGithub={this.createdGithub}
 							reset={this.reset}
 							createErr={this.state.createErr}
+						/>
+
+						<Content
+
 						/>
 					</div>
 				);
