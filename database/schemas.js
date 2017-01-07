@@ -4,8 +4,7 @@ const sequelize = new Sequelize('tqgqhyre', 'tqgqhyre', 'SRgfpU6w8a1h1zwhkkgyDyA
   host: 'elmer.db.elephantsql.com',
   dialect: 'postgres'
 })
-  
-module.exports = ()=>{
+
 const User = sequelize.define('user', {
   name: Sequelize.STRING,
   githubHandle: Sequelize.STRING,
@@ -20,12 +19,15 @@ const AccessGroup = sequelize.define('accessGroup', {
 
 const Room = sequelize.define('room', {
   name: Sequelize.STRING,
+  accessGroupId: Sequelize.INTEGER,
   capacity: Sequelize.INTEGER,
   coordinates: Sequelize.STRING,
   color: Sequelize.STRING,
 });
 
 const Reservation = sequelize.define('reservation', {
+  roomId: Sequelize.INTEGER,
+  userId: Sequelize.INTEGER,
   startTime: Sequelize.DATE,
   endTime: Sequelize.DATE
 });
@@ -35,11 +37,16 @@ const UserAccessGroup = sequelize.define('userAccess', {
   accessGroupId: Sequelize.INTEGER
 });
 
-User.sync();
-AccessGroup.sync();
-Room.sync();
-Reservation.sync();
-UserAccessGroup.sync();
+module.exports = {
+  User,
+  AccessGroup,
+  Room,
+  Reservation,
+  UserAccessGroup
+}
 
-return ()=>{};
-};
+// module.exports.User = User;
+// module.exports.AccessGroup = AccessGroup;
+// module.exports.Room = Room;
+// module.exports.Reservation = Reservation;
+// module.exports.UserAccessGroup = UserAccessGroup;
