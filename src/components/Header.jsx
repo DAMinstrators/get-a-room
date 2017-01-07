@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login.jsx';
 import CreateUser from './CreateUser.jsx';
@@ -24,7 +24,7 @@ const Logged = (props) => (
     <MenuItem primaryText="Help" />
     <MenuItem primaryText="Sign out" />
   </IconMenu>
-); 
+);
 
 // const LoggedOut = () => (<Login username={this.usernameChange}
 // 							password={this.passwordChange}
@@ -49,7 +49,7 @@ class Header extends Component {
 		labelPos: "left";
 	}
 
-  
+
 	//listens to changes to the username field on login page
 	usernameChange = (event) => {
 		this.setState({username: event.target.value})
@@ -65,7 +65,7 @@ class Header extends Component {
 		this.setState({loginErr: ''});
 	    this.setState({createSuccess: ''});
 	}
-  
+
 	login = () => {
 
 		// check if they filled out both fields
@@ -114,7 +114,7 @@ class Header extends Component {
 
 
   }
-  
+
   createOrg = () => {
     console.log('create button clicked')
 		this.setState({requestToCreate: 'orgpage'});
@@ -214,7 +214,7 @@ class Header extends Component {
           title="Title"
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={
-            this.loggedIn ? <CreateUser 
+            this.loggedIn ? <CreateUser
                submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
 							 createdPassword={this.createdPassword}
@@ -227,12 +227,12 @@ class Header extends Component {
 							login={this.login}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
-							createSuccess={this.createSuccess} 
-							username={this.username} 
-							password={this.password} 
-							loggedIn={this.loggedIn} 
-							createOrg={this.createOrg} 
-							createUser={this.createUser} 
+							createSuccess={this.createSuccess}
+							username={this.username}
+							password={this.password}
+							loggedIn={this.loggedIn}
+							createOrg={this.createOrg}
+							createUser={this.createUser}
             />
             }
         />

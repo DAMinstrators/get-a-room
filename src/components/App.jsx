@@ -14,6 +14,7 @@ class App extends Component {
 		this.state = {
 			username: '',
 			password: '',
+			buildingName: '',
 			createdUsername: '',
 			createdPassword: '',
 			createdGithub: '',
@@ -52,7 +53,7 @@ class App extends Component {
 	  this.setState({createSuccess: ''});
   }
 
- 
+
 
 
 
@@ -134,7 +135,7 @@ class App extends Component {
 			if (this.state.requestToCreate === 'loginpage') {
 				return (
 					<div>
-						<Header 
+						<Header
 							loginErr={this.state.loginErr}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
