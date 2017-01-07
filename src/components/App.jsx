@@ -1,11 +1,10 @@
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
-import Login from './Login';
-import CreateOrganization from './CreateOrganization';
-import CreateUser from './CreateUser';
+import Login from './Login.jsx';
+import CreateOrganization from './CreateOrganization.jsx';
+import CreateUser from './CreateUser.jsx';
 import RoomManager from './RoomManager.jsx';
 import Scheduler from './Scheduler.jsx';
-import FloorCanvas from './FloorCanvas.jsx';
 
 class App extends Component {
 	constructor() {
@@ -90,7 +89,7 @@ class App extends Component {
 
 		//post request to see if username and password are correct
 		var http = new XMLHttpRequest();
-		var url = "http://localhost:8080/user/validate";
+		var url = "http://localhost:3000/user/validate";
 		var params = loginString;
 		http.open("POST", url, true);
 
@@ -172,7 +171,7 @@ class App extends Component {
 
 		console.log(userString);
 	    var http = new XMLHttpRequest();
-		var url = "http://localhost:8080/user/create";
+		var url = "http://localhost:3000/user/create";
 		var params = userString;
 		http.open("POST", url, true);
 

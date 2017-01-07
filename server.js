@@ -1,11 +1,14 @@
 'use strict';
 const express = require('express');
 const path = require('path');
-const db = require('./../database/db');
+const db = require('./database/db');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const webpack = require('webpack');
+const config = require('./webpack.config');
+const compiler = webpack(config);
 
 /*
   Access the db file in the database directory to alter Sequelize code
@@ -30,9 +33,20 @@ const cors = require('cors');
 
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, './../public')));
+// app.use(express.static(path.join(__dirname, './public')));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
+
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.get('/rooms/:name/reservations/today', (req, res) =>{
     db.getReservationsToday(req.params.name)
@@ -123,6 +137,6 @@ app.post('/reservation', (req,res)=>{
   });
 });
 
-app.listen(8080, function () {
-   console.log("...listening on port 8080");
+app.listen(3000, function () {
+   console.log("...listening on port 3000");
 });
