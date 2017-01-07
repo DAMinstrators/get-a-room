@@ -5,10 +5,9 @@ class SelectRoomButton extends Component {
 	constructor(props) {
 		super(props);
 		
-		this.handleSelectRoomButton = this.handleSelectRoomButton.bind(this);
 	}
 
-	handleSelectRoomButton(event) {
+	handleSelectRoomButton = (event) => {
 		event.preventDefault();
 		this.props.selectRoom(this.props.roomIndex);
 	}
