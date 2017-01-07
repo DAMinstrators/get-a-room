@@ -1,4 +1,6 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 export default class Login extends React.Component {
     constructor() {
@@ -15,8 +17,8 @@ export default class Login extends React.Component {
 
     }
     handleOnLogin() {
-        this.refs.username.value = '';
-        this.refs.password.value = '';
+        this.refs.username = '';
+        this.refs.password = '';
         this.props.login();
     }
     handleKeyPress(e){
@@ -24,7 +26,10 @@ export default class Login extends React.Component {
         this.handleOnLogin();
       }
     }
-    
+      focus() {
+    // Explicitly focus the text input using the raw DOM API
+    this.textInput.focus();
+  }
   render() {
     return (
       <div>
@@ -33,13 +38,29 @@ export default class Login extends React.Component {
           <div id="containertitle" className="container-title">Log in</div>
            
           <div id="forms" className="forms">
+              <TextField
+                hintText="Username"
+                floatingLabelText="Username"
+                id="username"
+                 ref={(input) => { this.textInput = input; }}
+                onKeyPress={this.handleKeyPress}
+                onChange={this.props.username}          
+              />
+             <TextField
+                hintText="Password"
+                floatingLabelText="Password"
+                id="password"
+                ref={(input) => { this.textInput = input; }}
+                onKeyPress={this.handleKeyPress}
+                onChange={this.props.username}          
+               />  
+
+
             <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.username} className="username"></input></div>
             <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.password} className="password"></input></div> 
+            <div><RaisedButton label="Login" onClick={this.handleOnLogin} /></div> 
           </div>
-         
-
-            <button type="submit" onClick={this.handleOnLogin} id="loginbtn">Login</button>
-            <div id="err">{this.props.loginErr}</div>
+          <div id="err">{this.props.loginErr}</div>
 
         </div>
         
@@ -47,8 +68,8 @@ export default class Login extends React.Component {
 
           <div id="containertitle" className="container-title">New User?</div>
           <div id="buttons">
-            <button type="button" onClick={this.props.createOrg} id="createorgbtn">Create a new Organization</button>
-            <button type="button" onClick={this.props.createUser} id="createuserbtn">Create a new User</button>
+            <RaisedButton onClick={this.props.createOrg} id="createorgbtn" label="Create a new Organization" />
+            <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Create a new User" />
           </div>
 
         </div>

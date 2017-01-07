@@ -1,4 +1,5 @@
-import React, { Component} from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login.jsx';
 import CreateOrganization from './CreateOrganization.jsx';

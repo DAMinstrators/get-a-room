@@ -69,7 +69,7 @@ class Scheduler extends Component {
 			const roomName = this.props.rooms[this.state.selectedRoomIndex].name;
 			//UPDATE: remove selectedSlot and use selectedSlots so that user can choose multiple time slots
 			const selectedTimeSlot = this.state.selectedSlot;
-			const userName = "dhani";
+			const userName = "test";
 
 			console.log(isValidDate(date), roomName, selectedTimeSlot, userName);
 			if (isValidDate(date) && roomName && selectedTimeSlot && userName) {
