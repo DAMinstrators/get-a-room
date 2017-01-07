@@ -1,30 +1,38 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 export default class Login extends React.Component {
-    constructor() {
-        super();
+
+  constructor(props) {
+      super(props);
         this.handleOnLogin = this.handleOnLogin.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
+
     handleOnKey(target) {
       console.log('key pressed')
-      console.log(target)
+      console.log(this.refs.username.value)
       if(target.charCode==13){
             alert('Enter clicked!!!');    
       }
 
     }
-    handleOnLogin() {
+
+
+    handleOnLogin = () => {
         this.refs.username.value = '';
         this.refs.password.value = '';
         this.props.login();
     }
+
     handleKeyPress(e){
       if(e.key === 'Enter') {
         this.handleOnLogin();
       }
     }
-    
+
+
   render() {
     return (
       <div>
@@ -33,13 +41,13 @@ export default class Login extends React.Component {
           <div id="containertitle" className="container-title">Log in</div>
            
           <div id="forms" className="forms">
-            <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.username} className="username"></input></div>
-            <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.password} className="password"></input></div> 
-          </div>
-         
 
-            <button type="submit" onClick={this.handleOnLogin} id="loginbtn">Login</button>
-            <div id="err">{this.props.loginErr}</div>
+            <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
+            <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
+            <RaisedButton onClick={this.props.login} id="loginbtn" label="Login" />
+
+          </div>
+          <div id="err">{this.props.loginErr}</div>
 
         </div>
         
@@ -47,8 +55,8 @@ export default class Login extends React.Component {
 
           <div id="containertitle" className="container-title">New User?</div>
           <div id="buttons">
-            <button type="button" onClick={this.props.createOrg} id="createorgbtn">Create a new Organization</button>
-            <button type="button" onClick={this.props.createUser} id="createuserbtn">Create a new User</button>
+            <RaisedButton onClick={this.props.createOrg} id="createorgbtn" label="Create a new Organization" />
+            <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Create a new User" />
           </div>
 
         </div>

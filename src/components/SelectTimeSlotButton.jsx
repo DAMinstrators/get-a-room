@@ -4,11 +4,9 @@ import ReactDOM from 'react-dom';
 class SelectTimeSlotButton extends Component {
 	constructor(props) {
 		super(props);
-		
-		this.handleSelectTimeSlotButton = this.handleSelectTimeSlotButton.bind(this);
 	}
 
-	handleSelectTimeSlotButton(event) {
+	handleSelectTimeSlotButton = (event) => {
 		event.preventDefault();
 		this.props.selectTimeSlot(this.props.timeSlot);
 	}

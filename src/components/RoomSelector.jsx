@@ -5,11 +5,9 @@ import SelectRoomButton from './SelectRoomButton.jsx';
 class RoomSelector extends Component {
 	constructor(props) {
 		super(props);
-		
-		this.handleSelectRoom = this.handleSelectRoom.bind(this);
 	}
 
-	handleSelectRoom(roomIndex) {
+	handleSelectRoom = (roomIndex) => {
 		this.props.selectRoom(roomIndex);
 	}
 
