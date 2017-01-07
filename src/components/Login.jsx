@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 export default class Login extends React.Component {
 
   constructor(props) {
-        super(props);
+      super(props);
         this.handleOnLogin = this.handleOnLogin.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
@@ -44,6 +44,7 @@ export default class Login extends React.Component {
 
             <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
             <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
+            <RaisedButton onClick={this.props.login} id="loginbtn" label="Login" />
 
           </div>
           <div id="err">{this.props.loginErr}</div>

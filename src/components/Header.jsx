@@ -46,7 +46,7 @@ class Header extends Component {
 		super(props);
 
     loggedIn: true;
-
+		labelPos: "left";
 	}
 
   
@@ -99,7 +99,7 @@ class Header extends Component {
 					this.setState({loginErr: ''});
 					this.setState({username: ''});
 					this.setState({password: ''});
-          this.loggedIn = true;
+          this.loggedIn = false;
 				} else {
 					console.log('in else')
 					this.setState({loginErr: 'Invalid login'})
@@ -195,7 +195,8 @@ class Header extends Component {
   }
 
   handleChange = (event, logged) => {
-    this.loggedIn = logged;
+		this.loggedIn = logged;
+		this.labelPos = () => {logged ? "left" : "right"}
   };
 
   render() {
@@ -205,14 +206,22 @@ class Header extends Component {
           label="Logged"
           defaultToggled={false}
           onToggle={this.handleChange}
-          labelPosition="right"
+          // labelPosition="right"
+          labelPosition={this.labelPos}
           style={{margin: 20}}
         />
         <AppBar
           title="Title"
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={
-            this.logged ? <Login usernameChange={this.usernameChange}
+            this.loggedIn ? <CreateUser 
+               submitCreateUser={this.submitCreateUser}
+				 			 createdUsername={this.createdUsername}
+							 createdPassword={this.createdPassword}
+							 createdGithub={this.createdGithub}
+							 reset={this.reset}
+							 createErr={this.props.createErr}
+              /> : <Login usernameChange={this.usernameChange}
 							passwordChange={this.passwordChange}
 							loginErr={this.loginErr}
 							login={this.login}
@@ -224,14 +233,7 @@ class Header extends Component {
 							loggedIn={this.loggedIn} 
 							createOrg={this.createOrg} 
 							createUser={this.createUser} 
-              /> : <CreateUser 
-               submitCreateUser={this.submitCreateUser}
-				 			 createdUsername={this.createdUsername}
-							 createdPassword={this.createdPassword}
-							 createdGithub={this.createdGithub}
-							 reset={this.reset}
-							 createErr={this.props.createErr}
-              />
+            />
             }
         />
       </div>

@@ -22,7 +22,7 @@ class App extends Component {
 			loggedIn: false,
 			loginErr: '',
 			requestToCreate: 'loginpage',
-      		rooms: [],
+      rooms: [],
 			scheduler: {
 				selectedRoomIndex: "",
 				reservations: {}
