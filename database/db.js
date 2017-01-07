@@ -19,15 +19,15 @@ const schemas = require('./schemas');
 const moment = require('moment');
 const db = {};
 
-db.createUser = (user) =>{
+db.createUser = (user) => {
   return schemas.User.findOne({where: {name: user.username}})
     .then((usr) =>{
       if(usr !== null) return 'exists';
-      return User.create({name: user.username, githubHandle: user.github, password: user.password})
+      return schemas.User.create({name: user.username, githubHandle: user.github, password: user.password})
     });
 };
 
-db.validateUser = (user) =>{
+db.validateUser = (user) => {
     return schemas.User.findOne({where: {name: user.username}})
       .then((usr) =>{
         if(usr === null) return false;
@@ -38,7 +38,7 @@ db.validateUser = (user) =>{
       });
 };
 
-db.getRoomByName = (name) =>{
+db.getRoomByName = (name) => {
   return schemas.Room.findOne({'name': name});
 };
 
@@ -46,7 +46,7 @@ db.getRooms = () =>{
   return schemas.Room.findAll();
 };
 
-db.getReservationsToday = (name) =>{
+db.getReservationsToday = (name) => {
   let date = moment().format();
 
   return schemas.Room.findOne({where: {'name': name}}).then((rm) =>{
@@ -55,13 +55,13 @@ db.getReservationsToday = (name) =>{
     let begin = moment(date).seconds(0).minutes(0).hour(0).subtract(1, 'd');
     let end = moment(date).seconds(0).minutes(0).hour(0).add(1, 'd');
 
-    return Reservation.findAll({where: {startTime: {$gt: begin, $lt: end}}});
+    return schemas.Reservation.findAll({where: {startTime: {$gt: begin, $lt: end}}});
   });
 
 
 };
 
-db.getReservationsTomorrow = (name) =>{
+db.getReservationsTomorrow = (name) => {
   let date = moment().format();
 
   return schemas.Room.findOne({where: {'name': name}}).then((rm) =>{
@@ -76,7 +76,7 @@ db.getReservationsTomorrow = (name) =>{
 
 };
 
-db.getReservationsByDate = (input) =>{
+db.getReservationsByDate = (input) => {
   return schemas.Room.findOne({where: {'name': input.name}}).then((rm) =>{
     if(rm === null) return "Room doesn't exist.";
 
@@ -87,21 +87,21 @@ db.getReservationsByDate = (input) =>{
   });
 };
 
-db.getRoomReservations = (name)=> {
+db.getRoomReservations = (name) => {
   return schemas.Room.findOne({where: {'name': name}}).then((rm) =>{
     if(rm === null) return "Room doesn't exist.";
     return schemas.Reservation.findAll({where: {roomId: rm.id}});
   });
 };
 
-db.getReservationByNameDateTime = (input) =>{
+db.getReservationByNameDateTime = (input) => {
   return schemas.Room.findOne({where: {name: input.name}}).then((rm) =>{ //find roomId from given name
     if(rm === null) return "Room doesn't exist.";
     return schemas.Reservation.findOne({where: {roomId: rm.id, startTime: input.startTime}});
   });
 };
 
-db.createRoom = (room) =>{
+db.createRoom = (room) => {
   return schemas.Room.findOne({where: {name: room.name}})
     .then((rm) =>{
         if(rm !== null) return 'Room already exists.';
@@ -109,7 +109,7 @@ db.createRoom = (room) =>{
     });
 };
 
-db.addReservation = (rsvp) =>{
+db.addReservation = (rsvp) => {
   return schemas.Room.findOne({where: {name: rsvp.roomName}}).then((rm) =>{
     if(rm === null){ return;}
 
