@@ -45,7 +45,7 @@ class Header extends Component {
   constructor(props) {
 		super(props);
 
-    loggedIn: true;
+    loggedIn1: true;
 		labelPos: "left";
 	}
 
@@ -99,7 +99,7 @@ class Header extends Component {
 					this.setState({loginErr: ''});
 					this.setState({username: ''});
 					this.setState({password: ''});
-          this.loggedIn = false;
+					this.loggedIn1 = false;
 				} else {
 					console.log('in else')
 					this.setState({loginErr: 'Invalid login'})
@@ -131,15 +131,15 @@ class Header extends Component {
 
 
 	  //check to make sure all fields are filled on user creation page
-	  if (this.props.createdUsername === '' || this.props.createdPassword === '' || this.props.createdGithub === '') {
+	  if (this.createdUsername === '' || this.createdPassword === '' || this.createdGithub === '') {
 		  this.setState({createErr: "Please fill out all fields"})
 		  return;
 	  }
 
 	  //if they are all filled properly, format string for post request
-	  let userString = 'username=' + this.props.createdUsername + '&' +
-	  			 'password='+ this.props.createdPassword + '&' +
-				 'github=' + this.props.createdGithub;
+	  let userString = 'username=' + this.state.createdUsername + '&' +
+	  			 'password='+ this.state.createdPassword + '&' +
+				 'github=' + this.state.createdGithub;
 
 		//reset the username and password so you can create another one if you want to
 		this.setState({createdUsername: ''});
@@ -147,7 +147,7 @@ class Header extends Component {
 	  	this.setState({createdGithub: ''});
 
 		console.log(userString);
-	    var http = new XMLHttpRequest();
+	  var http = new XMLHttpRequest();
 		var url = "http://localhost:3000/user/create";
 		var params = userString;
 		http.open("POST", url, true);
@@ -159,7 +159,7 @@ class Header extends Component {
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
 				 console.log(http.responseText);
-				if (http.responseText === "\"exists\"") {
+				 if (http.responseText === "\"exists\"") {
 					this.setState({createSuccess: 'Please use a different username.'});
 
 				} else {
@@ -195,13 +195,14 @@ class Header extends Component {
   }
 
   handleChange = (event, logged) => {
-		this.loggedIn = logged;
-		this.labelPos = () => {logged ? "left" : "right"}
+		this.loggedIn1 = logged;
+		this.labelPos = function() {this.loggedIn1 ? "left" : "right"}.bind(this)();
   };
 
   render() {
     return (
-      <div>
+			<div>
+			<span onClick={this.handleChange}>Register</span>	
         <Toggle
           label="Logged"
           defaultToggled={false}
@@ -214,7 +215,7 @@ class Header extends Component {
           title="Title"
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={
-            this.loggedIn ? <CreateUser 
+            this.loggedIn1 ? <CreateUser 
                submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
 							 createdPassword={this.createdPassword}
@@ -232,7 +233,8 @@ class Header extends Component {
 							password={this.password} 
 							loggedIn={this.loggedIn} 
 							createOrg={this.createOrg} 
-							createUser={this.createUser} 
+							createUser={this.createUser}
+							handleChange={this.handleChange}	
             />
             }
         />
