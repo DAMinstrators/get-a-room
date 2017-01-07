@@ -44,7 +44,7 @@ export default class Login extends React.Component {
 
             <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
             <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
-            <RaisedButton onClick={this.props.login} id="loginbtn" label="Login" />
+            <RaisedButton onClick={this.props.handleChange} id="loginbtn" label="Login" />
 
           </div>
           <div id="err">{this.props.loginErr}</div>
@@ -55,7 +55,6 @@ export default class Login extends React.Component {
 
           <div id="containertitle" className="container-title">New User?</div>
           <div id="buttons">
-            <RaisedButton onClick={this.props.createOrg} id="createorgbtn" label="Create a new Organization" />
             <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Create a new User" />
           </div>
 
