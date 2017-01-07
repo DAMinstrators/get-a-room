@@ -5,11 +5,9 @@ import SelectTimeSlotButton from './SelectTimeSlotButton.jsx';
 class TimeSlotSelector extends Component {
 	constructor(props) {
 		super(props);
-
-		this.handleSelectTimeSlot = this.handleSelectTimeSlot.bind(this);
 	}
 
-	handleSelectTimeSlot(timeSlot) {
+	handleSelectTimeSlot = (timeSlot) => {
 		this.props.selectTimeSlot(timeSlot);
 	}
 

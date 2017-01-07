@@ -12,7 +12,9 @@ h1 {
 }
 
 #app {
+    position: relative;
     width: 100%;
+    top: 30%;
 }
 
 #container {

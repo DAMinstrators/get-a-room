@@ -29,13 +29,9 @@ class Scheduler extends Component {
 			errorMessage: ""
 		};
 
-		this.handleSelectDate = this.handleSelectDate.bind(this);
-		this.handleSelectRoom = this.handleSelectRoom.bind(this);
-		this.handleSelectTimeSlot = this.handleSelectTimeSlot.bind(this);
-		this.handleReservationRequest = this.handleReservationRequest.bind(this);
 	}
 
-	handleSelectDate(date) {
+	handleSelectDate = (date) => {
 		const selectedDate = new Date(date);
 		if (isValidDate(selectedDate) && date.length === 10) {
 			this.setState({selectedDate: date});//store the string version (just the timestamp)
@@ -45,13 +41,12 @@ class Scheduler extends Component {
 		}
 	}
 
-	handleSelectRoom(roomIndex) {
+	handleSelectRoom = (roomIndex) => {
 		this.setState({selectedRoomIndex: roomIndex});
-
 		this.setState({selectedSlots: {}});
 	}
 
-	handleSelectTimeSlot(timeSlot) {
+	handleSelectTimeSlot = (timeSlot) => {
 		const selectedSlots = this.state.selectedSlots;
 
 		if (!selectedSlots[timeSlot]) {

@@ -2,12 +2,11 @@ import React from 'react';
 
 
 export default class CreateUser extends React.Component {
-  constructor() {
-    super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+  constructor(props) {
+    super(props);
   }
 
-  handleKeyPress(e){
+  handleKeyPress = (e) => {
       if(e.key === 'Enter') {
         this.props.submitCreateUser();
       }
