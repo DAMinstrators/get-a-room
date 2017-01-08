@@ -42,10 +42,6 @@ class App extends Component {
 		this.setState({requestToCreate: 'userpage'});
 	}
 
-	//checks to see if username and password are correct
-
-
-  //user clicked on submit button after creating an org
 
 
   //takes you back to login page, resets all the information in the fields
@@ -58,66 +54,6 @@ class App extends Component {
 
   }
 
-    addRoom = (name, capacity) =>  {
-		if (name) {
-			const rooms = this.state.rooms.slice();
-			rooms.push({name: name, capacity: capacity});
-			this.setState({rooms: rooms});
-
-			const data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1";//UPDATE: accessGroupId to be dynamic
-			this.httpRequest("post", "/room", data, (result) => {
-				console.log("Room added!");
-			});
-		}
-	}
-
-	removeRoom = (roomIndex) => {
-		const rooms = this.state.rooms.slice(0, roomIndex).concat(this.state.rooms.slice(roomIndex + 1));
-		this.setState({rooms: rooms});
-	}
-
-	makeReservation = () => {
-
-	}
-
-	removeReservation = () => {
-
-	}
-
-	httpRequest = (method, url, data, callback) => {
-		let xhttp = new XMLHttpRequest();
-		let params = "";
-		if (data) {
-			params = data;
-		}
-		method = method.toLowerCase();
-
-		xhttp.open(method, url, true);
-
-		if (method === "getting") {
-			console.log("Getting...", url, data, callback);
-			xhttp.setRequestHeader("Content-type", "application/json");
-		}
-
-		if (method === "post") {
-			console.log("Posting...", callback);
-			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		}
-
-		xhttp.onreadystatechange = () => {
-			if (xhttp.status == 200 && xhttp.readyState == 4) {
-				console.log(xhttp.responseText);
-				//console.log("Response Text: ", xhttp.responseText);
-				callback(null, JSON.parse(xhttp.responseText));
-			}
-
-			if (xhttp.status == 400 || xhttp.status == 500) {
-				callback(url + " could not be reached");
-			}
-		}
-
-		xhttp.send(params);
-	}
 
 	render() {
 		//if you're not logged in, render the login page
@@ -131,9 +67,9 @@ class App extends Component {
 							createOrg={this.createOrg}
 							createUser={this.createUser}
 							createSuccess={this.state.createSuccess}
-							username={this.state.username}
-							password={this.state.password}
-							loggedIn={this.state.loggedIn}
+							username="test"
+							password="test"
+							loggedIn="true"
 							submitCreateOrg={this.submitCreateOrg}
 							submitCreateUser={this.submitCreateUser}
 				 			createdUsername={this.createdUsername}
@@ -144,31 +80,13 @@ class App extends Component {
 						/>
 
 						<Content 
-					  	
+					  	rooms={this.state.rooms} 
 						/>
 					</div>
 				);
 			//if you're not logged in, and they clicked on the create organization button
-			} if (this.state.requestToCreate === 'orgpage') {
+			} 
 
-				return (
-				 <CreateOrganization submitCreateOrg={this.submitCreateOrg}/>
-				);
-			//if you're not logged in, and they clicked on the create user button
-			} if (this.state.requestToCreate === 'userpage') {
-
-				return (
-				 <CreateUser submitCreateUser={this.submitCreateUser}
-				 			 createdUsername={this.createdUsername}
-							 createdPassword={this.createdPassword}
-							 createdGithub={this.createdGithub}
-							 reset={this.reset}
-							 createErr={this.state.createErr}
-
-
-				 				/>
-				);
-			}
 		//if you log in successfully, shermans part
 		} else {
 			return (
