@@ -95,10 +95,6 @@ if (params.building){
 };
 }
 
-
-
-
-
 //////////////////
 // ROOM TABLE
 // TO BE DELETED UPON REFACTORING

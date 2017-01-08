@@ -2,12 +2,11 @@ import React from 'react';
 
 
 export default class CreateUser extends React.Component {
-  constructor() {
-    super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+  constructor(props) {
+    super(props);
   }
 
-  handleKeyPress(e){
+  handleKeyPress = (e) => {
       if(e.key === 'Enter') {
         this.props.submitCreateUser();
       }
@@ -15,23 +14,15 @@ export default class CreateUser extends React.Component {
     
   render() {
     return (
-      <div id="container" className="app-container">
-        <div id="createfields">
-            <div id="forms">
-            <center><div id="containertitle">Create User Page</div></center>
-            
-            <div>Username: <input id="username" ref="username" onChange={this.props.createdUsername} onKeyPress={this.handleKeyPress} className="username"></input></div>
-            <div>Password: <input type="password" id="password" ref="password" onChange={this.props.createdPassword} onKeyPress={this.handleKeyPress} className="password"></input></div>
-            <div>Github Handle: <input id="githubhandle" ref="githubhandle" onChange={this.props.createdGithub} onKeyPress={this.handleKeyPress} className="githubhandle"></input></div>
-            
-            </div>
+      <div>
+            <div id="containertitle"  style={{display:'inline-block'}}>Register</div>
+            <div style={{display:'inline-block'}}>Username: <input id="username" ref="username" onChange={this.props.createdUsername} onKeyPress={this.handleKeyPress} className="username"></input></div>
+            <div style={{display:'inline-block'}}>Password: <input type="password" id="password" ref="password" onChange={this.props.createdPassword} onKeyPress={this.handleKeyPress} className="password"></input></div>
+            <div  style={{display:'inline-block'}}><button id="submit" onClick={this.props.submitCreateUser} style={{display:'inline-block'}}>Submit</button>
+        <button id="reset" onClick={this.props.reset} style={{display:'inline-block'}}>Return to Login</button>   </div>
         <div id="err">{this.props.createErr}</div>
         
-        <button id="submit" onClick={this.props.submitCreateUser}>Submit</button>
-        <button id="reset" onClick={this.props.reset}>Return to Login</button>
-        
-        </div>
-        
+             
         
       </div>
         

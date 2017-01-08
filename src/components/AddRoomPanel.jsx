@@ -11,18 +11,16 @@ class AddRoomPanel extends Component {
 			errorMessage: ""
 		};
 
-		this.handleRoomEntry = this.handleRoomEntry.bind(this);
-		this.addRoom = this.addRoom.bind(this);
 	}
 
-	handleRoomEntry(event) {
+	handleRoomEntry = (event) => {
 		const entryUpdate = {};
 		entryUpdate[event.target.name] = event.target.value;
 		console.log(entryUpdate);
 		this.setState(entryUpdate);
 	}
 
-	addRoom() {
+	addRoom = () => {
 		if (this.state.name) {
 			let unique = true;
 			//check to see if room already exists (Rooms must have unique names)
@@ -47,7 +45,7 @@ class AddRoomPanel extends Component {
 		}
 	}
 
-	render() {
+	render = () => {
 		let errorMessage = "";
 		if (this.state.errorMessage) {
 			errorMessage = <div className="error">{ this.state.errorMessage }</div>;

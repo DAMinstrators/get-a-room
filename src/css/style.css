@@ -1,7 +1,7 @@
 body {
-    background: white;
+    background: #FAFAFA;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     font-family: arial;
@@ -12,22 +12,56 @@ h1 {
 }
 
 #app {
-    position: absolute;
-    top: 30%
+    position: relative;
+    width: 100%;
+    top: 30%;
+}
+
+#content-panel {
+
+}
+
+#actionRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#actionBuilding {
+    flex: 1 0 0;
+}
+
+#actionDate {
+    flex: 1 0 0;
+}
+
+#actionReservationTitle {
+    flex: 1 0 0;
+}
+#actionRooms {
+    flex: 1 0 0;
+}
+
+#actionTime {
+    flex: 1 0 0;
+}
+
+#actionReservation {
+    flex: 1 0 0;
 }
 
 #container {
-    display: flex;
+    /*display: flex;
     justify-content: center;
     background: #eff5ff;
-    width: 600px;
+    width: 100%;
     max-height: 800px;
     border: 1px solid black;
     border-radius: 5px;
     padding-bottom: 20px;
     padding-top: 20px;
     margin-bottom: 30px;
-    box-shadow: 10px 10px 8px 1px #3d3d3d;
+    box-shadow: 10px 10px 8px 1px #3d3d3d;*/
 
 }
 

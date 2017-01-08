@@ -5,11 +5,9 @@ import RemoveRoom from './RemoveRoom.jsx';
 class RoomList extends Component {
 	constructor(props) {
 		super(props);
-		
-		this.handleRemoveRoom = this.handleRemoveRoom.bind(this);
 	}
 
-	handleRemoveRoom(roomIndex) {
+	handleRemoveRoom = (roomIndex) => {
 		this.props.removeRoom(roomIndex);
 	}
 

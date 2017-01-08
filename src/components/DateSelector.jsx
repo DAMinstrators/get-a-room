@@ -5,10 +5,9 @@ class DateSelector extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleSelectDate = this.handleSelectDate.bind(this);
 	}
 
-	handleSelectDate(event) {
+	handleSelectDate = (event) => {
 		this.props.selectDate(event.target.value);
 	}
 
