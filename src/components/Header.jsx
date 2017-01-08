@@ -202,7 +202,6 @@ class Header extends Component {
   render() {
     return (
 			<div>
-			<span onClick={this.handleChange}>Register</span>	
         <Toggle
           label="Logged"
           defaultToggled={false}

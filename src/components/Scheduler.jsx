@@ -58,7 +58,7 @@ class Scheduler extends Component {
 		this.setState({selectedSlots: selectedSlots, selectedSlot: timeSlot});
 	}
 
-	handleReservationRequest() {
+	handleReservationRequest = () => {
 		if (this.state.selectedRoomIndex >= 0) {
 			const date = new Date(this.state.selectedDate);
 			const roomName = this.props.rooms[this.state.selectedRoomIndex].name;

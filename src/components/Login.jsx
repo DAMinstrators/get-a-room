@@ -36,32 +36,16 @@ export default class Login extends React.Component {
   render() {
     return (
       <div>
-      <div id="container" className="app-container">
-        <div id="adminfield" className="admin-field">
-          <div id="containertitle" className="container-title">Log in</div>
-           
           <div id="forms" className="forms">
-
-            <div>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
-            <div>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
-            <RaisedButton onClick={this.props.handleChange} id="loginbtn" label="Login" />
-
+            <div style={{display:'inline-block'}}>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
+            <div style={{display:'inline-block'}}>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
+            <RaisedButton onClick={this.props.login} id="loginbtn" label="Login" style={{display:'inline-block', 'margin-left':10+'px', 'margin-right':10+'px'}} />
+            <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Register"  style={{display:'inline-block'}}/>
           </div>
           <div id="err">{this.props.loginErr}</div>
-
-        </div>
         
-        <div id="create" className="create"> 
-
-          <div id="containertitle" className="container-title">New User?</div>
-          <div id="buttons">
-            <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Create a new User" />
-          </div>
-
-        </div>
-        </div>
         <center><div id="createsuccess">{this.props.createSuccess}</div></center>
-        </div>
+      </div>
         
     );
   }
