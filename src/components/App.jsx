@@ -220,7 +220,7 @@ class App extends Component {
 
 			const data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1";//UPDATE: accessGroupId to be dynamic
 			this.httpRequest("post", "/room", data, (result) => {
-				console.log("Room added!");
+				console.log(result);
 			});
 		}
 	}
@@ -262,7 +262,7 @@ class App extends Component {
 			if (xhttp.status == 200 && xhttp.readyState == 4) {
 				console.log(xhttp.responseText);
 				//console.log("Response Text: ", xhttp.responseText);
-				callback(null, JSON.parse(xhttp.responseText));
+				callback(JSON.parse(xhttp.responseText));
 			}
 
 			if (xhttp.status == 400 || xhttp.status == 500) {
@@ -317,7 +317,7 @@ class App extends Component {
 				<div>
 					<center><button id="logout" onClick={this.reset}>Logout</button></center>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
-				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
+					<Scheduler username={this.state.username} rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
 		}

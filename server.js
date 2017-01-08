@@ -48,6 +48,83 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+///////////
+// USER ROUTING
+///////////
+
+app.post('/user/create', (req, res) =>{
+  db.createUser(req.body)
+    .then((user) =>{
+      res.json(user);
+    });
+});
+
+app.post('/user/validate', (req, res) =>{
+  db.validateUser(req.body)
+    .then((user) =>{
+      res.json(user);
+    });
+});
+
+app.get('/users', (req, res) =>{
+  db.getUsers().then((users) =>{
+    res.json(users);
+  });
+});
+
+///////////////////
+// BUILDING ROUTING
+///////////////////
+
+app.post('/building', (req,res)=>{
+  db.createBuilding(req.body).then((building) =>{
+    res.json(building);
+  });
+});
+
+app.get('/buildings', (req, res) =>{
+  db.getBuildings().then((buildings) =>{
+    res.json(buildings);
+  });
+});
+
+app.get('/building/:name', (req, res) =>{
+  db.getBuildingByName(req.params.name).then((building) =>{
+    res.json(building);
+  });
+});
+
+
+/////////////////////
+//RESERVATION ROUTING
+/////////////////////
+
+app.post('/reservation', (req,res)=>{
+  console.log("Reservation body" , req.body)
+  db.addReservation(req.body).then((rsvp) =>{
+    res.json(rsvp);
+  });
+});
+
+app.get('/reservations', (req, res) =>{
+  db.getAllReservations().then((rsvps) =>{
+    res.json(rsvps);
+  });
+});
+
+app.get('/reservations/:building', (req, res) =>{
+  db.getReservations(req.params, req.query ).then((rsvps) =>{
+    res.json(rsvps);
+  });
+
+});
+
+///////////////
+// ROOM ROUTING
+// TO BE DELETED UPON REFACTORING
+///////////////
+
+
 app.get('/rooms/:name/reservations/today', (req, res) =>{
     db.getReservationsToday(req.params.name)
       .then((rsvps) =>{
@@ -106,23 +183,9 @@ app.get('/rooms', (req, res) =>{
 });
 
 app.get('/rooms/:name', (req, res) =>{
-  db.getRoomByName().then((room) =>{
+  db.getRoomByName(req.params.name).then((room) =>{
     res.json(room);
   });
-});
-
-app.post('/user/create', (req, res) =>{
-  db.createUser(req.body)
-    .then((user) =>{
-      res.json(user);
-    });
-});
-
-app.post('/user/validate', (req, res) =>{
-  db.validateUser(req.body)
-    .then((user) =>{
-      res.json(user);
-    });
 });
 
 app.post('/room', (req,res)=>{
@@ -131,11 +194,6 @@ app.post('/room', (req,res)=>{
   });
 });
 
-app.post('/reservation', (req,res)=>{
-  db.addReservation(req.body).then((rsvp) =>{
-    res.json(rsvp);
-  });
-});
 
 app.listen(3000, function () {
    console.log("...listening on port 3000");
