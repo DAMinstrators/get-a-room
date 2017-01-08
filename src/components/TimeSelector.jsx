@@ -19,6 +19,7 @@ export default class TimeSelector extends Component {
   };
 
   handleChange = (event, index, value) => this.setState({value});
+  handleChange2 = (event, index, value) => this.setState({value});
 
   render() {
     return (
@@ -37,12 +38,12 @@ export default class TimeSelector extends Component {
         <SelectField
           floatingLabelText="End Time"
           value={this.state.value}
-          onChange={this.handleChange}
+          onChange={this.handleChange2}
           style={{float:'right'}}
 
         >
           <MenuItem value={1} primaryText="3" />
-          <MenuItem value={2} primaryText="4" />
+          <MenuItem value={2} primaryText="4" disabled={true} />
           <MenuItem value={3} primaryText="5" />
         </SelectField>
       </div>
