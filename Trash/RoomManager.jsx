@@ -14,4 +14,4 @@ class RoomManager extends Component {
 	}
 }
 
-export default RoomManager;
+export default RoomManager; 

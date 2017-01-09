@@ -1,26 +1,21 @@
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
+import CreateOrganization from './../CreateOrganization.jsx';
 
-import MakeReservation from './makeReservation/MakeReservation.jsx';
-import CreateBuilding from './createBuilding/CreateBuilding.jsx';
-import JoinBuilding from './joinBuilding/JoinBuilding.jsx';
-
-class Content extends Component {
+class CreateBuilding extends Component {
   constructor(props) {
 		super(props);
+		this.state = {
+			buildings: [],
+			selectedBuilding: undefined,
+			rooms: [],
+			selectedRoom: undefined
+		}
 
 	}
 
-addRoom = () => {
-  const roomList = this.state.newRooms;
-  const roomCap = this.state.roomCap;
-  console.log('add room clicked')
-  this.setState({newRooms: this.state.newRooms.concat(<AddRoom />).map(function(input, index){return input;})
-  });
-}
-
  submitCreateOrg = () =>  {
-
+		console.log('create org button clicked')
 	  this.setState({requestToCreate: 'loginpage'});
 
 	  this.setState({loginErr: ''});
@@ -66,16 +61,10 @@ addRoom = () => {
     return (
 
 			<div className={'container'}>
-				<div>
-
-					<MakeReservation  />
-					<CreateBuilding submitCreateOrg={this.submitCreateOrg} />
-					<JoinBuilding />
-				</div>
-
+				<CreateOrganization submitCreateOrg={this.submitCreateOrg} />
 			</div>
 		)
  }
-}
+}	
 
-export default Content;
+export default CreateBuilding;
