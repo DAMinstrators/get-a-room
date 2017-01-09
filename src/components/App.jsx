@@ -49,7 +49,6 @@ class App extends Component {
 
   }
 
-
 	render() {
 		return (
 					<div style={{width:100+'%'}}>
@@ -75,6 +74,7 @@ class App extends Component {
 						/>
 					</div>
 		);		
+
 	}
 }
 export default App;

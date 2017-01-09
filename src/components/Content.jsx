@@ -11,6 +11,12 @@ import SelectDate from './SelectDate.jsx';
 class Content extends Component {
   constructor(props) {
 		super(props);
+		this.state = {
+			buildings:[],
+			selectedBuilding: undefined,
+			rooms:[],
+			selectedRoom: undefined
+		}
 
 	}
 
@@ -21,67 +27,41 @@ class Content extends Component {
 	  this.setState({loginErr: ''});
 	  this.setState({createSuccess: ''});
 	}
-	
-	addRoom = (name, capacity) =>  {
-		if (name) {
-			const rooms = this.props.rooms.slice();
-			rooms.push({name: name, capacity: capacity});
-			this.setState({rooms: rooms});
 
-			const data = "name=" + name + "&capacity=" + capacity + "&accessGroupId=1";//UPDATE: accessGroupId to be dynamic
-			this.httpRequest("post", "/room", data, (result) => {
-				console.log("Room added!");
-			});
-		}
+  componentDidMount() {
+		this.loadBuildings()
+  }
+
+
+	// Load all BUILDINGS and initialize selected to 1st element
+	loadBuildings = () => {
+	  return $.get("/buildings", (data) => {
+			 this.setState({buildings: data, selectedBuilding:data[0].name})
+			 console.log("Building Data", data)
+			 this.loadRooms(this.state.selectedBuilding)
+	  })
 	}
 
-	removeRoom = (roomIndex) => {
-		const rooms = this.props.rooms.slice(0, roomIndex).concat(this.props.rooms.slice(roomIndex + 1));
-		this.setState({rooms: rooms});
+  // FIXME -- ROOM LOAD ON SELECTION IS ALWAYS OFF BY ONE STATE
+	selectBuilding = (event, index, value) => {
+		this.setState({selectedBuilding: value})
+		this.loadRooms(value)
+  };
+
+
+	// Load all ROOMS and initialize selected to 1st element
+	loadRooms = (building) => {
+		let url = "/buildings/" + this.state.selectedBuilding;
+		return $.get(url, (data) => {
+			 this.setState({rooms: data.rooms, selectedRoom:data.rooms[0].name})
+			 console.log("my room data is:", data.rooms)
+	  })
 	}
 
-	makeReservation = () => {
+  selectRoom = (event, index, value) => {
+		this.setState({selectedRoom: value})
+  };
 
-	}
-
-	removeReservation = () => {
-
-	}
-
-	httpRequest = (method, url, data, callback) => {
-		let xhttp = new XMLHttpRequest();
-		let params = "";
-		if (data) {
-			params = data;
-		}
-		method = method.toLowerCase();
-
-		xhttp.open(method, url, true);
-
-		if (method === "getting") {
-			console.log("Getting...", url, data, callback);
-			xhttp.setRequestHeader("Content-type", "application/json");
-		}
-
-		if (method === "post") {
-			console.log("Posting...", callback);
-			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		}
-
-		xhttp.onreadystatechange = () => {
-			if (xhttp.status == 200 && xhttp.readyState == 4) {
-				console.log(xhttp.responseText);
-				//console.log("Response Text: ", xhttp.responseText);
-				callback(null, JSON.parse(xhttp.responseText));
-			}
-
-			if (xhttp.status == 400 || xhttp.status == 500) {
-				callback(url + " could not be reached");
-			}
-		}
-
-		xhttp.send(params);
-	}
 
  render() {
     return (
@@ -89,12 +69,12 @@ class Content extends Component {
 			<div className={'container'}>
 				<div>
 					<div id="actionRow">
-						<div id="actionBuilding"><BuildingSelector /></div>
+						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
 						<div id="actionDate"><SelectDate /></div>
 						<div id="actionReservationTitle">Reservations</div>
 					</div>	
 					<div id="actionRow">
-						<div id="actionRooms"><RoomSelector /></div>
+						<div id="actionRooms"><RoomSelector rooms={this.state.rooms} selectedRoom={this.state.selectedRoom} handleChange={this.selectRoom}/></div>
 						<div id="actionTime"><TimeSelector /></div>
 						<div id="actionReservation">show reservations</div>
 					</div>	
