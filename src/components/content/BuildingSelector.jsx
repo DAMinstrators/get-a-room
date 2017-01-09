@@ -30,8 +30,9 @@ export default class BuildingSelector extends Component {
           floatingLabelText="Buildings"
           value={this.props.selectedBuilding}
           onChange={this.props.handleChange}
+          children={buildings}
         >
-          {buildings}
+          
         </SelectField>
       </div>
     )

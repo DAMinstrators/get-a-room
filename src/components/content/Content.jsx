@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
 import CreateOrganization from './CreateOrganization.jsx';
 import RoomManager from './RoomManager.jsx';
 import Scheduler from './Scheduler.jsx';
@@ -22,6 +23,15 @@ class Content extends Component {
 			reservations: [],
 		}
 
+=======
+import MakeReservation from './makeReservation/MakeReservation.jsx';
+import CreateBuilding from './createBuilding/CreateBuilding.jsx';
+import JoinBuilding from './joinBuilding/JoinBuilding.jsx';
+
+class Content extends Component {
+  constructor(props) {
+		super(props); 
+>>>>>>> a8d9090e454a569949af993195a8d8341838f698
 	}
 
  submitCreateOrg = () =>  {
@@ -91,6 +101,7 @@ class Content extends Component {
 
 			<div className={'container'}>
 				<div>
+<<<<<<< HEAD
 					<div id="actionRow">
 						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
 						<div id="actionDate"><SelectDate handleChange={this.selectDate} /></div>
@@ -103,10 +114,12 @@ class Content extends Component {
 
 					</div>
 					<RaisedButton onClick={this.props.submitRes} id="subRes" label="Submit Reservation"  style={{display:'inline-block', float:'right'}}/>
+=======
+					<MakeReservation  />
+					<CreateBuilding submitCreateOrg={this.submitCreateOrg} />
+					<JoinBuilding />
+>>>>>>> a8d9090e454a569949af993195a8d8341838f698
 				</div>	
-				<CreateOrganization submitCreateOrg={this.submitCreateOrg} />
-				<RoomManager rooms={this.props.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
-				<Scheduler rooms={this.props.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 			</div>
 		)
  }
