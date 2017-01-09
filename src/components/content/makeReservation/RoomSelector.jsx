@@ -36,8 +36,8 @@ export default class RoomSelector extends Component {
           floatingLabelText="Rooms"
           value={this.props.selectedRoom}
           onChange={this.props.handleChange}
+          children={rooms}
         >
-         {rooms}
         </SelectField>
       </div>
     )
