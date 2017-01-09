@@ -86,8 +86,8 @@ class Content extends Component {
  render() {
     return (
 
-			<div>
-				<div id="contentPanel">
+			<div className={'container'}>
+				<div>
 					<div id="actionRow">
 						<div id="actionBuilding"><BuildingSelector /></div>
 						<div id="actionDate"><SelectDate /></div>
