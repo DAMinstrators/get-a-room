@@ -30,24 +30,19 @@ class Content extends Component {
 
   componentDidMount() {
 		this.loadBuildings()
-	
   }
 
-	componentWillUpdate(prevProps, prevState) {
-      console.log('Component DID UPDATE!')
-			// this.loadRooms(this.state.selectedBuilding)
-
-   }
 
 	// Load all BUILDINGS and initialize selected to 1st element
 	loadBuildings = () => {
 	  return $.get("/buildings", (data) => {
 			 this.setState({buildings: data, selectedBuilding:data[0].name})
 			 console.log("Building Data", data)
+			 this.loadRooms(this.state.selectedBuilding)
 	  })
 	}
 
-// FIXME -- ROOM LOAD ON SELECTION IS ALWAYS OFF BY ONE STATE
+  // FIXME -- ROOM LOAD ON SELECTION IS ALWAYS OFF BY ONE STATE
 	selectBuilding = (event, index, value) => {
 		this.setState({selectedBuilding: value})
 		this.loadRooms(value)
@@ -74,7 +69,7 @@ class Content extends Component {
 			<div>
 				<div id="contentPanel">
 					<div id="actionRow">
-						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding}/></div>
+						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
 						<div id="actionDate"><SelectDate /></div>
 						<div id="actionReservationTitle">Reservations</div>
 					</div>	

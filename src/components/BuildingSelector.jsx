@@ -16,6 +16,10 @@ const styles = {
  */
 export default class BuildingSelector extends Component {
  
+ componentDidUpdate(){
+   console.log("I updated");
+ }
+
   render() {
     console.log("propsBuildings", this.props.selectedBuilding)
     // Looping thru buildings to create Menu Items

@@ -20,13 +20,13 @@ export default class RoomSelector extends Component {
     value: 1,
   };
   componentWillReceiveProps(newProps){
-    console.log("New Props to Room:", newProps)
+
   }
 
   handleChange = (event, index, value) => this.setState({value});
 
   render() {
-
+    console.log(this.props.selectedRoom)
     let rooms = this.props.rooms.map((rObj, index) => {
        return <MenuItem key={index} value={rObj.name} primaryText={rObj.name} />
     });
