@@ -54,7 +54,6 @@ class App extends Component {
 
   }
 
-
 	render() {
 		//if you're not logged in, render the login page
 		if (!this.state.loggedIn) {
@@ -93,7 +92,7 @@ class App extends Component {
 				<div>
 					<center><button id="logout" onClick={this.reset}>Logout</button></center>
 					<RoomManager rooms={this.state.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
-				  <Scheduler rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
+					<Scheduler username={this.state.username} rooms={this.state.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 				</div>
 			);
 		}
