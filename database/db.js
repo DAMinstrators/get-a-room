@@ -86,6 +86,9 @@ if (params.building && querys.date && querys.room){
   return schemas.Reservation.findAll({where: {building: params.building, room:querys.room, date:querys.date}})
 };
 
+if (params.building && querys.room){
+  return schemas.Reservation.findAll({where: {building: params.building, room:querys.room}})
+};
 if (params.building && querys.date){
   return schemas.Reservation.findAll({where: {building: params.building, date:querys.date}})
 };

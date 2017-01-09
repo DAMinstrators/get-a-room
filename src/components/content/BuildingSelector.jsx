@@ -16,12 +16,9 @@ const styles = {
  */
 export default class BuildingSelector extends Component {
  
- componentDidUpdate(){
-   console.log("I updated");
- }
 
   render() {
-    console.log("propsBuildings", this.props.selectedBuilding)
+    // console.log("propsBuildings", this.props.selectedBuilding)
     // Looping thru buildings to create Menu Items
     let buildings = this.props.buildings.map((bObj, index) => {
        return <MenuItem key={index} value={bObj.name} primaryText={bObj.name} />
