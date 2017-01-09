@@ -6,7 +6,7 @@ import JoinBuilding from './joinBuilding/JoinBuilding.jsx';
 
 class Content extends Component {
   constructor(props) {
-		super(props);
+		super(props); 
 	}
 
  submitCreateOrg = () =>  {
