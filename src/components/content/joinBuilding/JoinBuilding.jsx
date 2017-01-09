@@ -1,12 +1,17 @@
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
-import MakeReservation from './makeReservation/MakeReservation.jsx';
-import CreateBuilding from './createBuilding/CreateBuilding.jsx';
-import JoinBuilding from './joinBuilding/JoinBuilding.jsx';
+import BuildingSelector from './../BuildingSelector.jsx';
 
-class Content extends Component {
+class JoinBuilding extends Component {
   constructor(props) {
 		super(props);
+		this.state = {
+			buildings: [],
+			selectedBuilding: undefined,
+			rooms: [],
+			selectedRoom: undefined
+		}
+
 	}
 
  submitCreateOrg = () =>  {
@@ -56,14 +61,14 @@ class Content extends Component {
     return (
 
 			<div className={'container'}>
-				<div>
-					<MakeReservation  />
-					<CreateBuilding submitCreateOrg={this.submitCreateOrg} />
-					<JoinBuilding />
-				</div>	
-			</div>
+					<div id="actionRow">
+            <div id="actionDate"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
+          </div>
+      </div>
+      
+
 		)
  }
 }	
 
-export default Content;
+export default JoinBuilding;
