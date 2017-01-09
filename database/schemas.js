@@ -37,6 +37,10 @@ const UserAccessGroup = sequelize.define('userAccess', {
   accessGroupId: Sequelize.INTEGER
 });
 
+const buildingName = sequelize.define('buildingName', {
+  name: Sequelize.STRING
+})
+
 module.exports = {
   User,
   AccessGroup,

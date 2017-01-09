@@ -27,6 +27,10 @@ db.createUser = (user) => {
     });
 };
 
+db.addBuilding = (building) => {
+  return schemas.
+}
+
 db.validateUser = (user) => {
     return schemas.User.findOne({where: {name: user.username}})
       .then((usr) =>{

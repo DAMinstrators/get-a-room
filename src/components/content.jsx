@@ -16,13 +16,24 @@ class Content extends Component {
 	  this.setState({createSuccess: ''});
   }
 
+  addRoom = () => {
+    console.log('Room button clicked');
+    let roomDiv = <div>
+      <input placeholder='Add Room!' />
+      <input placeholder='Room Capacity' />
+    </div>
+
+    
+  }
+
  render() {
     return (
 			<div>
-				 <CreateOrganization submitCreateOrg={this.submitCreateOrg}/>
+				 <CreateOrganization submitCreateOrg={this.submitCreateOrg} addRoom={this.addRoom}/>
+
 			</div>
 		)
  }
-}	
+}
 
 export default Content;

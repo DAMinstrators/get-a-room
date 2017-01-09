@@ -137,6 +137,10 @@ app.post('/reservation', (req,res)=>{
   });
 });
 
+app.post('/createBuilding', (req, res){
+  
+})
+
 app.listen(3000, function () {
    console.log("...listening on port 3000");
 });
