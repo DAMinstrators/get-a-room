@@ -8,29 +8,29 @@ const styles = {
   },
 };
 
+
 /**
  * `SelectField` is implemented as a controlled component,
  * with the current selection set through the `value` property.
  * The `SelectField` can be disabled with the `disabled` property.
  */
 export default class BuildingSelector extends Component {
-  state = {
-    value: 1,
-  };
-
-  handleChange = (event, index, value) => this.setState({value});
-
+ 
   render() {
+    console.log("propsBuildings", this.props.selectedBuilding)
+    // Looping thru buildings to create Menu Items
+    let buildings = this.props.buildings.map((bObj, index) => {
+       return <MenuItem key={index} value={bObj.name} primaryText={bObj.name} />
+    });
+
     return (
       <div>
         <SelectField
           floatingLabelText="Buildings"
-          value={this.state.value}
-          onChange={this.handleChange}
+          value={this.props.selectedBuilding}
+          onChange={this.props.handleChange}
         >
-          <MenuItem value={1} primaryText="Codesmith" />
-          <MenuItem value={2} primaryText="Whole Foods" />
-          <MenuItem value={3} primaryText="Starbucks" />
+          {buildings}
         </SelectField>
       </div>
     )

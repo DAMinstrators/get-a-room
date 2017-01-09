@@ -19,20 +19,25 @@ export default class RoomSelector extends Component {
   state = {
     value: 1,
   };
+  componentWillReceiveProps(newProps){
+    console.log("New Props to Room:", newProps)
+  }
 
   handleChange = (event, index, value) => this.setState({value});
 
   render() {
+
+    let rooms = this.props.rooms.map((rObj, index) => {
+       return <MenuItem key={index} value={rObj.name} primaryText={rObj.name} />
+    });
     return (
       <div>
         <SelectField
           floatingLabelText="Rooms"
-          value={this.state.value}
-          onChange={this.handleChange}
+          value={this.props.selectedRoom}
+          onChange={this.props.handleChange}
         >
-          <MenuItem value={1} primaryText="React" />
-          <MenuItem value={2} primaryText="Sails" />
-          <MenuItem value={3} primaryText="Express" />
+         {rooms}
         </SelectField>
       </div>
     )

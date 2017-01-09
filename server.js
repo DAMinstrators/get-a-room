@@ -88,7 +88,7 @@ app.get('/buildings', (req, res) =>{
   });
 });
 
-app.get('/building/:name', (req, res) =>{
+app.get('/buildings/:name', (req, res) =>{
   db.getBuildingByName(req.params.name).then((building) =>{
     res.json(building);
   });
