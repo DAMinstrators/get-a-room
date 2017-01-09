@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
 import CreateOrganization from './CreateOrganization.jsx';
 import RoomManager from './RoomManager.jsx';
+import AddRoom from './AddRoom.jsx';
 import Scheduler from './Scheduler.jsx';
 import BuildingSelector from './BuildingSelector.jsx';
 import TimeSelector from './TimeSelector.jsx';
@@ -15,13 +16,21 @@ class Content extends Component {
 			buildings:[],
 			selectedBuilding: undefined,
 			rooms:[],
+      newRooms:[],
 			selectedRoom: undefined
 		}
-
 	}
 
+addRoom = () => {
+  const roomList = this.state.newRooms;
+  const roomCap = this.state.roomCap;
+  console.log('add room clicked')
+  this.setState({newRooms: this.state.newRooms.concat(<AddRoom />).map(function(input, index){return input;})
+  });
+}
+
  submitCreateOrg = () =>  {
-		console.log('create org button clicked')
+		
 	  this.setState({requestToCreate: 'loginpage'});
 
 	  this.setState({loginErr: ''});
@@ -72,19 +81,20 @@ class Content extends Component {
 						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
 						<div id="actionDate"><SelectDate /></div>
 						<div id="actionReservationTitle">Reservations</div>
-					</div>	
+					</div>
 					<div id="actionRow">
 						<div id="actionRooms"><RoomSelector rooms={this.state.rooms} selectedRoom={this.state.selectedRoom} handleChange={this.selectRoom}/></div>
 						<div id="actionTime"><TimeSelector /></div>
 						<div id="actionReservation">show reservations</div>
-					</div>	
-				</div>	
+					</div>
+				</div>
 				<CreateOrganization submitCreateOrg={this.submitCreateOrg} />
+        <AddRoom addRoom={this.addRoom} />
 				<RoomManager rooms={this.props.rooms} addRoom={this.addRoom} removeRoom={this.removeRoom}/>
 				<Scheduler rooms={this.props.rooms} makeReservation={this.makeReservation} removeReservation={this.removeReservation} httpRequest={this.httpRequest}/>
 			</div>
 		)
  }
-}	
+}
 
 export default Content;

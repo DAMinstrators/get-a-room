@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login.jsx';
 import UserMenu from './UserMenu.jsx';
@@ -242,44 +242,25 @@ class Header extends Component {
   render() {
     return (
 			<div>
-<<<<<<< HEAD:src/components/Header.jsx
-			<span onClick={this.handleChange}>Register</span>
-        <Toggle
-          label="Logged"
-          defaultToggled={false}
-          onToggle={this.handleChange}
-          // labelPosition="right"
-          labelPosition={this.labelPos}
-          style={{margin: 20}}
-        />
-=======
-			{this.loggedIn1 ? 
+			{this.loggedIn1 ?
 				<AppBar
           iconElementLeft={
 						<UserMenu handleChange={this.handleChange}/>
 					}
 				/>
-					 : 
->>>>>>> master:src/components/header/Header.jsx
+					 :
         <AppBar
           title="Get A Room"
           iconElementLeft={
 						<IconButton><NavigationClose /></IconButton>
 					}
           iconElementRight={
-<<<<<<< HEAD:src/components/Header.jsx
-
-
-            this.loggedIn1 ? <CreateUser
-
-=======
-            this.registering ? <CreateUser 
->>>>>>> master:src/components/header/Header.jsx
+            this.registering ? <CreateUser
                submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
 							 createdPassword={this.createdPassword}
 							 reset={this.reset}
-							 createErr={this.props.createErr}							
+							 createErr={this.props.createErr}
 							 backToLog={this.backToLog}
 							/> : <Login usernameChange={this.usernameChange}
 							passwordChange={this.passwordChange}
@@ -287,20 +268,14 @@ class Header extends Component {
 							login={this.login}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
-
 							createSuccess={this.createSuccess}
 							username={this.username}
 							password={this.password}
 							loggedIn={this.loggedIn}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
-<<<<<<< HEAD:src/components/Header.jsx
-							handleChange={this.handleChange}
-
-=======
-							 registerSubmit={this.registerSubmit}	
-							 registering={this.registering}	
->>>>>>> master:src/components/header/Header.jsx
+							 registerSubmit={this.registerSubmit}
+							 registering={this.registering}
             />
             }
         />}

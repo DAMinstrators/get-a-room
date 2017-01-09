@@ -195,8 +195,8 @@ app.post('/room', (req,res)=>{
 });
 
 
-app.post('/createBuilding', (req, res){
-  
+app.post('/createBuilding', (req, res) => {
+
 })
 
 app.listen(3000, function () {
