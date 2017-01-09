@@ -58,7 +58,7 @@ class Scheduler extends Component {
 		this.setState({selectedSlots: selectedSlots, selectedSlot: timeSlot});
 	}
 
-	handleReservationRequest() {
+	handleReservationRequest = () => {
 		if (this.state.selectedRoomIndex >= 0) {
 			const date = new Date(this.state.selectedDate);
 			const roomName = this.props.rooms[this.state.selectedRoomIndex].name;
@@ -71,8 +71,9 @@ class Scheduler extends Component {
 				//modify date for API by placing year at the end of the time stamp
 				const apiDate = this.state.selectedDate.substring(5) + "-" + this.state.selectedDate.substring(0, 4);
 				const data = "date=" + apiDate + "&roomName=" + roomName + "&startTime=" + selectedTimeSlot + "&userName=" + userName;
+				// const data = {"date":apiDate, "roomName": roomName, "startTime": selectedTimeSlot, "&userName=" + userName;
 				this.props.httpRequest("post", "/reservation", data, (result) => {
-					console.log('sucess!!!!!!!!!!!');
+					console.log(result);
 					//this.setState({successMessage: "Reservation details: " + result});
 				});
 			} else {
