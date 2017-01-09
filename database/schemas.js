@@ -11,10 +11,27 @@ const User = sequelize.define('user', {
   password: Sequelize.STRING
 });
 
-const AccessGroup = sequelize.define('accessGroup', {
+const Building = sequelize.define('building', {
   name: Sequelize.STRING,
-  accessLevel: Sequelize.STRING,
-  organization: Sequelize.STRING
+  rooms: Sequelize.JSON,
+  password: Sequelize.STRING,
+  admin: Sequelize.STRING,
+});
+
+const Reservation = sequelize.define('reservation', {
+  //TO KEEP PRE-EXISTING FUNCTIONALIY
+  roomId: Sequelize.INTEGER,
+  userId: Sequelize.INTEGER,
+  startTime: Sequelize.DATE,
+  endTime: Sequelize.DATE,
+  // NEW RENAMED FUNCTIONALIY
+  createdBy: Sequelize.STRING,
+  building: Sequelize.STRING,
+  room: Sequelize.STRING,
+  date: Sequelize.STRING,
+  start: Sequelize.INTEGER,
+  end: Sequelize.INTEGER,
+  description: Sequelize.STRING,
 });
 
 const Room = sequelize.define('room', {
@@ -25,28 +42,17 @@ const Room = sequelize.define('room', {
   color: Sequelize.STRING,
 });
 
-const Reservation = sequelize.define('reservation', {
-  roomId: Sequelize.INTEGER,
-  userId: Sequelize.INTEGER,
-  startTime: Sequelize.DATE,
-  endTime: Sequelize.DATE
-});
-
-const UserAccessGroup = sequelize.define('userAccess', {
-  userId: Sequelize.INTEGER,
-  accessGroupId: Sequelize.INTEGER
-});
-
 const buildingName = sequelize.define('buildingName', {
   name: Sequelize.STRING
 })
 
 module.exports = {
   User,
-  AccessGroup,
+  Building,
+  // AccessGroup,
   Room,
   Reservation,
-  UserAccessGroup
+  // UserAccessGroup
 }
 
 // module.exports.User = User;
@@ -54,3 +60,14 @@ module.exports = {
 // module.exports.Room = Room;
 // module.exports.Reservation = Reservation;
 // module.exports.UserAccessGroup = UserAccessGroup;
+
+// const AccessGroup = sequelize.define('accessGroup', {
+//   name: Sequelize.STRING,
+//   accessLevel: Sequelize.STRING,
+//   organization: Sequelize.STRING
+// });
+
+// const UserAccessGroup = sequelize.define('userAccess', {
+//   userId: Sequelize.INTEGER,
+//   accessGroupId: Sequelize.INTEGER
+// });

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login.jsx';
+import UserMenu from './UserMenu.jsx';
 import CreateUser from './CreateUser.jsx';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -10,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import FontIcon from 'material-ui/FontIcon';
 
 const Logged = (props) => (
   <IconMenu
@@ -44,9 +46,10 @@ Logged.muiName = 'IconMenu';
 class Header extends Component {
   constructor(props) {
 		super(props);
-
-    loggedIn1: true;
+		loggedIn1: false;
+    registering: false;
 		labelPos: "left";
+		backlog: false;
 	}
 
 
@@ -63,7 +66,7 @@ class Header extends Component {
 		this.setState({password: event.target.value})
 		// console.log(this.state.password);
 		this.setState({loginErr: ''});
-	    this.setState({createSuccess: ''});
+	  this.setState({createSuccess: ''});
 	}
 
 	login = () => {
@@ -95,22 +98,26 @@ class Header extends Component {
 				console.log(http.responseText);
 				if (http.responseText === 'true') {
 					console.log('valid login!!!')
-					this.setState({loggedIn: true});
+					this.state.loggedIn = true;
 					this.setState({loginErr: ''});
 					this.setState({username: ''});
 					this.setState({password: ''});
-					this.loggedIn1 = false;
+					this.registering = false;
+					this.loggedIn1 = true;
+
 				} else {
 					console.log('in else')
 					this.setState({loginErr: 'Invalid login'})
 				}
+				this.forceUpdate();
 			}
 		}.bind(this);
 		http.send(params);
-
         this.setState({loginErr: ''});
         this.setState({username: ''});
         this.setState({password: ''});
+
+				this.handleChange();
 
 
   }
@@ -194,14 +201,48 @@ class Header extends Component {
 	  this.setState({createErr: ''});
   }
 
+	registerSubmit = () => {
+		console.log('hitting register')
+		this.registering = true;
+		this.handleChange();
+	}
+
+	backToLog = () => {
+		console.log('hitting backToLog')
+		this.registering = false;
+		this.loggedIn1 = false;
+		this.backlog = true;
+		this.handleChange();
+	}
+
   handleChange = (event, logged) => {
-		this.loggedIn1 = logged;
-		this.labelPos = function() {this.loggedIn1 ? "left" : "right"}.bind(this)();
+		console.log('handlechange clicked')
+		if(this.loggedIn1) { //to logout from register
+			this.loggedIn1 = false;
+			this.registering = false;
+			this.forceUpdate();
+		} else if(!this.loggedIn1 && !this.registering  && this.backlog === true) { //to login
+			this.loggedIn1 = false;
+			this.registering = false;
+			this.backlog = false;
+			this.forceUpdate();
+		} else if(!this.loggedIn1 && this.registering) { //to register from login
+			this.loggedIn1 = false;
+			this.registering = true;
+			this.forceUpdate();
+		} else if(!this.loggedIn1 && !this.registering) { //to login from register
+			this.loggedIn1 = true;
+			this.registering = false;
+			this.forceUpdate();
+		}
   };
+
+
 
   render() {
     return (
 			<div>
+<<<<<<< HEAD:src/components/Header.jsx
 			<span onClick={this.handleChange}>Register</span>
         <Toggle
           label="Logged"
@@ -211,21 +252,36 @@ class Header extends Component {
           labelPosition={this.labelPos}
           style={{margin: 20}}
         />
+=======
+			{this.loggedIn1 ? 
+				<AppBar
+          iconElementLeft={
+						<UserMenu handleChange={this.handleChange}/>
+					}
+				/>
+					 : 
+>>>>>>> master:src/components/header/Header.jsx
         <AppBar
-          title="Title"
-          iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+          title="Get A Room"
+          iconElementLeft={
+						<IconButton><NavigationClose /></IconButton>
+					}
           iconElementRight={
+<<<<<<< HEAD:src/components/Header.jsx
 
 
             this.loggedIn1 ? <CreateUser
 
+=======
+            this.registering ? <CreateUser 
+>>>>>>> master:src/components/header/Header.jsx
                submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
 							 createdPassword={this.createdPassword}
-							 createdGithub={this.createdGithub}
 							 reset={this.reset}
-							 createErr={this.props.createErr}
-              /> : <Login usernameChange={this.usernameChange}
+							 createErr={this.props.createErr}							
+							 backToLog={this.backToLog}
+							/> : <Login usernameChange={this.usernameChange}
 							passwordChange={this.passwordChange}
 							loginErr={this.loginErr}
 							login={this.login}
@@ -238,11 +294,16 @@ class Header extends Component {
 							loggedIn={this.loggedIn}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
+<<<<<<< HEAD:src/components/Header.jsx
 							handleChange={this.handleChange}
 
+=======
+							 registerSubmit={this.registerSubmit}	
+							 registering={this.registering}	
+>>>>>>> master:src/components/header/Header.jsx
             />
             }
-        />
+        />}
       </div>
     );
   }
