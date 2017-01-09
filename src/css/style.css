@@ -17,7 +17,21 @@ h1 {
     top: 30%;
 }
 
-#content-panel {
+.container {
+    display: block;
+    width: 70%;
+    min-width: 70vw;
+    margin: 0 auto;
+}
+
+#vhCentered {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#userMenu {
 
 }
 

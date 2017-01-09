@@ -30,17 +30,27 @@ export default class Login extends React.Component {
       if(e.key === 'Enter') {
         this.handleOnLogin();
       }
-    }
+    } 
 
 
   render() {
     return (
-      <div>
-          <div id="forms" className="forms">
-            <div style={{display:'inline-block'}}>Username: <input id="username" ref="username" onKeyPress={this.handleKeyPress} onChange={this.props.usernameChange} className="username"></input></div>
-            <div style={{display:'inline-block'}}>Password: <input type="password" id="password" onKeyPress={this.handleKeyPress} ref="password" onChange={this.props.passwordChange} className="password"></input></div> 
-            <RaisedButton onClick={this.props.login} id="loginbtn" label="Login" style={{display:'inline-block', 'margin-left':10+'px', 'margin-right':10+'px'}} />
-            <RaisedButton onClick={this.props.createUser} id="createuserbtn" label="Register"  style={{display:'inline-block'}}/>
+      <div className={'container'}>
+          <div id="" className="">
+                <TextField
+                 hintText="Username"
+                 floatingLabelText="Username"
+                 id="username"
+                 onChange = {(input) => this.props.usernameChange(input)}     
+               />
+              <TextField
+                 hintText="Password"
+                 floatingLabelText="Password"
+                 id="password"
+                 onChange = {(input) => this.props.passwordChange(input)}            
+                />  
+            <RaisedButton onClick={this.props.login} secondary={true} id="loginbtn" label="Login" style={{display:'inline-block', 'margin-left':10+'px', 'margin-right':10+'px', 'margin-top':5+'px'}} />
+            <RaisedButton onClick={this.props.registerSubmit} id="createuserbtn" label="Register"  style={{display:'inline-block', float:'right'}}/>
           </div>
           <div id="err">{this.props.loginErr}</div>
         

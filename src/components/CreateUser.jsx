@@ -1,5 +1,6 @@
 import React from 'react';
-
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 export default class CreateUser extends React.Component {
   constructor(props) {
@@ -14,16 +15,22 @@ export default class CreateUser extends React.Component {
     
   render() {
     return (
-      <div>
-            <div id="containertitle"  style={{display:'inline-block'}}>Register</div>
-            <div style={{display:'inline-block'}}>Username: <input id="username" ref="username" onChange={this.props.createdUsername} onKeyPress={this.handleKeyPress} className="username"></input></div>
-            <div style={{display:'inline-block'}}>Password: <input type="password" id="password" ref="password" onChange={this.props.createdPassword} onKeyPress={this.handleKeyPress} className="password"></input></div>
-            <div  style={{display:'inline-block'}}><button id="submit" onClick={this.props.submitCreateUser} style={{display:'inline-block'}}>Submit</button>
-        <button id="reset" onClick={this.props.reset} style={{display:'inline-block'}}>Return to Login</button>   </div>
+      <div className={'container'}>
+          <TextField
+            floatingLabelText="Username"
+            name = "username"
+            onChange =  {(input) => this.props.createdUsername(input)}
+            id = "username"
+          />
+          <TextField
+            floatingLabelText="Password"
+            type="password"
+            onChange =  {(input) => this.props.createdPassword(input)}
+            id = "password"
+          />
+          <RaisedButton id="submit" secondary={true} label="Register" onClick={this.props.submitCreateUser} style={{display:'inline-block', 'margin-left':10+'px', 'margin-right':10+'px', 'margin-top':5+'px'}} />
+          <RaisedButton id="return" label="Login" onClick={this.props.backToLog} style={{display:'inline-block', float:'right'}} />
         <div id="err">{this.props.createErr}</div>
-        
-             
-        
       </div>
         
     );
