@@ -81,10 +81,11 @@ class App extends Component {
 							reset={this.reset}
 							createErr={this.state.createErr}
 						/>
-
-						{this.props.children || <Splash />}
+        
+            {this.props.children || <Splash />}
 						</div>
-						);
+		);
+
 
 	}
 
