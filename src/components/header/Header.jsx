@@ -28,7 +28,7 @@ const Logged = (props) => (
     <MenuItem primaryText="Help" />
     <MenuItem primaryText="Sign out" />
   </IconMenu>
-); 
+);
 
 // const LoggedOut = () => (<Login username={this.usernameChange}
 // 							password={this.passwordChange}
@@ -54,7 +54,7 @@ class Header extends Component {
 		backlog: false;
 	}
 
-  
+
 	//listens to changes to the username field on login page
 	usernameChange = (event) => {
 		this.setState({username: event.target.value})
@@ -70,7 +70,7 @@ class Header extends Component {
 		this.setState({loginErr: ''});
 	  this.setState({createSuccess: ''});
 	}
-  
+
 	login = () => {
 
 		// check if they filled out both fields
@@ -123,7 +123,7 @@ class Header extends Component {
 
 
   }
-  
+
   createOrg = () => {
     console.log('create button clicked')
 		this.setState({requestToCreate: 'orgpage'});
@@ -245,7 +245,7 @@ class Header extends Component {
   render() {
     return (
 			<div>
-			{this.loggedIn1 ? 
+			{this.loggedIn1 ?
 				<AppBar
 					style = {{'background-color': '#FFF'}}	
 					iconElementLeft={
@@ -259,7 +259,7 @@ class Header extends Component {
 						<UserMenu handleChange={this.handleChange} backToLog={this.backToLog}/>
 					}
 				/>
-					 : 
+					 :
         <AppBar
 					style = {{'background-color': '#FFF'}}	
 					iconElementLeft={
@@ -270,12 +270,12 @@ class Header extends Component {
 					</div>		
 					}
           iconElementRight={
-            this.registering ? <CreateUser 
+            this.registering ? <CreateUser
                submitCreateUser={this.submitCreateUser}
 				 			 createdUsername={this.createdUsername}
 							 createdPassword={this.createdPassword}
 							 reset={this.reset}
-							 createErr={this.props.createErr}							
+							 createErr={this.props.createErr}
 							 backToLog={this.backToLog}
 							/> : <Login usernameChange={this.usernameChange}
 							passwordChange={this.passwordChange}
@@ -283,14 +283,14 @@ class Header extends Component {
 							login={this.login}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
-							createSuccess={this.createSuccess} 
-							username={this.username} 
-							password={this.password} 
-							loggedIn={this.loggedIn} 
-							createOrg={this.createOrg} 
+							createSuccess={this.createSuccess}
+							username={this.username}
+							password={this.password}
+							loggedIn={this.loggedIn}
+							createOrg={this.createOrg}
 							createUser={this.createUser}
-							 registerSubmit={this.registerSubmit}	
-							 registering={this.registering}	
+							 registerSubmit={this.registerSubmit}
+							 registering={this.registering}
             />
             }
         />}

@@ -4,7 +4,7 @@ const moment = require('moment');
 const db = {};
 
 ////////////
-//USER TABLE 
+//USER TABLE
 ////////////
 
 db.createUser = (user) => {
@@ -14,6 +14,10 @@ db.createUser = (user) => {
       return schemas.User.create({name: user.username, githubHandle: user.github, password: user.password, buildings: ''})
     });
 };
+
+// db.addBuilding = (building) => {
+//   return schemas.
+// }
 
 db.validateUser = (user) => {
     return schemas.User.findOne({where: {name: user.username}})

@@ -14,9 +14,7 @@ const User = sequelize.define('user', {
 
 const Building = sequelize.define('building', {
   name: Sequelize.STRING,
-  rooms: Sequelize.JSON,
-  password: Sequelize.STRING,
-  admin: Sequelize.STRING,
+  rooms: Sequelize.JSON
 });
 
 const Reservation = sequelize.define('reservation', {
@@ -42,6 +40,10 @@ const Room = sequelize.define('room', {
   coordinates: Sequelize.STRING,
   color: Sequelize.STRING,
 });
+
+const buildingName = sequelize.define('buildingName', {
+  name: Sequelize.STRING
+})
 
 module.exports = {
   User,

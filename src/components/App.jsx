@@ -11,6 +11,7 @@ class App extends Component {
 		this.state = {
 			username: '',
 			password: '',
+			buildingName: '',
 			createdUsername: '',
 			createdPassword: '',
 			createdGithub: '',
@@ -39,6 +40,17 @@ class App extends Component {
 	}
 
 
+  submitCreateOrg = () =>  {
+	  this.setState({requestToCreate: 'loginpage'});
+
+	  this.setState({loginErr: ''});
+	  this.setState({createSuccess: ''});
+  }
+
+
+
+
+
 
   //takes you back to login page, resets all the information in the fields
   reset = (event) =>  {
@@ -53,7 +65,8 @@ class App extends Component {
 	render() {
 		return (
 					<div style={{width:100+'%'}}>
-						<Header 
+						<Header
+
 							loginErr={this.state.loginErr}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
@@ -69,11 +82,13 @@ class App extends Component {
 							reset={this.reset}
 							createErr={this.state.createErr}
 						/>
-
+        
             {this.props.children || <Splash />}
-					</div>
-		);		
 
-	} 
+		);
+
+
+	}
+
 }
 export default App;

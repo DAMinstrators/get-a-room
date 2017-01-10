@@ -79,7 +79,9 @@ app.get('/users', (req, res) =>{
 
 app.post('/building', (req,res)=>{
   db.createBuilding(req.body).then((building) =>{
+    
     res.json(building);
+
   });
 });
 
@@ -201,6 +203,10 @@ app.post('/room', (req,res)=>{
   });
 });
 
+
+app.post('/createBuilding', (req, res) => {
+
+})
 
 app.listen(3000, function () {
    console.log("...listening on port 3000");
