@@ -9,7 +9,7 @@ const SelectDate = (props) => {
 
  return( 
   <div>
-    <DatePicker hintText="Select Date" defaultDate={curr} container="inline" onChange={props.handleChange} />
+    <DatePicker floatingLabelText="Date" hintText="Select Date" defaultDate={curr} container="inline" onChange={props.handleChange} />
   </div>
 );
 }

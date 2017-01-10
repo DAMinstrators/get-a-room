@@ -112,19 +112,23 @@ submitRes = () => {
     return (
 
 			<div className={'container'}>
+				<div className="pageHeader">Make a Reservation</div>	
 				<div>
-					<div id="actionRow">
-						<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
-						<div id="actionDate"><SelectDate handleChange={this.selectDate} /></div>
-						<div id="actionReservationTitle"><h3>Reservations</h3><ReservationList reservations={this.state.reservations}/> </div>
-					</div>	
-					<div id="actionRow">
-						<div id="actionRooms"><RoomSelector rooms={this.state.rooms} selectedRoom={this.state.selectedRoom} handleChange={this.selectRoom}/></div>
-						<div id="actionTime"><TimeSelector floatingLabel="start time" handleChange={this.selectStart} selectedTime={this.state.selectedStartTime}/></div>
-						<div id="actionTime"><TimeSelector floatingLabel="end time" handleChange={this.selectEnd} selectedStartTime={this.state.selectedStartTime} selectedTime={this.state.selectedEndTime}/></div>
-
+					<div id="leftPanel">
+						<div id="actionRow">
+							<div id="actionDate"><SelectDate handleChange={this.selectDate} /></div>
+							<div id="actionBuilding"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
+							<div id="actionRooms"><RoomSelector rooms={this.state.rooms} selectedRoom={this.state.selectedRoom} handleChange={this.selectRoom}/></div>
+						</div>	
+						<div id="actionRow">
+							<div id="actionTime"><TimeSelector floatingLabel="start time" handleChange={this.selectStart} selectedTime={this.state.selectedStartTime}/></div>
+							<div id="actionTime"><TimeSelector floatingLabel="end time" handleChange={this.selectEnd} selectedStartTime={this.state.selectedStartTime} selectedTime={this.state.selectedEndTime}/></div>
+							<RaisedButton onClick={this.submitRes} id="subRes" label="Submit Reservation" style={{ display: 'inline-block', float: 'right' }} />
+						</div>
+						</div>
+					<div id="rightPanel">
+							<ReservationList reservations={this.state.reservations}/>	
 					</div>
-					<RaisedButton onClick={this.submitRes} id="subRes" label="Submit Reservation"  style={{display:'inline-block', float:'right'}}/>
 				</div>	
 			</div>
 		)

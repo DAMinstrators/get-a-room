@@ -66,7 +66,6 @@ class App extends Component {
 		return (
 					<div style={{width:100+'%'}}>
 						<Header
-
 							loginErr={this.state.loginErr}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
@@ -82,11 +81,10 @@ class App extends Component {
 							reset={this.reset}
 							createErr={this.state.createErr}
 						/>
-        
-            {this.props.children || <Splash />}
 
-		);
-
+						{this.props.children || <Splash />}
+						</div>
+						);
 
 	}
 
