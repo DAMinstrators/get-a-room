@@ -84,7 +84,7 @@ class App extends Component {
 						/>
         
             {this.props.children || <Splash />}
-
+						</div>
 		);
 
 
