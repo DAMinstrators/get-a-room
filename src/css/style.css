@@ -11,6 +11,53 @@ h1 {
     color: white;
 }
 
+#splash {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-image: url('background.jpg');
+    background-size: cover;
+    height: 100vh;    
+    width: 100vw;
+    filter: blur(1px) opacity(90%) grayscale(0%);
+}
+
+
+#splashContent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 100%;    
+    width: 100%;
+    filter: blur(0px) opacity(100%) grayscale(0%);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+#splashText {
+    width: 30%;
+    background-color: rgba(255, 255, 255, .8);
+    position: relative;
+    bottom: 50px;
+    left: 100px;
+    text-align: center;
+    padding:30px;
+    color: rgba(56, 56, 56);
+}
+
+#appname {
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+#tagline {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top:30px;
+}
+
 #app {
     position: relative;
     width: 100%;

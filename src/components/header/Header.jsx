@@ -12,6 +12,8 @@ import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FontIcon from 'material-ui/FontIcon';
+import { Link } from 'react-router';
+import NavLink from './NavLink.jsx';
 
 const Logged = (props) => (
   <IconMenu
@@ -104,12 +106,12 @@ class Header extends Component {
 					this.setState({password: ''});
 					this.registering = false;
 					this.loggedIn1 = true;
-
+					this.forceUpdate();
 				} else {
 					console.log('in else')
 					this.setState({loginErr: 'Invalid login'})
 				}
-				this.forceUpdate();
+				
 			}
 		}.bind(this);
 		http.send(params);
@@ -217,11 +219,12 @@ class Header extends Component {
 
   handleChange = (event, logged) => {
 		console.log('handlechange clicked')
-		if(this.loggedIn1) { //to logout from register
+		if(this.loggedIn1 && !this.backlog) { //to logout from register
 			this.loggedIn1 = false;
 			this.registering = false;
+			this.backlog = true;
 			this.forceUpdate();
-		} else if(!this.loggedIn1 && !this.registering  && this.backlog === true) { //to login
+		} else if(!this.loggedIn1 && !this.registering  && this.backlog) { //to login
 			this.loggedIn1 = false;
 			this.registering = false;
 			this.backlog = false;
@@ -244,15 +247,27 @@ class Header extends Component {
 			<div>
 			{this.loggedIn1 ?
 				<AppBar
-          iconElementLeft={
-						<UserMenu handleChange={this.handleChange}/>
+					style = {{'background-color': '#FFF'}}	
+					iconElementLeft={
+					<div>
+						<div style={{'display':'inline-block'}}>
+							<NavLink to='/'><img src={require('./logo.png')} style={{ height: 100 + 'px', width: 200 + 'px' }} /></ NavLink>
+						</div>
+					</div>		
+					}
+					iconElementRight={
+						<UserMenu handleChange={this.handleChange} backToLog={this.backToLog}/>
 					}
 				/>
 					 :
         <AppBar
-          title="Get A Room"
-          iconElementLeft={
-						<IconButton><NavigationClose /></IconButton>
+					style = {{'background-color': '#FFF'}}	
+					iconElementLeft={
+					<div>
+						<div style={{'display':'inline-block'}}>
+							<img src={require('./logo.png')} style={{ height: 100 + 'px', width: 200 + 'px' }} />
+						</div>
+					</div>		
 					}
           iconElementRight={
             this.registering ? <CreateUser

@@ -8,7 +8,8 @@ const sequelize = new Sequelize('tqgqhyre', 'tqgqhyre', 'SRgfpU6w8a1h1zwhkkgyDyA
 const User = sequelize.define('user', {
   name: Sequelize.STRING,
   githubHandle: Sequelize.STRING,
-  password: Sequelize.STRING
+  password: Sequelize.STRING,
+  // buildings: Sequelize.ARRAY[STRING]
 });
 
 const Building = sequelize.define('building', {

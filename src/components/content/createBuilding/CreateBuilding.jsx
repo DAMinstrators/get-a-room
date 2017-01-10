@@ -14,6 +14,7 @@ class CreateBuilding extends Component {
 			selectedRoom: undefined
 		}
 
+
 	}
 
 

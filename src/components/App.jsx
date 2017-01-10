@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Header from './header/Header.jsx';
 import Content from './content/Content.jsx';
+import Splash from './content/Splash.jsx';
 
 class App extends Component {
 	constructor() {
@@ -81,10 +82,9 @@ class App extends Component {
 							reset={this.reset}
 							createErr={this.state.createErr}
 						/>
+        
+            {this.props.children || <Splash />}
 
-
-            {this.props.children || <Content />}
-					</div>
 		);
 
 
