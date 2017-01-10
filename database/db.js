@@ -11,7 +11,7 @@ db.createUser = (user) => {
   return schemas.User.findOne({where: {name: user.username}})
     .then((usr) =>{
       if(usr !== null) return 'exists';
-      return schemas.User.create({name: user.username, githubHandle: user.github, password: user.password})
+      return schemas.User.create({name: user.username, githubHandle: user.github, password: user.password, buildings: ''})
     });
 };
 
@@ -47,6 +47,21 @@ db.getBuildings = () => {
 
 db.getBuildingByName = (name) => {
   return schemas.Building.findOne({where: {name: name}});
+};
+
+//JOIN BUILDING
+db.joinBuilding = (user) => {
+  return Users.find({ where: { where: user.username } })
+  .on('success', function (usr) {
+    if (usr) {
+      let arr = usr.buildings;
+      arr.push(user.building)
+      usr.updateAttributes({
+        buildings: arr
+      })
+      .success(function () {})
+    }
+  })
 };
 
 ////////////////////

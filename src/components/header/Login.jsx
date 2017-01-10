@@ -1,6 +1,8 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { Link } from 'react-router';
+import NavLink from './NavLink.jsx';
 
 export default class Login extends React.Component {
 
@@ -48,8 +50,8 @@ export default class Login extends React.Component {
                  id="password"
                  onChange = {(input) => this.props.passwordChange(input)}            
                 />  
-            <RaisedButton onClick={this.props.login} secondary={true} id="loginbtn" label="Login" style={{display:'inline-block', 'margin-left':10+'px', 'margin-right':10+'px', 'margin-top':5+'px'}} />
-            <RaisedButton onClick={this.props.registerSubmit} id="createuserbtn" label="Register"  style={{display:'inline-block', float:'right'}}/>
+            <RaisedButton onClick={this.props.login} secondary={true} id="loginbtn" label="Login" style={{display:'inline-block', 'marginTop':5+'px', marginLeft:20 + 'px'}} />
+            <RaisedButton onClick={this.props.registerSubmit} id="createuserbtn" label="Register"  style={{display:'inline-block', float:'right', position:'relative', top:30 + 'px', right:30 +'px'}}/>
           </div>
           <div id="err">{this.props.loginErr}</div>
         
