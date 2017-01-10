@@ -57,27 +57,33 @@ db.getBuildingByName = (name) => {
 // RESERVATION TABLE
 ////////////////////
 
+
 db.addReservation = (rsvp) =>{
-  return schemas.Room.findOne({where: {name: rsvp.room}}).then((rm) =>{
-    if(rm === null){ return ('Room does not exist.');}
-    // let date = moment(rsvp.date, 'MM-DD-YYYY').hour(rsvp.startTime).minutes(0).seconds(0).format();
-    return schemas.User.findOne({where: {name: rsvp.createdBy}})
-      .then((usr) =>{
-        if(usr === null) return ('User does not exist.');
-        return schemas.Reservation
-        .create({startTime: rsvp.date,
-                 userId: usr.id,
-                 roomId: rm.id,
-                 createdBy: usr.name,
-                 building: rsvp.building,
-                 room:rsvp.room,
-                 date:rsvp.date,
-                 start:rsvp.start,
-                 end:rsvp.end,
-                 description: rsvp.description});
-      });
-  });
+ return schemas.Reservation
+        .create(rsvp);
 };
+
+// db.addReservation = (rsvp) =>{
+//   return schemas.Room.findOne({where: {name: rsvp.room}}).then((rm) =>{
+//     if(rm === null){ return ('Room does not exist.');}
+//     // let date = moment(rsvp.date, 'MM-DD-YYYY').hour(rsvp.startTime).minutes(0).seconds(0).format();
+//     return schemas.User.findOne({where: {name: rsvp.createdBy}})
+//       .then((usr) =>{
+//         if(usr === null) return ('User does not exist.');
+//         return schemas.Reservation
+//         .create({startTime: rsvp.date,
+//                  userId: usr.id,
+//                  roomId: rm.id,
+//                  createdBy: usr.name,
+//                  building: rsvp.building,
+//                  room:rsvp.room,
+//                  date:rsvp.date,
+//                  start:rsvp.start,
+//                  end:rsvp.end,
+//                  description: rsvp.description});
+//       });
+//   });
+// };
 
 db.getAllReservations = () => {
   return schemas.Reservation.findAll();
@@ -90,6 +96,9 @@ if (params.building && querys.date && querys.room){
   return schemas.Reservation.findAll({where: {building: params.building, room:querys.room, date:querys.date}})
 };
 
+if (params.building && querys.room){
+  return schemas.Reservation.findAll({where: {building: params.building, room:querys.room}})
+};
 if (params.building && querys.date){
   return schemas.Reservation.findAll({where: {building: params.building, date:querys.date}})
 };
