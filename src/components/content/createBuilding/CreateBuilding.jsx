@@ -5,12 +5,7 @@ import CreateOrganization from './../CreateOrganization.jsx';
 class CreateBuilding extends Component {
   constructor(props) {
 		super(props);
-		this.state = {
-			buildings: [],
-			selectedBuilding: undefined,
-			rooms: [],
-			selectedRoom: undefined
-		}
+
 
 	}
 

@@ -20,6 +20,7 @@
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "express-static": "^1.0.3",
+    "file-loader": "^0.9.0",
     "material-design-icons": "^3.0.1",
     "material-ui": "^0.16.6",
     "moment": "^2.17.1",
@@ -34,6 +35,7 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "sequelize": "^3.27.0",
+    "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.14.0"

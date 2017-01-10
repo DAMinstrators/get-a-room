@@ -74,6 +74,7 @@ app.get('/users', (req, res) =>{
 
 ///////////////////
 // BUILDING ROUTING
+
 ///////////////////
 
 app.post('/building', (req,res)=>{
@@ -91,6 +92,12 @@ app.get('/buildings', (req, res) =>{
 app.get('/buildings/:name', (req, res) =>{
   db.getBuildingByName(req.params.name).then((building) =>{
     res.json(building);
+  });
+});
+
+app.post('/buildings/join', (req, res) => {
+  db.joinBuilding(req.body).then((user) => {
+    res.json(user);
   });
 });
 
