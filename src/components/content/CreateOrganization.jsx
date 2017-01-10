@@ -11,7 +11,6 @@ export default class CreateOrganization extends React.Component {
           <button id="submit" onClick={this.props.submitCreateOrg}>Submit</button>
         </div>
       </div>
-        
     );
   }
 }

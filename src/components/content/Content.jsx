@@ -54,7 +54,6 @@ class Content extends Component {
 
  render() {
     return (
-
 			<div className={'container'}>
 				<div>
 					<MakeReservation  />
@@ -63,7 +62,7 @@ class Content extends Component {
 				</div>	
 			</div>
 		)
- }
-}	
+  }
+}
 
 export default Content;
