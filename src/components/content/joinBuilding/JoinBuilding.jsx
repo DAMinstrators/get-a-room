@@ -36,7 +36,6 @@ class JoinBuilding extends Component {
 
  render() {
     return (
-
 			<div className={'container'}>
 					<div id="actionRow">
 					<div id="actionDate">
@@ -53,8 +52,6 @@ class JoinBuilding extends Component {
 					</div>
 				</div>
       </div>
-      
-
 		)
  }
 }	

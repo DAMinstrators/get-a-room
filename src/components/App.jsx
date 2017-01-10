@@ -68,10 +68,8 @@ class App extends Component {
 							reset={this.reset}
 							createErr={this.state.createErr}
 						/>
-						
-						<Content 
-						rooms={this.state.rooms} 
-						/>
+
+            {this.props.children || <Content />}
 					</div>
 		);		
 
