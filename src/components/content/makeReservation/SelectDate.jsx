@@ -7,8 +7,6 @@ import DatePicker from 'material-ui/DatePicker';
 let curr = new Date();
 const SelectDate = (props) => {
 
-  
-  console.log("SELECT DATE")
  return( 
   <div>
     <DatePicker hintText="Select Date" defaultDate={curr} container="inline" onChange={props.handleChange} />

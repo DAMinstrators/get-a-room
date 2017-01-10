@@ -35,16 +35,21 @@ export default class TimeSelector extends Component {
                  {value:19, primaryText:"7:00PM"},
                  {value:20, primaryText:"8:00PM"},
                  {value:21, primaryText:"9:00PM"}]
+  
+
       let timeList = times.map((tObj) => {
+        if (this.props.selectedStartTime && tObj.value <= this.props.selectedStartTime){
+          return <MenuItem value={tObj.value} primaryText={tObj.primaryText} disabled="true" />
+        }
         return <MenuItem value={tObj.value} primaryText={tObj.primaryText} />
       })
     return (
     
       <div>
         <SelectField
-          floatingLabelText="Start Time"
-          value={9}
-          onChange={this.handleChange}
+          floatingLabelText={this.props.floatingLabel}
+          value={this.props.selectedTime}
+          onChange={this.props.handleChange}
           style={{float:'left'}}
         >
           {timeList}
