@@ -12,6 +12,8 @@ import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FontIcon from 'material-ui/FontIcon';
+import { Link } from 'react-router';
+import NavLink from './NavLink.jsx';
 
 const Logged = (props) => (
   <IconMenu
@@ -249,7 +251,7 @@ class Header extends Component {
 					iconElementLeft={
 					<div>
 						<div style={{'display':'inline-block'}}>
-							<img src={require('./logo.png')} style={{ height: 100 + 'px', width: 200 + 'px' }} />
+							<NavLink to='/'><img src={require('./logo.png')} style={{ height: 100 + 'px', width: 200 + 'px' }} /></ NavLink>
 						</div>
 					</div>		
 					}

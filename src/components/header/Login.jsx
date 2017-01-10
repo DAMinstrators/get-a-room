@@ -1,6 +1,8 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { Link } from 'react-router';
+import NavLink from './NavLink.jsx';
 
 export default class Login extends React.Component {
 
