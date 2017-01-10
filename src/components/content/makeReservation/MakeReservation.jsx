@@ -65,10 +65,10 @@ class MakeReservation extends Component {
 	}
 
 	loadReservations = (building, date, room) => {
+		console.log("I reloaded")
 		let url = "/reservations/" + this.state.selectedBuilding + "/?date=" + this.state.selectedDate + "&room=" + this.state.selectedRoom;
 		return $.get(url, (data) => {
 			this.setState({reservations: data})
-			 console.log("my reservation data is:", data)
 	  })
 	}
 
@@ -88,8 +88,11 @@ selectEnd = (event, index, value) => {
 
 selectDate = (x,d) => {
   let formatDate =  d.getFullYear() + "-" + d.getMonth()+1 + "-" + d.getDate()
-	this.setState({selectedDate: formatDate})
+	this.setState({selectedDate: formatDate}, function() {
+		  this.loadReservations(this.state.selectBuilding, this.state.selectedDate, this.state.selectedRoom)
+		})
 };
+
 
 submitRes = () => {
 	// Just getting AM PM from start and end time
@@ -105,7 +108,7 @@ submitRes = () => {
     "description": "A meeting from " + this.state.selectedStartTime + ":00"+ first + " to " + this.state.selectedEndTime + ":00"+second
   }
 	console.log(res)
-	$.post("/reservation/", res).then(this.loadReservations(this.state.selectBuilding, this.state.selectedDate, this.state.selectedRoom))
+	$.post("/reservation/", res).done(this.loadReservations(this.state.selectBuilding, this.state.selectedDate, this.state.selectedRoom))
 }
 
  render() {
