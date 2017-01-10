@@ -1,4 +1,6 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 export default class CreateOrganization extends React.Component {
@@ -27,10 +29,20 @@ submitCreateOrg = () =>  {
     return (
       <div id="container" className="app-container">
         <div id="adminfield">
-          {'Create Building Page'}
-          <input id='buildingName' placeholder='Name of Building' onChange={(e) => {this.buildingChange(e)}}/>
-          <input id='roomName' placeholder='Add Rooms' onChange={(e) => {this.roomAdd(e)}}/>
-          <button id="submit" onClick={this.submitCreateOrg}>{'Submit'}</button>
+          <div className="pageHeader">Create Building</div>
+              <TextField
+                 hintText="Building Name"
+                 floatingLabelText="Building Name"
+                 id="buildingName"
+                 onChange = {(e) => {this.buildingChange(e)}}
+               />
+              <TextField
+                 hintText="Add Rooms"
+                 floatingLabelText="Add Rooms"
+                 id="roomName"
+                 onChange = {(e) => {this.roomAdd(e)}}     
+               />
+             <RaisedButton onClick={this.submitCreateOrg} secondary={true} id="createBuildingButton" label="Create Building" style={{display:'inline-block', 'marginTop':5+'px', marginLeft:20 + 'px'}} />
         </div>
       </div>
 

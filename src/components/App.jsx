@@ -66,7 +66,6 @@ class App extends Component {
 		return (
 					<div style={{width:100+'%'}}>
 						<Header
-
 							loginErr={this.state.loginErr}
 							createOrg={this.createOrg}
 							createUser={this.createUser}
