@@ -9,18 +9,14 @@ class CreateBuilding extends Component {
 			buildings: [],
 			selectedBuilding: undefined,
 			rooms: [],
+      buildingChange: '',
+      addRoom: '',
 			selectedRoom: undefined
 		}
 
 	}
 
- submitCreateOrg = () =>  {
-		console.log('create org button clicked')
-	  this.setState({requestToCreate: 'loginpage'});
 
-	  this.setState({loginErr: ''});
-	  this.setState({createSuccess: ''});
-	}
 
   componentDidMount() {
 		this.loadBuildings()
@@ -65,6 +61,6 @@ class CreateBuilding extends Component {
 			</div>
 		)
  }
-}	
+}
 
 export default CreateBuilding;

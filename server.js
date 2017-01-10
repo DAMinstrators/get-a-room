@@ -78,7 +78,9 @@ app.get('/users', (req, res) =>{
 
 app.post('/building', (req,res)=>{
   db.createBuilding(req.body).then((building) =>{
+    
     res.json(building);
+
   });
 });
 

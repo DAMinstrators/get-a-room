@@ -11,13 +11,7 @@ class Content extends Component {
 
 	}
 
-addRoom = () => {
-  const roomList = this.state.newRooms;
-  const roomCap = this.state.roomCap;
-  console.log('add room clicked')
-  this.setState({newRooms: this.state.newRooms.concat(<AddRoom />).map(function(input, index){return input;})
-  });
-}
+
 
  submitCreateOrg = () =>  {
 

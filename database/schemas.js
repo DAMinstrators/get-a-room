@@ -13,9 +13,7 @@ const User = sequelize.define('user', {
 
 const Building = sequelize.define('building', {
   name: Sequelize.STRING,
-  rooms: Sequelize.JSON,
-  password: Sequelize.STRING,
-  admin: Sequelize.STRING,
+  rooms: Sequelize.JSON
 });
 
 const Reservation = sequelize.define('reservation', {
