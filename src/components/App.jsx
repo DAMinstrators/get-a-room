@@ -83,10 +83,7 @@ class App extends Component {
 						/>
 
 
-						<Content
-						rooms={this.state.rooms}
-
-						/>
+            {this.props.children || <Content />}
 					</div>
 		);
 

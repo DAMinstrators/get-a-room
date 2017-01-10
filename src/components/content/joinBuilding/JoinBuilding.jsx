@@ -11,7 +11,6 @@ class JoinBuilding extends Component {
 			rooms: [],
 			selectedRoom: undefined
 		}
-
 	}
 
  submitCreateOrg = () =>  {
@@ -59,14 +58,11 @@ class JoinBuilding extends Component {
 
  render() {
     return (
-
 			<div className={'container'}>
 					<div id="actionRow">
             <div id="actionDate"><BuildingSelector buildings={this.state.buildings} selectedBuilding={this.state.selectedBuilding} handleChange={this.selectBuilding} loadRooms={this.loadRooms}/></div>
           </div>
       </div>
-      
-
 		)
  }
 }	

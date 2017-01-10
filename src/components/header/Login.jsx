@@ -16,7 +16,6 @@ export default class Login extends React.Component {
       if(target.charCode==13){
             alert('Enter clicked!!!');    
       }
-
     }
 
 

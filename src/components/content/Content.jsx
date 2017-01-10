@@ -58,7 +58,6 @@ class Content extends Component {
 
  render() {
     return (
-
 			<div className={'container'}>
 				<div>
 
@@ -69,7 +68,8 @@ class Content extends Component {
 
 			</div>
 		)
- }
+
+  }
 }
 
 export default Content;
