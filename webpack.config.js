@@ -1,29 +1,36 @@
-var config = {
-   entry: './src/index.js',
-	
-   output: {
-      path:'./public',
-      filename: 'bundle.js',
-   },
-	
-   devServer: {
-      inline: true,
-      port: 8080
-   },
-	
-   module: {
-      loaders: [
-         {
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel',
-				
-            query: {
-               presets: ['es2015', 'react']
-            }
-         }
-      ]
-   }
-}
+var path = require('path');
+var webpack = require('webpack');
 
-module.exports = config;
+module.exports = {
+  devtool: 'source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    './src/index.jsx'
+  ],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  module: {
+    loaders: [{
+      test: /\.jsx$/,
+      loaders: ['react-hot', 'babel'],
+      include: path.join(__dirname, 'src')
+    },
+    { 
+      test: /\.css$/, 
+      exclude: /\.useable\.css$/, 
+      loader: "style-loader!css-loader" },
+    { 
+      test: /\.(png|jpg)$/,
+      loader: 'url-loader?limit=8192'
+    },
+    { 
+      test: /\.useable\.css$/, 
+      loader: "style-loader/useable!css-loader" }]
+  }
+};
